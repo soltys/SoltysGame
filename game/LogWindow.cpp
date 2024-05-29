@@ -4,18 +4,19 @@
 #include <iostream>
 #include <sstream>
 #include "GameContext.hpp"
-LogWindow::LogWindow()
+LogWindow::LogWindow() {}
+
+void LogWindow::initialize()
 {
     this->render_window_ = std::make_unique<sf::RenderWindow>(sf::VideoMode(800u, 600u), "Log window");
-
     font_memory_ = r::get_file("font_Consolas.ttf");
     font_.loadFromMemory(font_memory_.data(), font_memory_.size());
-    text_ = std::make_unique<sf::Text>("", font_);    
-    text_->setCharacterSize(12);    
+    text_ = std::make_unique<sf::Text>("", font_);
+    text_->setCharacterSize(20);
     text_->setFillColor(sf::Color::White);
 }
 
-void LogWindow::update(sf::Int64 dt, const std::unique_ptr<GameContext>& context)
+void LogWindow::update(const std::unique_ptr<GameContext> &context)
 {
     auto window_position = context->getWindowPosition();
     if (window_position != last_main_window_position)
@@ -57,7 +58,7 @@ void LogWindow::render()
     }
 }
 
-void LogWindow::close()
+void LogWindow::finalize()
 {
     this->render_window_->close();
 }

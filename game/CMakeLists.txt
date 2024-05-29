@@ -7,7 +7,7 @@ pack_resources(pack_file
     FORCE)
 
 add_executable(${MAIN_TARGET} WIN32
-    SFMLMain.cpp
+    main.cpp
     LogWindow.cpp
     LogWindow.h
     Resources.hpp
@@ -16,6 +16,7 @@ add_executable(${MAIN_TARGET} WIN32
     Game.cpp
     Game.h
     GameTime.hpp
+    GameObject.hpp
     ${pack_file}
 )
 

@@ -9,35 +9,41 @@ void Game::Initialize()
 
     sf::VideoMode windowSize(800u, 600u);
     this->window = std::make_unique<sf::RenderWindow>(windowSize, r::get_locale_string("WINDOW_TITLE"));
-    bool log_window_toggle = r::get_toggle("LOG_WINDOW");
-    if (log_window_toggle)
+    if (r::get_toggle("LOG_WINDOW"))
     {
-        this->log_window = std::make_unique<LogWindow>();
+        this->game_object_collection.push_back(std::make_unique<LogWindow>());
     }
     l::info("===started game===");
     const int framerateLimit = 60;
     l::info("setFramerateLimit(" + std::to_string(framerateLimit) + ")");
     window->setFramerateLimit(framerateLimit);
+
+    std::for_each(this->game_object_collection.begin(), this->game_object_collection.end(),
+             [](const std::unique_ptr<GameObject>& o) { o->initialize(); });
 }
 void Game::Update()
 {
-    context->setWindowPosition(this->window->getPosition())
-        ->setWindowSize(this->window->getSize());
-    auto dt = this->gameTime->GetMicroseconds();
-    l::info(std::format("dt: {}", dt));
+    context
+        ->set_window_position(this->window->getPosition())
+        ->set_window_size(this->window->getSize())
+        ->set_update_tick(this->gameTime->GetMicroseconds());
+
     for (auto event = sf::Event{}; window->pollEvent(event);)
     {
         if (event.type == sf::Event::Closed)
         {
-            window->close();
-            log_window->close();
+            std::for_each(this->game_object_collection.begin(), this->game_object_collection.end(),
+             [](const std::unique_ptr<GameObject>& o) { o->finalize(); });
+
+             window->close();
         }
         else if (event.type == sf::Event::MouseButtonPressed)
         {
             l::info("MouseButtonPressed");
         }
     }
-    log_window->update(dt, this->context);
+    std::for_each(this->game_object_collection.begin(), this->game_object_collection.end(),
+             [&](const std::unique_ptr<GameObject>& o) { o->update(this->context); });
 }
 bool Game::IsRunning()
 {
@@ -48,7 +54,9 @@ void Game::Terminate()
 }
 void Game::Draw()
 {
+    std::for_each(this->game_object_collection.begin(), this->game_object_collection.end(),
+             [](const std::unique_ptr<GameObject>& o) { o->render(); });
+
     window->clear();
     window->display();
-    log_window->render();
 }
