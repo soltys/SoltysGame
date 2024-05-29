@@ -1,4 +1,4 @@
-#include <game/Logging/DbLogger.h>
+#include <game/logging/DbLogger.h>
 #include <game/Locator.h>
 void DbLogger::log(LogLevel log_level, const std::string &logger, const std::string &message)
 {

@@ -1,4 +1,4 @@
-#include <game/Logging/LogWindow.h>
+#include <game/logging/LogWindow.h>
 #include <format>
 #include <game/Utils.h>
 #include <iostream>

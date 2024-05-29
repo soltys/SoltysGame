@@ -1,10 +1,10 @@
 #include <game/Locator.h>
-#include <game/Logging/Logger.h>
-#include <game/Logging/NullLogger.h>
-#include <game/Logging/DbLogger.h>
-#include <game/Logging/WindowsDebugLogger.h>
-#include <game/Logging/ConsoleLogger.h>
-#include <game/Logging/CompositeLogger.h>
+#include <game/logging/Logger.h>
+#include <game/logging/NullLogger.h>
+#include <game/logging/DbLogger.h>
+#include <game/logging/WindowsDebugLogger.h>
+#include <game/logging/ConsoleLogger.h>
+#include <game/logging/CompositeLogger.h>
 
 #include <game/Utils.h>
 

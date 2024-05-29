@@ -44,6 +44,7 @@ void Game::Update()
     {
         sys::clear_velocity(this->context.get());
         sys::keyboard(this->context.get());
+        sys::collision(this->context.get());
         sys::movement(this->context.get());
     }
 }

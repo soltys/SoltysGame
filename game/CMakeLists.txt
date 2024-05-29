@@ -21,23 +21,25 @@ add_executable(${MAIN_TARGET}
     Locator.cpp
     include/game/Locator.h
 
-    Logging/LogWindow.cpp
-    include/game/Logging/LogWindow.h
-    include/game/Logging/Logger.h
-    include/game/Logging/DbLogger.h
-    Logging/DbLogger.cpp
-    include/game/Logging/CompositeLogger.h
-    Logging/CompositeLogger.cpp
-    include/game/Logging/NullLogger.h
-    Logging/NullLogger.cpp
-    include/game/Logging/WindowsDebugLogger.h
-    Logging/WindowsDebugLogger.cpp
-    include/game/Logging/ConsoleLogger.h
-    Logging/ConsoleLogger.cpp
+    logging/LogWindow.cpp
+    include/game/logging/LogWindow.h
+    include/game/logging/Logger.h
+    include/game/logging/DbLogger.h
+    logging/DbLogger.cpp
+    include/game/logging/CompositeLogger.h
+    logging/CompositeLogger.cpp
+    include/game/logging/NullLogger.h
+    logging/NullLogger.cpp
+    include/game/logging/WindowsDebugLogger.h
+    logging/WindowsDebugLogger.cpp
+    include/game/logging/ConsoleLogger.h
+    logging/ConsoleLogger.cpp
 
     ${pack_file}
 
     system/system.cpp
+    system/render.h
+    system/render.cpp
     EntityFactory.cpp
     include/game/EntityFactory.h
     #single-header-libraries

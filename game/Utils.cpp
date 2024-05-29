@@ -31,7 +31,7 @@ std::vector<packer::LogEntry> r::get_logs(const int amount)
 }
 
 //
-// Logging section
+// logging section
 //
 
 void l::info(const std::string &logger, const std::string &message)
