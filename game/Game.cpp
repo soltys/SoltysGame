@@ -14,7 +14,11 @@ void Game::Initialize()
     {
         this->game_object_collection.push_back(std::make_unique<LogWindow>());
     }
-    this->game_object_collection.push_back(std::make_unique<Paddle>());
+
+    this->game_object_collection.push_back(
+        std::make_unique<Paddle>(std::make_unique<PaddleConfig>(sf::Vector2f(20, 300), true)));
+    this->game_object_collection.push_back(
+        std::make_unique<Paddle>(std::make_unique<PaddleConfig>(sf::Vector2f(video_mode.width - 20, 300), false)));
 
     l::info("===started game===");
 

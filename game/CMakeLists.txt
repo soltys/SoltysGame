@@ -20,6 +20,7 @@ add_executable(${MAIN_TARGET} WIN32
     include/game/Config.h
     Paddle.cpp
     include/game/Paddle.h
+    include/game/PaddleConfig.h
     Locator.cpp
     include/game/Locator.h
     Logging/LogWindow.cpp

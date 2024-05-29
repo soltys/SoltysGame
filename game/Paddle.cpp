@@ -1,14 +1,17 @@
 #include <game/Paddle.h>
 #include <game/Utils.h>
-Paddle::Paddle(/* args */)
+Paddle::Paddle(std::unique_ptr<PaddleConfig> config): config_(std::move(config))
 {
 }
 
 void Paddle::initialize(ConstGameContext context)
 {
     this->rect = sf::RectangleShape(sf::Vector2f(static_cast<float>(this->paddle_width), static_cast<float>(this->paddle_height)));
-    rect.setPosition(20, 20);
+    auto start_position = this->config_->get_start_position();
+    rect.setPosition(start_position.x, start_position.y);
     rect.setFillColor(sf::Color::White);
+
+    this->moving_down = config_->is_facing_right();
 }
 
 void Paddle::update(ConstGameContext context)
@@ -26,9 +29,9 @@ void Paddle::update(ConstGameContext context)
     }
 
     int direction = this->moving_down ? 1 : -1;
-    int step = 10 ;
     
-    rect.setPosition(current_position.x, current_position.y + (step * direction));
+    
+    rect.setPosition(current_position.x, current_position.y + (paddle_speed * direction));
 }
 
 void Paddle::render(sf::RenderTarget *target)
