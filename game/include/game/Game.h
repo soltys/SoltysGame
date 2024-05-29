@@ -3,8 +3,7 @@
 #include <game/GameTime.hpp>
 #include <game/GameContext.hpp>
 #include <game/Logging/LogWindow.h>
-#include <game/GameObject.hpp>
-
+#include <entt/entt.hpp>
 class Game
 {
 	void Update(double dt, GameContext ev);
@@ -15,8 +14,7 @@ class Game
 	std::unique_ptr<GameContext> context;
 	std::unique_ptr<GameTime> gameTime;
 	sf::RenderWindow* window;
-	GameObjectCollection game_object_collection;
-
+	entt::registry reg;
 public:
 	void Initialize();
 	void Update();

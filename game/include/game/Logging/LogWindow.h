@@ -1,9 +1,8 @@
 #include <SFML/Graphics.hpp>
 #include <memory>
 #include <game/GameContext.hpp>
-#include <game/GameObject.hpp>
 #pragma once
-class LogWindow: public GameObject
+class LogWindow
 {
 private:
     std::unique_ptr<sf::RenderWindow> render_window_;
@@ -16,8 +15,8 @@ private:
 
 public:
     LogWindow();
-    void initialize(ConstGameContext context) override;
-    void update(ConstGameContext context) override;
-    void render(sf::RenderTarget* target) override;
-    void finalize() override;
+    void initialize(ConstGameContext context);
+    void update(ConstGameContext context);
+    void render(sf::RenderTarget *target);
+    void finalize();
 };

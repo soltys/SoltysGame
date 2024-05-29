@@ -7,3 +7,8 @@ void CompositeLogger::log(LogLevel log_level, const std::string &logger_name, co
         logger->log(log_level, logger_name, message);
     }
 }
+
+void CompositeLogger::push_back(const std::shared_ptr<Logger> &logger)
+{
+    loggers_.push_back(logger);
+}

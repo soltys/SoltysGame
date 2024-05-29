@@ -3,6 +3,7 @@
 #include <game/Logging/NullLogger.h>
 #include <game/Logging/DbLogger.h>
 #include <game/Logging/WindowsDebugLogger.h>
+#include <game/Logging/ConsoleLogger.h>
 #include <game/Logging/CompositeLogger.h>
 
 #include <game/Utils.h>
@@ -31,19 +32,23 @@ void Locator::provide_logger()
 {
     if (r::get_toggle("LOG_ENABLED"))
     {
-        std::vector<std::shared_ptr<Logger>> loggers;
+        auto composite_logger = std::make_shared<CompositeLogger>();
 
         if (r::get_toggle("LOG_TO_DB"))
         {
-            loggers.push_back(std::make_shared<DbLogger>());
+            composite_logger->push_back(std::make_shared<DbLogger>());
         }
 
         if (r::get_toggle("LOG_TO_WINDOWS_DEBUG"))
         {
-            loggers.push_back(std::make_shared<WindowsDebugLogger>());
+            composite_logger->push_back(std::make_shared<WindowsDebugLogger>());
         }
 
-        const auto composite_logger = std::make_shared<CompositeLogger>(loggers);
+        if (r::get_toggle("LOG_TO_CONSOLE"))
+        {
+            composite_logger->push_back(std::make_shared<ConsoleLogger>());
+        }
+        
         provide(composite_logger);
     }
     else

@@ -8,21 +8,19 @@ pack_resources(pack_file
 
 add_subdirectory(assets)
 
-add_executable(${MAIN_TARGET} WIN32
+add_executable(${MAIN_TARGET}
     main.cpp    
     Utils.cpp
     include/game/Utils.h
     Game.cpp
     include/game/Game.h
     include/game/GameTime.hpp
-    include/game/GameObject.hpp
     include/game/GameContext.hpp
     include/game/Config.h
-    Paddle.cpp
-    include/game/Paddle.h
-    include/game/PaddleConfig.h
+
     Locator.cpp
     include/game/Locator.h
+
     Logging/LogWindow.cpp
     include/game/Logging/LogWindow.h
     include/game/Logging/Logger.h
@@ -34,7 +32,16 @@ add_executable(${MAIN_TARGET} WIN32
     Logging/NullLogger.cpp
     include/game/Logging/WindowsDebugLogger.h
     Logging/WindowsDebugLogger.cpp
+    include/game/Logging/ConsoleLogger.h
+    Logging/ConsoleLogger.cpp
+
     ${pack_file}
+
+    system/system.cpp
+    EntityFactory.cpp
+    include/game/EntityFactory.h
+    #single-header-libraries
+    include/entt/entt.hpp
 )
 
 
