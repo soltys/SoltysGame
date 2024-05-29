@@ -21,7 +21,7 @@ void Game::Initialize()
     context
         ->set_window_position(this->window->getPosition())
         ->set_window_size(this->window->getSize())
-        ->set_update_tick(this->gameTime->GetMicroseconds());
+        ->add_lag(this->gameTime->GetMicroseconds());
 
     std::for_each(this->game_object_collection.begin(), this->game_object_collection.end(),
                   [&](const std::unique_ptr<GameObject> &o)
@@ -32,7 +32,7 @@ void Game::Update()
     context
         ->set_window_position(this->window->getPosition())
         ->set_window_size(this->window->getSize())
-        ->set_update_tick(this->gameTime->GetMicroseconds());
+        ->add_lag(this->gameTime->GetMicroseconds());
 
     for (auto event = sf::Event{}; window->pollEvent(event);)
     {
@@ -50,9 +50,12 @@ void Game::Update()
         }
     }
 
-    std::for_each(this->game_object_collection.begin(), this->game_object_collection.end(),
-                  [&](const std::unique_ptr<GameObject> &o)
-                  { o->update(this->context.get()); });
+    while (this->context->should_update())
+    {
+        std::for_each(this->game_object_collection.begin(), this->game_object_collection.end(),
+                      [&](const std::unique_ptr<GameObject> &o)
+                      { o->update(this->context.get()); });
+    }
 }
 bool Game::IsRunning()
 {
@@ -64,10 +67,6 @@ void Game::Terminate()
 }
 void Game::Draw()
 {
-    if (!context->should_redraw())
-    {
-        return;
-    }
     window->clear(sf::Color::Black);
 
     std::for_each(this->game_object_collection.begin(), this->game_object_collection.end(),

@@ -5,6 +5,10 @@ class Paddle : public GameObject
 {
 private:
     sf::RectangleShape  rect;
+    
+    bool moving_down = true;
+    const int paddle_width = 20;
+    const int paddle_height =  120;
 public:
     void initialize(ConstGameContext context) override;
     void update(ConstGameContext context) override;

@@ -5,10 +5,10 @@ class GameContext
 {
     sf::Vector2i main_window_position;
     sf::Vector2u main_window_size;
-    sf::Int64 update_tick;
+    sf::Int64 lag = 0;
 
-    static constexpr int framerate_limit = TARGET_FPS;
-    static constexpr float microseconds_per_frame = 1 / framerate_limit;
+    static constexpr int framerate_limit = 60.f;
+    static constexpr float microseconds_per_update = 1000000.f / 60.f;
 
 public:
     const sf::Vector2i &get_window_position() const
@@ -19,19 +19,20 @@ public:
     {
         return this->main_window_size;
     }
-    const sf::Int64 &get_update_tick() const
+    const sf::Int64 &get_lag() const
     {
-        return this->update_tick;
+        return this->lag;
     }
 
-    const float get_dt() const
+    const bool should_update()
     {
-        return this->update_tick / microseconds_per_frame;
-    }
-
-    const bool should_redraw() const
-    {
-        return this->update_tick >= microseconds_per_frame;
+        bool should_update = this->lag >= microseconds_per_update;
+        if (should_update)
+        {
+            this->lag -= microseconds_per_update;
+            return true;
+        }
+        return false;
     }
 
     GameContext *set_window_position(const sf::Vector2i position)
@@ -46,12 +47,12 @@ public:
         this->main_window_size.y = size.y;
         return this;
     }
-    GameContext *set_update_tick(sf::Int64 microseconds)
+    GameContext *add_lag(sf::Int64 microseconds)
     {
-        this->update_tick = microseconds;
+        this->lag += microseconds;
         return this;
     }
 };
 
 typedef const std::unique_ptr<GameContext> GameContextPtr;
-typedef const GameContext* const ConstGameContext;
+typedef const GameContext *const ConstGameContext;
