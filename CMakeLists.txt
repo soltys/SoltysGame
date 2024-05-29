@@ -72,4 +72,4 @@ add_custom_command(
         TARGET ${MAIN_TARGET} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy
                 ${ALLEGRO_SHARED_LIBRARY}
-                "${CMAKE_CURRENT_BINARY_DIR}/Debug")
+                "${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>")
