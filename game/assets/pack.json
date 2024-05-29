@@ -5,11 +5,11 @@
             "prefix": "font_"
         }
     ],
-    "store": {
+    "kv": {
         "foo": "bar",
         "lorem": "[Soltys] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dapibus sit amet augue a vehicula."
     },
-    "toggles": {
+    "options": {
         "LOG_WINDOW": true
     }
 }

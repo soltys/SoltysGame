@@ -10,6 +10,7 @@ private:
 
     sf::Font font_;
     std::vector<char> font_memory_;
+    std::vector<std::string> lines_;
 
 public:
     LogWindow();

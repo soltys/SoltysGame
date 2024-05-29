@@ -4,14 +4,16 @@
 int main(int argc, char *argv[])
 {
     auto window = sf::RenderWindow{{800u, 600u}, "Soltys Game"};
-    std::shared_ptr<LogWindow> log_window = nullptr;
+    std::unique_ptr<LogWindow> log_window = nullptr;
     bool log_window_toggle = r::get_toggle("LOG_WINDOW");
     if (log_window_toggle)
     {
-        log_window = std::make_shared<LogWindow>();
+        log_window = std::make_unique<LogWindow>();
     }
-
-    window.setFramerateLimit(144);
+    l::info("===started game===");
+    const int framerateLimit = 144;
+    l::info("setFramerateLimit(" + std::to_string(framerateLimit) + ")");
+    window.setFramerateLimit(framerateLimit);
 
     sf::WindowHandle handle = window.getSystemHandle();
 
@@ -24,6 +26,10 @@ int main(int argc, char *argv[])
                 window.close();
                 if (log_window_toggle)
                     log_window->close();
+            }
+            else if (event.type == sf::Event::MouseButtonPressed)
+            {
+                l::info("MouseButtonPressed");
             }
         }
         if (log_window_toggle)

@@ -2,15 +2,18 @@
 include(FetchContent)
 FetchContent_Declare(SFML
     GIT_REPOSITORY https://github.com/SFML/SFML.git
-    GIT_TAG 2.6.x)
+    GIT_TAG 2.6.x
+)
 
 FetchContent_Declare(embed_resource
     GIT_REPOSITORY https://github.com/soltys/embed_resource.git
-    GIT_TAG 0.2.2)    
+    GIT_TAG 0.2.2
+)    
 
 FetchContent_Declare(packer
     GIT_REPOSITORY https://github.com/soltys/packer.git
-    GIT_TAG main)
+    GIT_TAG 9633535d3005bdc2963348a64e7c607aedfe5cdc
+)
 
 set(SQLITECPP_RUN_CPPLINT OFF CACHE BOOL "" FORCE)
 set(SQLITECPP_RUN_CPPCHECK OFF CACHE BOOL "" FORCE)

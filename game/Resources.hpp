@@ -1,22 +1,22 @@
 #pragma once
 
-#include <packer/Reader.h>
+#include <packer/Packer.h>
 #include <memory>
 
 class PackerResources
 {
 public:
-    static packer::Reader &get_packer()
+    static packer::Packer &get_packer()
     {
         static PackerResources instance;
         return *instance.packer_reader;
     }
 
 private:
-    std::unique_ptr<packer::Reader> packer_reader;
+    std::unique_ptr<packer::Packer> packer_reader;
     PackerResources()
     {
-        packer_reader = std::make_unique<packer::Reader>("pack.db");
+        packer_reader = std::make_unique<packer::Packer>("pack.db");
     }
 
 public:
