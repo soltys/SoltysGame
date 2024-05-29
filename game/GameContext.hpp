@@ -52,3 +52,6 @@ public:
         return this;
     }
 };
+
+typedef const std::unique_ptr<GameContext> GameContextPtr;
+typedef const GameContext* const ConstGameContext;

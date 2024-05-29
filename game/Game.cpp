@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "Utils.h"
 #include "LogWindow.h"
+#include "Paddle.h"
 #include <format>
 void Game::Initialize()
 {
@@ -8,16 +9,23 @@ void Game::Initialize()
     this->context = std::make_unique<GameContext>();
 
     sf::VideoMode windowSize(800u, 600u);
-    this->window = std::make_unique<sf::RenderWindow>(windowSize, r::get_locale_string("WINDOW_TITLE"));
+    this->window = new sf::RenderWindow(windowSize, r::get_locale_string("WINDOW_TITLE"));
     if (r::get_toggle("LOG_WINDOW"))
     {
         this->game_object_collection.push_back(std::make_unique<LogWindow>());
     }
+    this->game_object_collection.push_back(std::make_unique<Paddle>());
+
     l::info("===started game===");
 
+    context
+        ->set_window_position(this->window->getPosition())
+        ->set_window_size(this->window->getSize())
+        ->set_update_tick(this->gameTime->GetMicroseconds());
+
     std::for_each(this->game_object_collection.begin(), this->game_object_collection.end(),
-                  [](const std::unique_ptr<GameObject> &o)
-                  { o->initialize(); });
+                  [&](const std::unique_ptr<GameObject> &o)
+                  { o->initialize(this->context.get()); });
 }
 void Game::Update()
 {
@@ -44,7 +52,7 @@ void Game::Update()
 
     std::for_each(this->game_object_collection.begin(), this->game_object_collection.end(),
                   [&](const std::unique_ptr<GameObject> &o)
-                  { o->update(this->context); });
+                  { o->update(this->context.get()); });
 }
 bool Game::IsRunning()
 {
@@ -52,6 +60,7 @@ bool Game::IsRunning()
 }
 void Game::Terminate()
 {
+    delete window;
 }
 void Game::Draw()
 {
@@ -59,10 +68,11 @@ void Game::Draw()
     {
         return;
     }
-    std::for_each(this->game_object_collection.begin(), this->game_object_collection.end(),
-                  [](const std::unique_ptr<GameObject> &o)
-                  { o->render(); });
+    window->clear(sf::Color::Black);
 
-    window->clear();
+    std::for_each(this->game_object_collection.begin(), this->game_object_collection.end(),
+                  [&](const std::unique_ptr<GameObject> &o)
+                  { o->render(dynamic_cast<sf::RenderTarget *>(window)); });
+
     window->display();
 }

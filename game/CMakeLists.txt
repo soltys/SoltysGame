@@ -18,6 +18,8 @@ add_executable(${MAIN_TARGET} WIN32
     GameTime.hpp
     GameObject.hpp
     Config.h
+    Paddle.cpp
+    Paddle.h
     ${pack_file}
 )
 

@@ -16,8 +16,8 @@ private:
 
 public:
     LogWindow();
-    void initialize() override;
-    void update(const std::unique_ptr<GameContext>& context) override;
-    void render() override;
+    void initialize(ConstGameContext context) override;
+    void update(ConstGameContext context) override;
+    void render(sf::RenderTarget* target) override;
     void finalize() override;
 };

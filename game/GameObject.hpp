@@ -12,9 +12,9 @@ public:
     GameObject &operator=(GameObject &&) = delete;
     virtual ~GameObject() = default;
 
-    virtual void initialize() = 0;
-    virtual void update(const std::unique_ptr<GameContext> &context) = 0;
-    virtual void render() = 0;
+    virtual void initialize(ConstGameContext context) = 0;
+    virtual void update(ConstGameContext context) = 0;
+    virtual void render(sf::RenderTarget* target) = 0;
     virtual void finalize() = 0;
 };
 

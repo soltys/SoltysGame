@@ -14,7 +14,7 @@ class Game
 
 	std::unique_ptr<GameContext> context;
 	std::unique_ptr<GameTime> gameTime;
-	std::unique_ptr<sf::RenderWindow> window;
+	sf::RenderWindow* window;
 	GameObjectCollection game_object_collection;
 
 public:

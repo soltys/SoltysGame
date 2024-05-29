@@ -6,7 +6,7 @@
 #include "GameContext.hpp"
 LogWindow::LogWindow() {}
 
-void LogWindow::initialize()
+void LogWindow::initialize(ConstGameContext context)
 {
     this->render_window_ = std::make_unique<sf::RenderWindow>(sf::VideoMode(800u, 600u), "Log window");
     font_memory_ = r::get_file("font_Consolas.ttf");
@@ -16,8 +16,8 @@ void LogWindow::initialize()
     text_->setFillColor(sf::Color::White);
 }
 
-void LogWindow::update(const std::unique_ptr<GameContext> &context)
-{
+void LogWindow::update(ConstGameContext context)
+{    
     auto window_position = context->get_window_position();
     if (window_position != last_main_window_position)
     {
@@ -48,7 +48,7 @@ void LogWindow::update(const std::unique_ptr<GameContext> &context)
     text_->setString(imploded.str());
 }
 
-void LogWindow::render()
+void LogWindow::render(sf::RenderTarget* target)
 {
     if (this->render_window_->isOpen())
     {
