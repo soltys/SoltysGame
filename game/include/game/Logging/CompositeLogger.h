@@ -1,5 +1,5 @@
 #pragma once
-#include "Logger.h"
+#include <game/Logging/Logger.h>
 #include <vector>
 #include <memory>
 class CompositeLogger : public Logger

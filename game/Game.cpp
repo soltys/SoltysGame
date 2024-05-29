@@ -1,7 +1,7 @@
-#include "Game.h"
-#include "Utils.h"
-#include "Logging/LogWindow.h"
-#include "Paddle.h"
+#include <game/Game.h>
+#include <game/Utils.h>
+#include <game/Logging/LogWindow.h>
+#include <game/Paddle.h>
 #include <format>
 void Game::Initialize()
 {

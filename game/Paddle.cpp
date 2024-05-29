@@ -1,5 +1,5 @@
-#include "Paddle.h"
-#include "Utils.h"
+#include <game/Paddle.h>
+#include <game/Utils.h>
 Paddle::Paddle(/* args */)
 {
 }

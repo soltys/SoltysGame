@@ -1,6 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "Config.h"
+
 class GameContext
 {
     sf::Vector2i main_window_position;

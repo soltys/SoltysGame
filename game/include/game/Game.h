@@ -1,9 +1,9 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "GameTime.hpp"
-#include "GameContext.hpp"
-#include "Logging/LogWindow.h"
-#include "GameObject.hpp"
+#include <game/GameTime.hpp>
+#include <game/GameContext.hpp>
+#include <game/Logging/LogWindow.h>
+#include <game/GameObject.hpp>
 
 class Game
 {

@@ -1,7 +1,7 @@
 #pragma once
 #include <memory>
 #include <vector>
-#include "GameContext.hpp"
+#include <game/GameContext.hpp>
 class GameObject
 {
 public:

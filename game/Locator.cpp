@@ -1,10 +1,11 @@
-#include "Locator.h"
-#include "Logging/NullLogger.h"
-#include "Logging/DbLogger.h"
-#include "Logging/WindowsDebugLogger.h"
-#include "Logging/CompositeLogger.h"
+#include <game/Locator.h>
+#include <game/Logging/Logger.h>
+#include <game/Logging/NullLogger.h>
+#include <game/Logging/DbLogger.h>
+#include <game/Logging/WindowsDebugLogger.h>
+#include <game/Logging/CompositeLogger.h>
 
-#include "Utils.h"
+#include <game/Utils.h>
 
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>

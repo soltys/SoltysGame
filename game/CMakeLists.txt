@@ -9,33 +9,34 @@ pack_resources(pack_file
 add_subdirectory(assets)
 
 add_executable(${MAIN_TARGET} WIN32
-    main.cpp
-    
+    main.cpp    
     Utils.cpp
-    Utils.h
+    include/game/Utils.h
     Game.cpp
-    Game.h
-    GameTime.hpp
-    GameObject.hpp
-    Config.h
+    include/game/Game.h
+    include/game/GameTime.hpp
+    include/game/GameObject.hpp
+    include/game/GameContext.hpp
+    include/game/Config.h
     Paddle.cpp
-    Paddle.h
+    include/game/Paddle.h
     Locator.cpp
-    Locator.h
+    include/game/Locator.h
     Logging/LogWindow.cpp
-    Logging/LogWindow.h
-    Logging/Logger.h
-    Logging/DbLogger.h
+    include/game/Logging/LogWindow.h
+    include/game/Logging/Logger.h
+    include/game/Logging/DbLogger.h
     Logging/DbLogger.cpp
-    Logging/CompositeLogger.h
+    include/game/Logging/CompositeLogger.h
     Logging/CompositeLogger.cpp
-    Logging/NullLogger.h
+    include/game/Logging/NullLogger.h
     Logging/NullLogger.cpp
-    Logging/WindowsDebugLogger.h
+    include/game/Logging/WindowsDebugLogger.h
     Logging/WindowsDebugLogger.cpp
     ${pack_file}
 )
 
+
 target_link_libraries(${MAIN_TARGET} PRIVATE sfml-graphics sfml-main packer_library)
 
-
+target_include_directories(${MAIN_TARGET} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)

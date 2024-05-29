@@ -2,7 +2,7 @@
 #include <memory>
 #include <utility>
 #include <packer/Packer.h>
-#include "Logging/Logger.h"
+#include <game/Logging/Logger.h>
 class Locator
 {
 private:

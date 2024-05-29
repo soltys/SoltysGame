@@ -1,9 +1,9 @@
-#include "LogWindow.h"
+#include <game/Logging/LogWindow.h>
 #include <format>
-#include "../Utils.h"
+#include <game/Utils.h>
 #include <iostream>
 #include <sstream>
-#include "../GameContext.hpp"
+#include <game/GameContext.hpp>
 LogWindow::LogWindow() {}
 
 void LogWindow::initialize(ConstGameContext context)

@@ -1,5 +1,5 @@
 #pragma once
-#include "GameObject.hpp"
+#include <game/GameObject.hpp>
 #include <SFML/Graphics.hpp>
 class Paddle : public GameObject
 {

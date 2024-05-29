@@ -1,7 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <memory>
-#include "../GameContext.hpp"
-#include "../GameObject.hpp"
+#include <game/GameContext.hpp>
+#include <game/GameObject.hpp>
 #pragma once
 class LogWindow: public GameObject
 {
