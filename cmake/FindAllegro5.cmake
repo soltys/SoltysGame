@@ -1,3 +1,7 @@
+find_path(ALLEGRO_INCLUDE_DIR
+    NAMES allegro5
+)
+
 find_library(ALLEGRO_LIBRARY
     NAMES allegro    
 )
@@ -5,6 +9,18 @@ find_file(ALLEGRO_SHARED_LIBRARY
     NAMES allegro-5.2.dll
     PATHS "$ENV{VCPKG_ROOT}/installed/$ENV{VCPKG_DEFAULT_TRIPLET}/bin"
 )
-find_path(ALLEGRO_INCLUDE_DIR
-    NAMES allegro5
+
+find_library(ALLEGRO_PRIMITIVES_LIBRARY
+    NAMES allegro_primitives
+)
+find_file(ALLEGRO_PRIMITIVES_SHARED_LIBRARY
+    NAMES allegro_primitives-5.2.dll
+    PATHS "$ENV{VCPKG_ROOT}/installed/$ENV{VCPKG_DEFAULT_TRIPLET}/bin"
+)
+
+set(Allegro5_FOUND true)
+mark_as_advanced(
+    ALLEGRO_INCLUDE_DIR 
+    ALLEGRO_LIBRARY ALLEGRO_SHARED_LIBRARY
+    ALLEGRO_PRIMITIVES_LIBRARY ALLEGRO_PRIMITIVES_SHARED_LIBRARY
 )

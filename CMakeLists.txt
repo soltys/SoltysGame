@@ -23,6 +23,7 @@ set(MAIN_TARGET_DISPLAY_NAME "SoltysGame")
 set(SOURCES 
     src/main.cpp
 )
+
 add_executable(${MAIN_TARGET} WIN32 
     ${SOURCES}
 )
@@ -49,6 +50,7 @@ PUBLIC
 target_link_libraries(${MAIN_TARGET} 
 PRIVATE 
     ${ALLEGRO_LIBRARY}
+    ${ALLEGRO_PRIMITIVES_LIBRARY}
 )
 
 # Copy Shared Libraries
@@ -56,4 +58,5 @@ add_custom_command(
     TARGET ${MAIN_TARGET} POST_BUILD
     #Allegro 5
     COMMAND ${CMAKE_COMMAND} -E copy_if_different ${ALLEGRO_SHARED_LIBRARY} "${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>"
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different ${ALLEGRO_PRIMITIVES_SHARED_LIBRARY} "${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>"
 )
