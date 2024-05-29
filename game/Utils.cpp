@@ -16,6 +16,15 @@ std::string r::get_string(const std::string &key)
     return PackerResources::get_packer().get_key_value(key);
 }
 
+std::string r::get_locale_string(const std::string &key)
+{
+    return PackerResources::get_packer().get_translation(key, r::get_string("current_locale"));
+}
+
+//
+// Logging section
+//
+
 void l::info(const std::string &logger, const std::string &message)
 {
     PackerResources::get_packer().insert_log("INFO", logger, message);

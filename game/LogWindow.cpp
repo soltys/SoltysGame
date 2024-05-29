@@ -10,9 +10,8 @@ LogWindow::LogWindow()
     font_memory_ = r::get_file("font_Consolas.ttf");
     font_.loadFromMemory(font_memory_.data(), font_memory_.size());
     text_ = std::make_unique<sf::Text>("", font_);    
-    text_->setCharacterSize(12);
-    text_->setStyle(sf::Text::Bold);
-    text_->setFillColor(sf::Color::Red);
+    text_->setCharacterSize(12);    
+    text_->setFillColor(sf::Color::White);
 }
 
 void LogWindow::update(const sf::Vector2i &main_window_position, const sf::Vector2u &main_window_size)

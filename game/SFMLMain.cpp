@@ -3,7 +3,7 @@
 #include "Utils.h"
 int main(int argc, char *argv[])
 {
-    auto window = sf::RenderWindow{{800u, 600u}, "Soltys Game"};
+    auto window = sf::RenderWindow{{800u, 600u}, r::get_locale_string("WINDOW_TITLE")};
     std::unique_ptr<LogWindow> log_window = nullptr;
     bool log_window_toggle = r::get_toggle("LOG_WINDOW");
     if (log_window_toggle)

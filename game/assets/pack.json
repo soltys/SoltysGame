@@ -6,10 +6,18 @@
         }
     ],
     "kv": {
+        "current_locale": "pl",
         "foo": "bar",
         "lorem": "[Soltys] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dapibus sit amet augue a vehicula."
     },
     "options": {
-        "LOG_WINDOW": true
+        "LOG_WINDOW": true,
+        "LOG_ENABLED": true
+    },
+    "strings": {
+        "WINDOW_TITLE": {
+            "en": "[en] Soltys Game",
+            "pl": "[pl] Soltys Game"
+        }
     }
 }
