@@ -1,7 +1,5 @@
 #include <game/Game.h>
 #include <game/Utils.h>
-#include <game/Logging/LogWindow.h>
-#include <format>
 #include <game/composition/composition.hpp>
 #include <game/EntityFactory.h>
 #include <game/system/system.h>
@@ -11,7 +9,7 @@ void Game::Initialize()
     this->context = std::make_unique<GameContext>();
 
     const sf::VideoMode video_mode(800u, 600u);
-    this->window = new sf::RenderWindow(video_mode, r::get_locale_string("WINDOW_TITLE"));        
+    this->window = new sf::RenderWindow(video_mode, r::get_locale_string("WINDOW_TITLE"));
 
     l::info("===started game===");
 
@@ -21,8 +19,9 @@ void Game::Initialize()
         ->set_registry(reg)
         ->set_main_render_target(window);
 
-    create_paddle(context.get(), sf::Vector2f(20.f, 300.f), game::Location::LEFT);
-    create_paddle(context.get(), sf::Vector2f(video_mode.width - 20.f, 300.f), game::Location::RIGHT);   
+    factory::create_paddle(context.get(), sf::Vector2f(20.f, 300.f), game::Location::LEFT);
+    factory::create_paddle(context.get(), sf::Vector2f(video_mode.width - 20.f, 300.f), game::Location::RIGHT);
+    factory::create_ball(context.get(), sf::Vector2f(400.f, 300.f));
 }
 void Game::Update()
 {
@@ -42,7 +41,7 @@ void Game::Update()
     }
 
     while (this->context->should_update())
-    { 
+    {
         sys::clear_velocity(this->context.get());
         sys::keyboard(this->context.get());
         sys::movement(this->context.get());

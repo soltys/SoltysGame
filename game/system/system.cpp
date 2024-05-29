@@ -7,10 +7,10 @@ void sys::clear_velocity(const GameContext *context)
 {
     const auto reg = context->get_registry();
     const auto view = reg->view<game::Paddle, game::Velocity>();
-    for (const entt::entity& e : view)
+    for (const entt::entity &e : view)
     {
-        auto& vel = view.get<game::Velocity>(e);
-        vel.Velocity = sf::Vector2i(0,0);
+        auto &vel = view.get<game::Velocity>(e);
+        vel.Velocity = sf::Vector2i(0, 0);
     }
 }
 
@@ -18,7 +18,7 @@ void sys::keyboard(const GameContext *context)
 {
     const auto reg = context->get_registry();
     const auto view = reg->view<game::Paddle, game::Velocity, game::PlacementLocation>();
-    for (const entt::entity& e : view)
+    for (const entt::entity &e : view)
     {
         auto [pl, vel] = view.get<game::PlacementLocation, game::Velocity>(e);
         if (pl.Loc == game::Location::RIGHT)
@@ -58,14 +58,14 @@ void sys::movement(const GameContext *context)
     }
 }
 
-void sys::render(const GameContext *context)
+void sys::render_paddle(const GameContext *context)
 {
     const auto reg = context->get_registry();
     const auto view = reg->view<game::Paddle, game::Position, game::Size, game::RenderTarget>();
     for (const entt::entity e : view)
     {
-        auto& shape = view.get<game::Paddle>(e).Shape;
-        const auto size = view.get<game::Size>(e).Size;                
+        auto &shape = view.get<game::Paddle>(e).Shape;
+        const auto size = view.get<game::Size>(e).Size;
         const auto position = view.get<game::Position>(e).Position;
         shape.setSize(size);
         shape.setPosition(position);
@@ -73,4 +73,25 @@ void sys::render(const GameContext *context)
         const auto renderTarget = view.get<game::RenderTarget>(e).RenderTarget;
         renderTarget->draw(shape);
     }
+}
+void sys::render_ball(const GameContext *context)
+{
+    const auto reg = context->get_registry();
+    const auto view = reg->view<game::Ball, game::Position, game::Size, game::RenderTarget>();
+    for (const entt::entity e : view)
+    {
+        auto &shape = view.get<game::Ball>(e).Shape;
+        const auto size = view.get<game::Size>(e).Size;
+        const auto position = view.get<game::Position>(e).Position;
+        shape.setRadius(size.x);
+        shape.setPosition(position);
+
+        const auto renderTarget = view.get<game::RenderTarget>(e).RenderTarget;
+        renderTarget->draw(shape);
+    }
+}
+void sys::render(const GameContext *context)
+{
+    render_paddle(context);
+    render_ball(context);
 }

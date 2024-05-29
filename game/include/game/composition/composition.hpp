@@ -25,6 +25,7 @@ namespace game
     };
     struct Ball
     {
+        sf::CircleShape Shape;
     };
     struct Size
     {
