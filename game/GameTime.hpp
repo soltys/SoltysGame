@@ -1,17 +1,15 @@
 #pragma once
-
-#include <allegro5/altime.h>
+#include <SFML/Graphics.hpp>
 
 class GameTime {
 private:
-	double lastTime;
+	sf::Clock clock;
 public:
-	GameTime(const double lt): lastTime(lt) {	}
+	GameTime()  {	}
 
-	double GetTick() {
-		auto now = al_get_time();
-		auto dt = now - lastTime;
-		lastTime = now;
+	sf::Int64 GetMicroseconds() {
+		auto dt = clock.getElapsedTime().asMicroseconds();
+		clock.restart();
 		return dt;
 	}
 };

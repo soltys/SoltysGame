@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <memory>
+#include "GameContext.hpp"
 #pragma once
 class LogWindow
 {
@@ -14,7 +15,7 @@ private:
 
 public:
     LogWindow();
-    void update(const sf::Vector2i &main_window_position, const sf::Vector2u &main_window_size);
+    void update(sf::Int64 dt, const std::unique_ptr<GameContext>& context);
     void render();
     void close();
 };

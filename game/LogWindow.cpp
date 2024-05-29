@@ -3,6 +3,7 @@
 #include "Utils.h"
 #include <iostream>
 #include <sstream>
+#include "GameContext.hpp"
 LogWindow::LogWindow()
 {
     this->render_window_ = std::make_unique<sf::RenderWindow>(sf::VideoMode(800u, 600u), "Log window");
@@ -14,12 +15,14 @@ LogWindow::LogWindow()
     text_->setFillColor(sf::Color::White);
 }
 
-void LogWindow::update(const sf::Vector2i &main_window_position, const sf::Vector2u &main_window_size)
+void LogWindow::update(sf::Int64 dt, const std::unique_ptr<GameContext>& context)
 {
-    if (main_window_position != last_main_window_position)
+    auto window_position = context->getWindowPosition();
+    if (window_position != last_main_window_position)
     {
-        render_window_->setPosition(sf::Vector2i(main_window_position.x + main_window_size.x, main_window_position.y));
-        last_main_window_position = main_window_position;
+        auto window_size = context->getWindowSize();
+        render_window_->setPosition(sf::Vector2i(window_position.x + window_size.x, window_position.y));
+        last_main_window_position = window_position;
     }
 
     for (auto event = sf::Event{}; this->render_window_->pollEvent(event);)

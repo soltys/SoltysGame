@@ -1,27 +1,20 @@
 #pragma once
-#include <memory>
-
+#include <SFML/Graphics.hpp>
 #include "GameTime.hpp"
-
-#include <allegro5/display.h>
-#include <allegro5/timer.h>
-#include <allegro5/events.h>
-
+#include "GameContext.hpp"
+#include "LogWindow.h"
 class Game {
-private:
-	ALLEGRO_DISPLAY* display = NULL;
-	ALLEGRO_TIMER* timer = NULL;
-	ALLEGRO_EVENT_QUEUE* event_queue = NULL;
-	ALLEGRO_EVENT ev;
-	
-	void Update(double dt, ALLEGRO_EVENT* ev);
+	void Update(double dt, GameContext ev);
 
 	bool noexit = true;
 	bool redraw = true;
 
+    std::unique_ptr<GameContext> context;
 	std::unique_ptr<GameTime> gameTime;
+	std::unique_ptr<sf::RenderWindow> window;
+	std::unique_ptr<LogWindow> log_window;
+    
 public:
-	ALLEGRO_EVENT& WaitForEvent() { al_wait_for_event(event_queue, &ev); return ev; }
 	void Initialize();
 	void Update();
 	bool IsRunning();

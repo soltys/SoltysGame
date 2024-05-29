@@ -13,6 +13,9 @@ add_executable(${MAIN_TARGET} WIN32
     Resources.hpp
     Utils.cpp
     Utils.h
+    Game.cpp
+    Game.h
+    GameTime.hpp
     ${pack_file}
 )
 

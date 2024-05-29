@@ -1,16 +1,14 @@
 #include "Game.h"
-using namespace std;
+int main(int argc, char *argv[])
+{
+    Game game;
+    game.Initialize();
+    while (game.IsRunning())
+    {
+        game.Update();
 
-
-int main() {
-	Game game;
-	game.Initialize();
-
-	while (game.IsRunning()) {
-		game.Update();
-		game.Draw();
-	}
-
-	game.Terminate();
-	return 0;
+        game.Draw();
+    }
+    game.Terminate();
+    return 0;
 }
