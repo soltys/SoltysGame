@@ -15,7 +15,6 @@ int main(int argc, char *argv[])
     l::info("setFramerateLimit(" + std::to_string(framerateLimit) + ")");
     window.setFramerateLimit(framerateLimit);
 
-    sf::WindowHandle handle = window.getSystemHandle();
 
     while (window.isOpen())
     {
