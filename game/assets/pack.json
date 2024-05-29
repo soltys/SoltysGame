@@ -10,11 +10,11 @@
         "foo": "bar",
         "lorem": "[Soltys] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dapibus sit amet augue a vehicula.",
         "keymapping": {
-            "LEFT": {
+            "Left": {
                 "Up": "W",
                 "Down": "S"
             },
-            "RIGHT": {
+            "Right": {
                 "Up": "Up",
                 "Down": "Down"
             }

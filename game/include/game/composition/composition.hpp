@@ -5,18 +5,10 @@ namespace game
 {
     enum class Location
     {
-        UP,
-        DOWN,
-        LEFT,
-        RIGHT
-    };
-
-    enum class Direction
-    {
-        UP,
-        DOWN,
-        LEFT,
-        RIGHT
+        Up,
+        Down,
+        Left,
+        Right
     };
 
     struct Paddle

@@ -76,10 +76,10 @@ const char *comp::to_string(game::Location location)
 {
     switch (location)
     {
-        LOCTOSTR(DOWN)
-        LOCTOSTR(UP)
-        LOCTOSTR(LEFT)
-        LOCTOSTR(RIGHT)
+        LOCTOSTR(Down)
+        LOCTOSTR(Up)
+        LOCTOSTR(Left)
+        LOCTOSTR(Right)
     default:
         throw std::invalid_argument("unmapped argument in to_string for Location");
     }
@@ -91,10 +91,10 @@ const char *comp::to_string(game::Location location)
     }
 game::Location comp::to_location(std::string name)
 {
-    STRTOLOC(LEFT)
-    STRTOLOC(RIGHT)
-    STRTOLOC(UP)
-    STRTOLOC(DOWN)
+    STRTOLOC(Left)
+    STRTOLOC(Right)
+    STRTOLOC(Up)
+    STRTOLOC(Down)
     throw std::invalid_argument("string (" + name + ") cannot be mapped into game::Location");
 }
 

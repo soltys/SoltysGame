@@ -19,8 +19,8 @@ void Game::Initialize()
         ->set_registry(reg)
         ->set_main_render_target(window);
 
-    factory::create_paddle(context.get(), sf::Vector2f(20.f, 300.f), game::Location::LEFT);
-    factory::create_paddle(context.get(), sf::Vector2f(video_mode.width - 20.f, 300.f), game::Location::RIGHT);
+    factory::create_paddle(context.get(), sf::Vector2f(10.f, 300.f), game::Location::Left);
+    factory::create_paddle(context.get(), sf::Vector2f(video_mode.width - 10.f, 300.f), game::Location::Right);
     factory::create_ball(context.get(), sf::Vector2f(400.f, 300.f));
 }
 void Game::Update()
