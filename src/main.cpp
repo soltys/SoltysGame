@@ -1,6 +1,5 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
-#include "math.h"
 #include <iostream>
 #define WINDOW_W 1380
 #define WINDOW_H 1020
@@ -12,14 +11,14 @@ const int FPS = 60;
 const int palette_w = 350;
 const int maxBallSpeed = 10.0;
 
-enum KEYS
+enum KEYS_PLAYER_1
 {
 	KEY_UP,
 	KEY_DOWN,
 	KEY_LEFT,
 	KEY_RIGHT
 };
-enum KEYS_P2
+enum KEYS_PLAYER_2
 {
 	W,
 	A,
@@ -31,7 +30,7 @@ struct padStruct
 	float speed = 15.0;
 	float x1 = SCREEN_W / 2 - palette_w / 2;
 	float x2 = SCREEN_W / 2 + palette_w / 2;
-} data;
+} padData;
 struct ballStruct
 {
 	float rad = 10;
@@ -56,13 +55,13 @@ struct ballStruct
 		x = x + speedX;
 		y = y + speedY;
 	}
-} balldata;
+} ballData;
 
 padStruct paddle;
 padStruct paddle2;
 ballStruct ball;
 
-void checkColiisionWithPad(void)
+void checkCollisionWithPad(void)
 {
 	if (ball.y >= 700 - ball.rad || ball.y <= 20 + ball.rad)
 	{
@@ -76,19 +75,23 @@ void checkColiisionWithPad(void)
 				down = true;
 			}
 			else
+			{
 				dist = ball.x - paddle.x1;
+			}				
 			distSpeed = -(palette_w / 2 - dist);
 			ball.speedX = distSpeed * (maxBallSpeed / (palette_w / 2.0));
 			ball.speedY = (sqrt(maxBallSpeed * maxBallSpeed - (ball.speedX * ball.speedX)));
 			if (!down)
+			{
 				ball.speedY *= (-1);
+			}
+				
 		}
 	}
 }
 int main()
 {
 	ALLEGRO_DISPLAY *display = NULL;
-	ALLEGRO_COLOR AL_WHITE, AL_FGREEN;
 	ALLEGRO_TIMER *timer = NULL;
 	ALLEGRO_EVENT_QUEUE *event_queue = NULL;
 	bool noexit = true;
@@ -104,8 +107,8 @@ int main()
 	al_register_event_source(event_queue, al_get_display_event_source(display));
 	al_register_event_source(event_queue, al_get_timer_event_source(timer));
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
-	AL_WHITE = al_map_rgb(255, 255, 255);
-	AL_FGREEN = al_map_rgb(34, 139, 34);
+	ALLEGRO_COLOR AL_WHITE = al_map_rgb(255, 255, 255);
+	ALLEGRO_COLOR AL_FGREEN = al_map_rgb(34, 139, 34);
 	al_flip_display();
 	al_start_timer(timer);
 	while (noexit)
@@ -113,7 +116,7 @@ int main()
 		while (!al_event_queue_is_empty(event_queue))
 		{
 			ALLEGRO_EVENT event;
-			al_wait_for_event(event_queue, &event);
+			al_wait_for_event(event_queue, &event);			
 			if (event.type == ALLEGRO_EVENT_TIMER)
 			{
 				if (keyP1[KEY_LEFT] && paddle.x1 > 0)
@@ -219,14 +222,12 @@ int main()
 		}
 		if (redraw)
 		{
-
 			redraw = false;
-			//	cout << paddle2.x1 << " " << paddle2.x2 << ", pileczka: " << ball.x << " " << ball.y << endl;
 			al_clear_to_color(al_map_rgb(0, 0, 0));
 			al_draw_filled_rectangle(paddle.x1, 720, paddle.x2, 700, AL_WHITE);
 			al_draw_filled_rectangle(paddle2.x1, 0, paddle2.x2, 20, AL_FGREEN);
 			al_draw_filled_circle(ball.x, ball.y, ball.rad, AL_WHITE);
-			checkColiisionWithPad();
+			checkCollisionWithPad();
 			ball.updatePos();
 			ball.checkHit();
 			al_flip_display();

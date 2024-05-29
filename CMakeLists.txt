@@ -28,6 +28,7 @@ add_executable(${MAIN_TARGET} WIN32
     ${SOURCES}
 )
 
+
 # set main project as default one in Visual Studio (Set as Startup Project)
 set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${MAIN_TARGET})
 
@@ -57,6 +58,6 @@ PRIVATE
 add_custom_command(
     TARGET ${MAIN_TARGET} POST_BUILD
     #Allegro 5
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different ${ALLEGRO_SHARED_LIBRARY} "${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>"
-    COMMAND ${CMAKE_COMMAND} -E copy_if_different ${ALLEGRO_PRIMITIVES_SHARED_LIBRARY} "${CMAKE_CURRENT_BINARY_DIR}/$<CONFIG>"
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different ${ALLEGRO_SHARED_LIBRARY} "${CMAKE_CURRENT_BINARY_DIR}"
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different ${ALLEGRO_PRIMITIVES_SHARED_LIBRARY} "${CMAKE_CURRENT_BINARY_DIR}"
 )
