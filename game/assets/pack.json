@@ -1,0 +1,11 @@
+{
+    "files": [
+        {
+            "glob": "*.ttf",
+            "prefix": "font_"
+        }
+    ],
+    "store": {
+        "foo": "bar"
+    }
+}
