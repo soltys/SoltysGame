@@ -51,6 +51,6 @@ namespace game
     };
     struct RenderTarget
     {
-        sf::RenderTarget* RenderTarget;
+        sf::RenderTarget *RenderTarget;
     };
 }

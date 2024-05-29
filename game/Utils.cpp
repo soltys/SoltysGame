@@ -66,3 +66,146 @@ std::chrono::system_clock::time_point epoch::to_time_point(int64_t microseconds_
     using time_point = std::chrono::system_clock::time_point;
     return time_point{std::chrono::duration_cast<time_point::duration>(std::chrono::microseconds(microseconds_epoch))};
 }
+
+///
+/// COMP
+///
+#define LOCTOSTR(enum_value) case game::Location::##enum_value: \
+        return #enum_value;
+const char *comp::to_string(game::Location location)
+{
+    switch (location)
+    {
+        LOCTOSTR(DOWN)
+        LOCTOSTR(UP)
+        LOCTOSTR(LEFT)
+        LOCTOSTR(RIGHT)
+    default:
+        throw std::invalid_argument("unmapped argument in to_string for Location");
+    }
+}
+#define STRTOLOC(location_value) \
+    if (name == #location_value) \
+    { \
+        return game::Location::##location_value; \
+    }
+game::Location comp::to_location(std::string name)
+{
+    STRTOLOC(LEFT)
+    STRTOLOC(RIGHT)
+    STRTOLOC(UP)
+    STRTOLOC(DOWN)
+    throw std::invalid_argument("string (" + name + ") cannot be mapped into game::Location");
+}
+
+#define KEYCONV(key_value)                \
+    if (key_name == #key_value)           \
+    {                                     \
+        return sf::Keyboard::##key_value; \
+    }
+sf::Keyboard::Key mysf::to_key(std::string key_name)
+{
+    KEYCONV(A)
+    KEYCONV(B)
+    KEYCONV(C)
+    KEYCONV(D)
+    KEYCONV(E)
+    KEYCONV(F)
+    KEYCONV(G)
+    KEYCONV(H)
+    KEYCONV(I)
+    KEYCONV(J)
+    KEYCONV(K)
+    KEYCONV(L)
+    KEYCONV(M)
+    KEYCONV(N)
+    KEYCONV(O)
+    KEYCONV(P)
+    KEYCONV(Q)
+    KEYCONV(R)
+    KEYCONV(S)
+    KEYCONV(T)
+    KEYCONV(U)
+    KEYCONV(V)
+    KEYCONV(W)
+    KEYCONV(X)
+    KEYCONV(Y)
+    KEYCONV(Z)
+    KEYCONV(Num0)
+    KEYCONV(Num1)
+    KEYCONV(Num2)
+    KEYCONV(Num3)
+    KEYCONV(Num4)
+    KEYCONV(Num5)
+    KEYCONV(Num6)
+    KEYCONV(Num7)
+    KEYCONV(Num8)
+    KEYCONV(Num9)
+    KEYCONV(Escape)
+    KEYCONV(LControl)
+    KEYCONV(LShift)
+    KEYCONV(LAlt)
+    KEYCONV(LSystem)
+    KEYCONV(RControl)
+    KEYCONV(RShift)
+    KEYCONV(RAlt)
+    KEYCONV(RSystem)
+    KEYCONV(Menu)
+    KEYCONV(LBracket)
+    KEYCONV(RBracket)
+    KEYCONV(Semicolon)
+    KEYCONV(Comma)
+    KEYCONV(Period)
+    KEYCONV(Apostrophe)
+    KEYCONV(Slash)
+    KEYCONV(Backslash)
+    KEYCONV(Grave)
+    KEYCONV(Equal)
+    KEYCONV(Hyphen)
+    KEYCONV(Space)
+    KEYCONV(Enter)
+    KEYCONV(Backspace)
+    KEYCONV(Tab)
+    KEYCONV(PageUp)
+    KEYCONV(PageDown)
+    KEYCONV(End)
+    KEYCONV(Home)
+    KEYCONV(Insert)
+    KEYCONV(Delete)
+    KEYCONV(Add)
+    KEYCONV(Subtract)
+    KEYCONV(Multiply)
+    KEYCONV(Divide)
+    KEYCONV(Left)
+    KEYCONV(Right)
+    KEYCONV(Up)
+    KEYCONV(Down)
+    KEYCONV(Numpad0)
+    KEYCONV(Numpad1)
+    KEYCONV(Numpad2)
+    KEYCONV(Numpad3)
+    KEYCONV(Numpad4)
+    KEYCONV(Numpad5)
+    KEYCONV(Numpad6)
+    KEYCONV(Numpad7)
+    KEYCONV(Numpad8)
+    KEYCONV(Numpad9)
+    KEYCONV(F1)
+    KEYCONV(F2)
+    KEYCONV(F3)
+    KEYCONV(F4)
+    KEYCONV(F5)
+    KEYCONV(F6)
+    KEYCONV(F7)
+    KEYCONV(F8)
+    KEYCONV(F9)
+    KEYCONV(F10)
+    KEYCONV(F11)
+    KEYCONV(F12)
+    KEYCONV(F13)
+    KEYCONV(F14)
+    KEYCONV(F15)
+    KEYCONV(Pause)
+
+    throw std::invalid_argument("string (" + key_name + ") cannot be mapped into sf::Keyboard::Key");
+}

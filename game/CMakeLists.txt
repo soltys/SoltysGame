@@ -18,6 +18,9 @@ add_executable(${MAIN_TARGET}
     include/game/GameContext.hpp
     include/game/Config.h
 
+    include/game/KeyMapService.h
+    KeyMapService.cpp
+
     Locator.cpp
     include/game/Locator.h
 
@@ -44,6 +47,7 @@ add_executable(${MAIN_TARGET}
     include/game/EntityFactory.h
     #single-header-libraries
     include/entt/entt.hpp
+    include/nlohmann/json.hpp
 )
 
 

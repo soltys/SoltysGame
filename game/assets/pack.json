@@ -8,9 +8,19 @@
     "kv": {
         "current_locale": "pl",
         "foo": "bar",
-        "lorem": "[Soltys] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dapibus sit amet augue a vehicula."        
+        "lorem": "[Soltys] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dapibus sit amet augue a vehicula.",
+        "keymapping": {
+            "LEFT": {
+                "Up": "W",
+                "Down": "S"
+            },
+            "RIGHT": {
+                "Up": "Up",
+                "Down": "Down"
+            }
+        }
     },
-    "options": {        
+    "options": {
         "LOG_ENABLED": true,
         "LOG_WINDOW": false,
         "LOG_TO_DB": true,

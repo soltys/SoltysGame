@@ -3,6 +3,7 @@
 #include <vector>
 #include <packer/LogEntry.hpp>
 #include <chrono>
+#include <game/composition/composition.hpp>
 namespace r
 {
     bool get_toggle(const std::string &name);
@@ -24,4 +25,15 @@ namespace epoch
     std::string to_time_string(int64_t microseconds_epoch);
     std::string to_datetime_string(int64_t microseconds_epoch);
     std::chrono::system_clock::time_point to_time_point(int64_t microseconds_epoch);
+}
+
+namespace comp
+{
+    const char* to_string(game::Location location);
+    game::Location to_location(std::string name);
+}
+
+namespace mysf
+{
+    sf::Keyboard::Key to_key(std::string key_name);
 }

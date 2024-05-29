@@ -16,6 +16,7 @@ void Locator::initialize()
 {
     Locator::provide_packer();
     Locator::provide_logger();
+    Locator::provide_key_map();
 }
 
 void Locator::provide_packer()
@@ -55,4 +56,9 @@ void Locator::provide_logger()
     {
         provide(std::make_shared<NullLogger>());
     }
+}
+
+void Locator::provide_key_map(){
+    auto key_map_service = std::make_shared<KeyMapService>(KeyJsonMapService::parse(r::get_string("keymapping")));
+    provide(key_map_service);
 }
