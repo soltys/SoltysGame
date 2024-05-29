@@ -1,35 +1,21 @@
 set(MAIN_TARGET soltys_game_main)
 set(MAIN_TARGET_DISPLAY_NAME "SoltysGame")
 
-set(SOURCES 
-    main.cpp
+pack_resources(pack_file
+    JSON_FILE "${CMAKE_CURRENT_SOURCE_DIR}/pack.json"
+	OUTPUT_FILE "${PROJECT_BINARY_DIR}/my_own_pack.sqlite"
+    FORCE)
+
+add_executable(${MAIN_TARGET} 
+    SFMLMain.cpp
+    ${pack_file}
 )
 
-add_executable(${MAIN_TARGET} WIN32 
-    ${SOURCES}
-)
+add_custom_command(TARGET ${MAIN_TARGET} POST_BUILD
+	  COMMAND ${CMAKE_COMMAND} -E copy ${pack_file} $<TARGET_FILE_DIR:${MAIN_TARGET}>
+	  COMMAND_EXPAND_LISTS
+	  )
 
+target_link_libraries(${MAIN_TARGET} PRIVATE sfml-graphics packer_library)
 
-
-
-
-# add c++ 11
-target_compile_features(${MAIN_TARGET} PUBLIC cxx_std_14)
-set_target_properties(${MAIN_TARGET} PROPERTIES CXX_EXTENSIONS OFF)
-
-# Change output name
-set_target_properties(${MAIN_TARGET} PROPERTIES OUTPUT_NAME ${MAIN_TARGET_DISPLAY_NAME})
-set_target_properties(${MAIN_TARGET} PROPERTIES PROJECT_LABEL ${MAIN_TARGET_DISPLAY_NAME})
-
-if(MSVC) 
-    # set main project as default one in Visual Studio (Set as Startup Project)
-    set_property(DIRECTORY ../ PROPERTY VS_STARTUP_PROJECT ${MAIN_TARGET})
-endif()
-
-# Libraries
-target_link_libraries(${MAIN_TARGET} 
-PRIVATE 
-    Allegro::allegro
-    Allegro::allegro_primitives
-)
 

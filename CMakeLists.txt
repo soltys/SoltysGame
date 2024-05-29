@@ -10,10 +10,18 @@ project(
 
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
 
-include(VCPKGCheck)
-include(LimitConfiguration)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/$<CONFIG>/bin")
+option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
 
-find_package(Allegro CONFIG REQUIRED)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_STANDARD_REQUIRED YES)
+set(CMAKE_CXX_EXTENSIONS Off)
+
+include(dependecies)
+
+# include(LimitConfiguration)
+
+# find_package(Allegro CONFIG REQUIRED)
 
 ##
 ## GAME
