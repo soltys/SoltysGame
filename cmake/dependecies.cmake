@@ -12,7 +12,7 @@ FetchContent_Declare(embed_resource
 
 FetchContent_Declare(packer
     GIT_REPOSITORY https://github.com/soltys/packer.git
-    GIT_TAG 9633535d3005bdc2963348a64e7c607aedfe5cdc
+    GIT_TAG ae28f22ae181d998f7b73ddd3cbb569344b382c3
 )
 
 set(SQLITECPP_RUN_CPPLINT OFF CACHE BOOL "" FORCE)

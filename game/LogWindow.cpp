@@ -12,16 +12,16 @@ void LogWindow::initialize()
     font_memory_ = r::get_file("font_Consolas.ttf");
     font_.loadFromMemory(font_memory_.data(), font_memory_.size());
     text_ = std::make_unique<sf::Text>("", font_);
-    text_->setCharacterSize(20);
+    text_->setCharacterSize(15);
     text_->setFillColor(sf::Color::White);
 }
 
 void LogWindow::update(const std::unique_ptr<GameContext> &context)
 {
-    auto window_position = context->getWindowPosition();
+    auto window_position = context->get_window_position();
     if (window_position != last_main_window_position)
     {
-        auto window_size = context->getWindowSize();
+        auto window_size = context->get_window_size();
         render_window_->setPosition(sf::Vector2i(window_position.x + window_size.x, window_position.y));
         last_main_window_position = window_position;
     }
@@ -38,7 +38,7 @@ void LogWindow::update(const std::unique_ptr<GameContext> &context)
     this->lines_.clear();
     for (const auto &l : logs)
     {
-        this->lines_.push_back(std::format("t:{}, m:{}", l.date(), l.message()));
+        this->lines_.push_back(std::format("{} -> {}", epoch::to_time_string(l.date()), l.message()));
     }
 
     const char *const delim = "\r\n";

@@ -14,12 +14,10 @@ void Game::Initialize()
         this->game_object_collection.push_back(std::make_unique<LogWindow>());
     }
     l::info("===started game===");
-    const int framerateLimit = 60;
-    l::info("setFramerateLimit(" + std::to_string(framerateLimit) + ")");
-    window->setFramerateLimit(framerateLimit);
 
     std::for_each(this->game_object_collection.begin(), this->game_object_collection.end(),
-             [](const std::unique_ptr<GameObject>& o) { o->initialize(); });
+                  [](const std::unique_ptr<GameObject> &o)
+                  { o->initialize(); });
 }
 void Game::Update()
 {
@@ -33,17 +31,20 @@ void Game::Update()
         if (event.type == sf::Event::Closed)
         {
             std::for_each(this->game_object_collection.begin(), this->game_object_collection.end(),
-             [](const std::unique_ptr<GameObject>& o) { o->finalize(); });
+                          [](const std::unique_ptr<GameObject> &o)
+                          { o->finalize(); });
 
-             window->close();
+            window->close();
         }
         else if (event.type == sf::Event::MouseButtonPressed)
         {
             l::info("MouseButtonPressed");
         }
     }
+
     std::for_each(this->game_object_collection.begin(), this->game_object_collection.end(),
-             [&](const std::unique_ptr<GameObject>& o) { o->update(this->context); });
+                  [&](const std::unique_ptr<GameObject> &o)
+                  { o->update(this->context); });
 }
 bool Game::IsRunning()
 {
@@ -54,8 +55,13 @@ void Game::Terminate()
 }
 void Game::Draw()
 {
+    if (!context->should_redraw())
+    {
+        return;
+    }
     std::for_each(this->game_object_collection.begin(), this->game_object_collection.end(),
-             [](const std::unique_ptr<GameObject>& o) { o->render(); });
+                  [](const std::unique_ptr<GameObject> &o)
+                  { o->render(); });
 
     window->clear();
     window->display();

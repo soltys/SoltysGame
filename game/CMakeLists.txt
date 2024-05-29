@@ -17,6 +17,7 @@ add_executable(${MAIN_TARGET} WIN32
     Game.h
     GameTime.hpp
     GameObject.hpp
+    Config.h
     ${pack_file}
 )
 

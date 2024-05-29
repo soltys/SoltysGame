@@ -39,3 +39,25 @@ std::vector<packer::LogEntry> l::get_logs(const int amount)
 {
     return PackerResources::get_packer().get_latest_logs(amount);
 }
+///
+/// EPOCH
+///
+std::chrono::local_time<std::chrono::system_clock::duration> epoch::to_local_time_zone(int64_t microseconds_epoch)
+{
+    auto tp = epoch::to_time_point(microseconds_epoch);
+    auto tz = std::chrono::current_zone();
+    return tz->to_local(tp);
+}
+std::string epoch::to_datetime_string(int64_t microseconds_epoch)
+{
+    return std::format("{:%Y-%m-%d %X}", to_local_time_zone(microseconds_epoch));
+}
+std::string epoch::to_time_string(int64_t microseconds_epoch)
+{
+    return std::format("{:%H:%M:%S}", to_local_time_zone(microseconds_epoch));
+}
+std::chrono::system_clock::time_point epoch::to_time_point(int64_t microseconds_epoch)
+{
+    using time_point = std::chrono::system_clock::time_point;
+    return time_point{std::chrono::duration_cast<time_point::duration>(std::chrono::microseconds(microseconds_epoch))};
+}

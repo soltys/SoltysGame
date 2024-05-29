@@ -4,17 +4,19 @@
 #include "GameContext.hpp"
 #include "LogWindow.h"
 #include "GameObject.hpp"
-class Game {
+
+class Game
+{
 	void Update(double dt, GameContext ev);
 
 	bool noexit = true;
 	bool redraw = true;
 
-    std::unique_ptr<GameContext> context;
+	std::unique_ptr<GameContext> context;
 	std::unique_ptr<GameTime> gameTime;
 	std::unique_ptr<sf::RenderWindow> window;
 	GameObjectCollection game_object_collection;
-    
+
 public:
 	void Initialize();
 	void Update();
