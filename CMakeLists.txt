@@ -19,10 +19,7 @@ set(CMAKE_CXX_EXTENSIONS Off)
 
 include(dependecies)
 
-# include(LimitConfiguration)
-
-# find_package(Allegro CONFIG REQUIRED)
-
+configure_file("${PROJECT_SOURCE_DIR}/.vscode/launch.json.in" "${PROJECT_SOURCE_DIR}/.vscode/launch.json")
 ##
 ## GAME
 ## 

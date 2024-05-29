@@ -6,9 +6,10 @@
         }
     ],
     "store": {
-        "foo": "bar"
+        "foo": "bar",
+        "lorem": "[Soltys] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dapibus sit amet augue a vehicula."
     },
-    "features": {
+    "toggles": {
         "LOG_WINDOW": true
     }
 }

@@ -8,6 +8,11 @@ pack_resources(pack_file
 
 add_executable(${MAIN_TARGET} WIN32
     SFMLMain.cpp
+    LogWindow.cpp
+    LogWindow.h
+    Resources.hpp
+    Utils.cpp
+    Utils.h
     ${pack_file}
 )
 
