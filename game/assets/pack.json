@@ -12,12 +12,14 @@
     },
     "options": {
         "LOG_WINDOW": true,
-        "LOG_ENABLED": true
+        "LOG_ENABLED": true,
+        "LOG_TO_DB": true,
+        "LOG_TO_WINDOWS_DEBUG": true
     },
     "strings": {
         "WINDOW_TITLE": {
-            "en": "[en] Soltys Game",
-            "pl": "[pl] Soltys Game"
+            "en": "[en] BATTLE PONG",
+            "pl": "[pl] BATTLE PONG"
         }
     }
 }

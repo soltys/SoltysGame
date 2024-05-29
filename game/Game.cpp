@@ -1,6 +1,6 @@
 #include "Game.h"
 #include "Utils.h"
-#include "LogWindow.h"
+#include "Logging/LogWindow.h"
 #include "Paddle.h"
 #include <format>
 void Game::Initialize()
@@ -8,8 +8,8 @@ void Game::Initialize()
     this->gameTime = std::make_unique<GameTime>();
     this->context = std::make_unique<GameContext>();
 
-    sf::VideoMode windowSize(800u, 600u);
-    this->window = new sf::RenderWindow(windowSize, r::get_locale_string("WINDOW_TITLE"));
+    const sf::VideoMode video_mode(800u, 600u);
+    this->window = new sf::RenderWindow(video_mode, r::get_locale_string("WINDOW_TITLE"));
     if (r::get_toggle("LOG_WINDOW"))
     {
         this->game_object_collection.push_back(std::make_unique<LogWindow>());
@@ -21,11 +21,12 @@ void Game::Initialize()
     context
         ->set_window_position(this->window->getPosition())
         ->set_window_size(this->window->getSize())
-        ->add_lag(this->gameTime->GetMicroseconds());
+        ->add_lag(this->gameTime->GetMicroseconds())
+        ->set_video_mode(video_mode);
 
-    std::for_each(this->game_object_collection.begin(), this->game_object_collection.end(),
-                  [&](const std::unique_ptr<GameObject> &o)
-                  { o->initialize(this->context.get()); });
+    std::ranges::for_each(this->game_object_collection,
+                          [&](const std::unique_ptr<GameObject> &o)
+                          { o->initialize(this->context.get()); });
 }
 void Game::Update()
 {
@@ -38,9 +39,9 @@ void Game::Update()
     {
         if (event.type == sf::Event::Closed)
         {
-            std::for_each(this->game_object_collection.begin(), this->game_object_collection.end(),
-                          [](const std::unique_ptr<GameObject> &o)
-                          { o->finalize(); });
+            std::ranges::for_each(this->game_object_collection,
+                                  [](const std::unique_ptr<GameObject> &o)
+                                  { o->finalize(); });
 
             window->close();
         }
@@ -52,9 +53,9 @@ void Game::Update()
 
     while (this->context->should_update())
     {
-        std::for_each(this->game_object_collection.begin(), this->game_object_collection.end(),
-                      [&](const std::unique_ptr<GameObject> &o)
-                      { o->update(this->context.get()); });
+        std::ranges::for_each(this->game_object_collection,
+                              [&](const std::unique_ptr<GameObject> &o)
+                              { o->update(this->context.get()); });
     }
 }
 bool Game::IsRunning()
@@ -69,9 +70,9 @@ void Game::Draw()
 {
     window->clear(sf::Color::Black);
 
-    std::for_each(this->game_object_collection.begin(), this->game_object_collection.end(),
-                  [&](const std::unique_ptr<GameObject> &o)
-                  { o->render(dynamic_cast<sf::RenderTarget *>(window)); });
+    std::ranges::for_each(this->game_object_collection,
+                          [&](const std::unique_ptr<GameObject> &o)
+                          { o->render(window); });
 
     window->display();
 }

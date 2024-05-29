@@ -1,9 +1,9 @@
 #include "LogWindow.h"
 #include <format>
-#include "Utils.h"
+#include "../Utils.h"
 #include <iostream>
 #include <sstream>
-#include "GameContext.hpp"
+#include "../GameContext.hpp"
 LogWindow::LogWindow() {}
 
 void LogWindow::initialize(ConstGameContext context)
@@ -34,7 +34,7 @@ void LogWindow::update(ConstGameContext context)
         }
     }
 
-    auto logs = l::get_logs(40);
+    auto logs = r::get_logs(40);
     this->lines_.clear();
     for (const auto &l : logs)
     {

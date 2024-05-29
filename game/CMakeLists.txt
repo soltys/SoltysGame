@@ -6,11 +6,11 @@ pack_resources(pack_file
 	OUTPUT_FILE "${PROJECT_BINARY_DIR}/$<CONFIG>/bin/pack.db"
     FORCE)
 
+add_subdirectory(assets)
+
 add_executable(${MAIN_TARGET} WIN32
     main.cpp
-    LogWindow.cpp
-    LogWindow.h
-    Resources.hpp
+    
     Utils.cpp
     Utils.h
     Game.cpp
@@ -20,6 +20,19 @@ add_executable(${MAIN_TARGET} WIN32
     Config.h
     Paddle.cpp
     Paddle.h
+    Locator.cpp
+    Locator.h
+    Logging/LogWindow.cpp
+    Logging/LogWindow.h
+    Logging/Logger.h
+    Logging/DbLogger.h
+    Logging/DbLogger.cpp
+    Logging/CompositeLogger.h
+    Logging/CompositeLogger.cpp
+    Logging/NullLogger.h
+    Logging/NullLogger.cpp
+    Logging/WindowsDebugLogger.h
+    Logging/WindowsDebugLogger.cpp
     ${pack_file}
 )
 

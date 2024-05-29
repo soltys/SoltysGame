@@ -6,17 +6,17 @@ Paddle::Paddle(/* args */)
 
 void Paddle::initialize(ConstGameContext context)
 {
-    this->rect = sf::RectangleShape(sf::Vector2f(this->paddle_width, this->paddle_height));
-    rect.setPosition(50, 50);
+    this->rect = sf::RectangleShape(sf::Vector2f(static_cast<float>(this->paddle_width), static_cast<float>(this->paddle_height)));
+    rect.setPosition(20, 20);
     rect.setFillColor(sf::Color::White);
 }
 
 void Paddle::update(ConstGameContext context)
 {
     auto current_position = rect.getPosition();
-    auto window_size = context->get_window_size();
+    auto window_size = context->get_video_mode();
 
-    if (current_position.y >= (window_size.y - this->paddle_height))
+    if (current_position.y >= ( window_size.height - this->paddle_height))
     {
         this->moving_down = !this->moving_down;
     }

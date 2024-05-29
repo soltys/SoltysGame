@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "GameTime.hpp"
 #include "GameContext.hpp"
-#include "LogWindow.h"
+#include "Logging/LogWindow.h"
 #include "GameObject.hpp"
 
 class Game

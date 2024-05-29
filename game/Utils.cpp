@@ -1,24 +1,33 @@
 #include "Utils.h"
-#include "Resources.hpp"
+#include "Locator.h"
+
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#undef WIN32_LEAN_AND_MEAN
 
 bool r::get_toggle(const std::string &name)
 {
-    return PackerResources::get_packer().get_toggle(name);
+    return Locator::get_packer()->get_toggle(name);
 }
 
 std::vector<char> r::get_file(const std::string &name)
 {
-    return PackerResources::get_packer().get_file(name);
+    return Locator::get_packer()->get_file(name);
 }
 
 std::string r::get_string(const std::string &key)
 {
-    return PackerResources::get_packer().get_key_value(key);
+    return Locator::get_packer()->get_key_value(key);
 }
 
 std::string r::get_locale_string(const std::string &key)
 {
-    return PackerResources::get_packer().get_translation(key, r::get_string("current_locale"));
+    return Locator::get_packer()->get_translation(key, r::get_string("current_locale"));
+}
+
+std::vector<packer::LogEntry> r::get_logs(const int amount)
+{
+    return Locator::get_packer()->get_latest_logs(amount);
 }
 
 //
@@ -27,18 +36,14 @@ std::string r::get_locale_string(const std::string &key)
 
 void l::info(const std::string &logger, const std::string &message)
 {
-    PackerResources::get_packer().insert_log("INFO", logger, message);
+    Locator::get_logger()->log(LogLevel::INFO, logger, message);
 }
 
 void l::info(const std::string &message)
 {
-    PackerResources::get_packer().insert_log("INFO", "GLOBAL_LOGGER", message);
+    Locator::get_logger()->log(LogLevel::INFO, "GLOBAL_LOGGER", message);
 }
 
-std::vector<packer::LogEntry> l::get_logs(const int amount)
-{
-    return PackerResources::get_packer().get_latest_logs(amount);
-}
 ///
 /// EPOCH
 ///
