@@ -24,4 +24,11 @@ FetchContent_Declare(
     EXCLUDE_FROM_ALL
 )
 
-FetchContent_MakeAvailable(SFML SQLiteCpp embed_resource packer)
+FetchContent_Declare(
+    lua
+    GIT_REPOSITORY "https://github.com/marovira/lua"
+    GIT_TAG ca9c739908627c7010e2584387d669af04b89722
+    EXCLUDE_FROM_ALL
+)
+
+FetchContent_MakeAvailable(SFML SQLiteCpp embed_resource packer lua)

@@ -57,6 +57,6 @@ add_executable(${MAIN_TARGET}
 )
 
 
-target_link_libraries(${MAIN_TARGET} PRIVATE sfml-graphics sfml-main packer_library)
+target_link_libraries(${MAIN_TARGET} PRIVATE sfml-graphics sfml-main packer_library lua::lua)
 
 target_include_directories(${MAIN_TARGET} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)

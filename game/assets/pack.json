@@ -1,6 +1,9 @@
 {
     "files": [
         {
+            "glob": "scripts/*.lua"
+        },
+        {
             "glob": "*.ttf",
             "prefix": "font_"
         }
