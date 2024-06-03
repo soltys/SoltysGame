@@ -1,9 +1,9 @@
-#include <game/KeyMapService.h>
+#include <game/core/KeyMapService.h>
 #include <game/Utils.h>
 #include <nlohmann/json.hpp>
-KeyJsonMapService KeyJsonMapService::parse(std::string json)
+KeyMapJsonService KeyMapJsonService::parse(std::string json)
 {
-    KeyJsonMapService key_mapping;
+    KeyMapJsonService key_mapping;
     auto root = nlohmann::json::parse(json);
 
     for (const auto &el : root.items())

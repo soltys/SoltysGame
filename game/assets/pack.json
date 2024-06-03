@@ -8,6 +8,22 @@
     "kv": {
         "current_locale": "pl",
         "lorem": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dapibus sit amet augue a vehicula.",
+        "game_settings": {
+            "paddle": {
+                "base_speed": 10,
+                "base_size": {
+                    "width": 5,
+                    "height": 100
+                }
+            },
+            "ball": {
+                "base_speed": 10,
+                "base_size": {
+                    "width": 7,
+                    "height": 7
+                }                
+            }
+        },
         "keymapping": {
             "Left": {
                 "Up": "W",

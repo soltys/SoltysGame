@@ -3,38 +3,32 @@
 #include <utility>
 #include <packer/Packer.h>
 #include <game/logging/Logger.h>
-#include <game/KeyMapService.h>
+#include <game/core/KeyMapService.h>
+#include <game/core/GameSettingsService.h>
+
+#define LOCATOR_FIELD(type, name)                             \
+private:                                                      \
+    static void provide_##name();                             \
+    inline static std::shared_ptr<##type> m_##name = nullptr; \
+                                                              \
+public:                                                       \
+    ##type static *                                           \
+        get_##name() { return m_##name.get(); }               \
+    static void provide(std::shared_ptr<##type>##name)        \
+    {                                                         \
+        m_##name = std::move(##name);                         \
+    }
 class Locator
 {
 private:
-    static void provide_packer();
     static void remove_packer_if_exists(const std::filesystem::path packer_path);
     static std::filesystem::path get_packer_path();
     static void extract_packer_from_executable(const std::filesystem::path packer_path);
-    static void provide_logger();
-    static void provide_key_map();
-    inline static std::shared_ptr<packer::Packer> packer_ = nullptr;
-    inline static std::shared_ptr<Logger> logger_ = nullptr;
-    inline static std::shared_ptr<KeyMapService> key_map_service_ = nullptr;
 
+    LOCATOR_FIELD(packer::Packer, packer)
+    LOCATOR_FIELD(Logger, logger)
+    LOCATOR_FIELD(KeyMapService, key_map)
+    LOCATOR_FIELD(GameSettingsService, game_settings)
 public:
-    static packer::Packer *get_packer() { return packer_.get(); }
-    static void provide(std::shared_ptr<packer::Packer> packer)
-    {
-        packer_ = std::move(packer);
-    }
-
-    static Logger *get_logger() { return logger_.get(); }
-    static void provide(std::shared_ptr<Logger> logger)
-    {
-        logger_ = std::move(logger);
-    }
-
-    static KeyMapService *get_key_map() { return key_map_service_.get(); }
-    static void provide(std::shared_ptr<KeyMapService> key_map_service)
-    {
-        key_map_service_ = std::move(key_map_service);
-    }
-
     static void initialize();
 };

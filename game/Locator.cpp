@@ -19,6 +19,7 @@ void Locator::initialize()
     Locator::provide_packer();
     Locator::provide_logger();
     Locator::provide_key_map();
+    Locator::provide_game_settings();
 }
 
 std::filesystem::path Locator::get_packer_path()
@@ -95,6 +96,12 @@ void Locator::provide_logger()
 
 void Locator::provide_key_map()
 {
-    auto key_map_service = std::make_shared<KeyMapService>(KeyJsonMapService::parse(r::get_string("keymapping")));
+    auto key_map_service = std::make_shared<KeyMapService>(KeyMapJsonService::parse(r::get_string("keymapping")));
     provide(key_map_service);
+}
+
+void Locator::provide_game_settings()
+{
+    auto game_settings_service = std::make_shared<GameSettingsService>(GameSettingsJsonService::parse(r::get_string("game_settings")));
+    provide(game_settings_service);
 }

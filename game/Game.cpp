@@ -43,7 +43,6 @@ void Game::Update()
         {
             view = mysf::get_letterbox_view(view, event.size.width, event.size.height);
         }
-
         if (event.type == sf::Event::Closed)
         {
             window->close();

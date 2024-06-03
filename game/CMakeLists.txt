@@ -20,8 +20,10 @@ add_executable(${MAIN_TARGET}
     include/game/GameContext.hpp
     include/game/Config.h
 
-    include/game/KeyMapService.h
-    KeyMapService.cpp
+    include/game/core/KeyMapService.h
+    core/KeyMapService.cpp
+    include/game/core/GameSettingsService.h
+    core/GameSettingsService.cpp
 
     Locator.cpp
     include/game/Locator.h

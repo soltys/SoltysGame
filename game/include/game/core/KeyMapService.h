@@ -19,8 +19,15 @@ public:
     }
 };
 
-class KeyJsonMapService : public KeyMapService
+class Action
 {
 public:
-    static KeyJsonMapService parse(std::string json);
+    inline static const action_name UP = "Up";
+    inline static const action_name DOWN = "Down";
+};
+
+class KeyMapJsonService : public KeyMapService
+{
+public:
+    static KeyMapJsonService parse(std::string json);
 };
