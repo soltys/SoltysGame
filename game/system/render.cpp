@@ -4,6 +4,15 @@
 #include <SFML/Window.hpp>
 #include "render.h"
 
+void sys::render_background(const GameContext *context)
+{
+    auto render_target = context->get_main_render_target();
+    auto view_mode = context->get_video_mode();
+    sf::RectangleShape blackbg(sf::Vector2f(view_mode.width, view_mode.height));
+    blackbg.setFillColor(sf::Color::Black);
+    render_target->draw(blackbg);
+}
+
 void sys::render_paddle(const GameContext *context)
 {
     const auto reg = context->get_registry();

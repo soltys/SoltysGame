@@ -70,7 +70,8 @@ std::chrono::system_clock::time_point epoch::to_time_point(int64_t microseconds_
 ///
 /// COMP
 ///
-#define LOCTOSTR(enum_value) case game::Location::##enum_value: \
+#define LOCTOSTR(enum_value)           \
+    case game::Location::##enum_value: \
         return #enum_value;
 const char *comp::to_string(game::Location location)
 {
@@ -84,9 +85,9 @@ const char *comp::to_string(game::Location location)
         throw std::invalid_argument("unmapped argument in to_string for Location");
     }
 }
-#define STRTOLOC(location_value) \
-    if (name == #location_value) \
-    { \
+#define STRTOLOC(location_value)                 \
+    if (name == #location_value)                 \
+    {                                            \
         return game::Location::##location_value; \
     }
 game::Location comp::to_location(std::string name)
@@ -208,4 +209,42 @@ sf::Keyboard::Key mysf::to_key(std::string key_name)
     KEYCONV(Pause)
 
     throw std::invalid_argument("string (" + key_name + ") cannot be mapped into sf::Keyboard::Key");
+}
+
+sf::View mysf::get_letterbox_view(sf::View view, int windowWidth, int windowHeight)
+{
+
+    // Compares the aspect ratio of the window to the aspect ratio of the view,
+    // and sets the view's viewport accordingly in order to achieve a letterbox effect.
+    // A new view (with a new viewport set) is returned.
+
+    float windowRatio = (float)windowWidth / (float)windowHeight;
+    float viewRatio = view.getSize().x / (float)view.getSize().y;
+    float sizeX = 1;
+    float sizeY = 1;
+    float posX = 0;
+    float posY = 0;
+
+    bool horizontalSpacing = true;
+    if (windowRatio < viewRatio)
+        horizontalSpacing = false;
+
+    // If horizontalSpacing is true, the black bars will appear on the left and right side.
+    // Otherwise, the black bars will appear on the top and bottom.
+
+    if (horizontalSpacing)
+    {
+        sizeX = viewRatio / windowRatio;
+        posX = (1 - sizeX) / 2.f;
+    }
+
+    else
+    {
+        sizeY = windowRatio / viewRatio;
+        posY = (1 - sizeY) / 2.f;
+    }
+
+    view.setViewport(sf::FloatRect(posX, posY, sizeX, sizeY));
+
+    return view;
 }

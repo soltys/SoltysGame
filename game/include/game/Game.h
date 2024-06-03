@@ -14,6 +14,7 @@ class Game
 	std::unique_ptr<GameContext> context;
 	std::unique_ptr<GameTime> gameTime;
 	sf::RenderWindow* window;
+	sf::View view;
 	entt::registry reg;
 public:
 	void Initialize();

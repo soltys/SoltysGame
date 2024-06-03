@@ -74,6 +74,7 @@ void sys::movement(const GameContext *context)
 
 void sys::render(const GameContext *context)
 {
+    render_background(context);
     render_paddle(context);
     render_ball(context);
 }

@@ -10,7 +10,9 @@ void Game::Initialize()
 
     const sf::VideoMode video_mode(800u, 600u);
     this->window = new sf::RenderWindow(video_mode, r::get_locale_string("WINDOW_TITLE"));
-
+    this->view.setSize(video_mode.width, video_mode.height);
+    view.setCenter(view.getSize().x / 2, view.getSize().y / 2);
+    view = mysf::get_letterbox_view(view, video_mode.width, video_mode.height);
     l::info("===started game===");
 
     context
@@ -30,6 +32,11 @@ void Game::Update()
 
     for (auto event = sf::Event{}; window->pollEvent(event);)
     {
+        if (event.type == sf::Event::Resized)
+        {
+            view = mysf::get_letterbox_view(view, event.size.width, event.size.height);
+        }
+
         if (event.type == sf::Event::Closed)
         {
             window->close();
@@ -58,7 +65,9 @@ void Game::Terminate()
 }
 void Game::Draw()
 {
-    window->clear(sf::Color::Black);
+    window->clear(sf::Color::Color(0x333333));
+    window->setView(view);
+
     sys::render(this->context.get());
     window->display();
 }

@@ -36,4 +36,6 @@ namespace comp
 namespace mysf
 {
     sf::Keyboard::Key to_key(std::string key_name);
+    sf::View get_letterbox_view(sf::View view, int windowWidth, int windowHeight);
+    
 }
