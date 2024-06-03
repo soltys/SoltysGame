@@ -3,8 +3,10 @@ set(MAIN_TARGET_DISPLAY_NAME "SoltysGame")
 
 pack_resources(pack_file
     JSON_FILE "${CMAKE_CURRENT_SOURCE_DIR}/assets/pack.json"
-	OUTPUT_FILE "${PROJECT_BINARY_DIR}/$<CONFIG>/bin/pack.db"
+	OUTPUT_FILE "${PROJECT_BINARY_DIR}/pack.db"
     FORCE)
+
+configure_file("game.rc.in" "${PROJECT_BINARY_DIR}/game.rc")
 
 add_subdirectory(assets)
 
@@ -48,6 +50,8 @@ add_executable(${MAIN_TARGET}
     #single-header-libraries
     include/entt/entt.hpp
     include/nlohmann/json.hpp
+
+    "${PROJECT_BINARY_DIR}/game.rc"
 )
 
 

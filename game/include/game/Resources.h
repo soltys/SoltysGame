@@ -1,0 +1,1 @@
+#define IDR_SQLITE1 101

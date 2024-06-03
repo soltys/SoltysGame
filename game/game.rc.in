@@ -1,0 +1,2 @@
+#include <game/resources.h>
+IDR_SQLITE1             sqlite                  "@PROJECT_BINARY_DIR@/pack.db"

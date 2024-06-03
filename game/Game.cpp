@@ -9,7 +9,14 @@ void Game::Initialize()
     this->context = std::make_unique<GameContext>();
 
     const sf::VideoMode video_mode(800u, 600u);
-    this->window = new sf::RenderWindow(video_mode, r::get_locale_string("WINDOW_TITLE"));
+
+    auto window_style = sf::Style::Default;
+    if (r::get_toggle("WINDOW_FULLSCREEN_LAUNCH"))
+    {
+        window_style = sf::Style::Fullscreen;
+    }
+    
+    this->window = new sf::RenderWindow(video_mode, r::get_locale_string("WINDOW_TITLE"), window_style);
     this->view.setSize(video_mode.width, video_mode.height);
     view.setCenter(view.getSize().x / 2, view.getSize().y / 2);
     view = mysf::get_letterbox_view(view, video_mode.width, video_mode.height);

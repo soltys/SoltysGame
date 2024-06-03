@@ -8,6 +8,9 @@ class Locator
 {
 private:
     static void provide_packer();
+    static void remove_packer_if_exists(const std::filesystem::path packer_path);
+    static std::filesystem::path get_packer_path();
+    static void extract_packer_from_executable(const std::filesystem::path packer_path);
     static void provide_logger();
     static void provide_key_map();
     inline static std::shared_ptr<packer::Packer> packer_ = nullptr;
