@@ -11,7 +11,8 @@ void sys::clear_velocity(const GameContext *context)
     for (const entt::entity &e : view)
     {
         auto &vel = view.get<game::Velocity>(e);
-        vel.Velocity = sf::Vector2i(0, 0);
+        vel.x = 0;
+        vel.y = 0;
     }
 }
 
@@ -26,26 +27,26 @@ void sys::keyboard(const GameContext *context)
     {
         auto [pl, pos, size, vel] = view.get<game::PlacementLocation, game::Position, game::Size, game::Velocity>(e);
 
-        if (sf::Keyboard::isKeyPressed(key_map->get_key(pl.Loc, Action::UP)))
+        if (sf::Keyboard::isKeyPressed(key_map->get_key(pl.Loc, "Up")))
         {
-            if (pos.Position.y <= 0)
+            if (pos.y <= 0)
             {
-                vel.Velocity.y = 0;
+                vel.y = 0;
             }
             else
             {
-                vel.Velocity.y = -base_paddle_speed;
+                vel.y = -base_paddle_speed;
             }
         }
-        if (sf::Keyboard::isKeyPressed(key_map->get_key(pl.Loc, Action::DOWN)))
+        if (sf::Keyboard::isKeyPressed(key_map->get_key(pl.Loc, "Down")))
         {
-            if (pos.Position.y + size.Size.y >= context->get_video_mode().height)
+            if (pos.y + size.height >= context->get_video_mode().height)
             {
-                vel.Velocity.y = 0;
+                vel.y = 0;
             }
             else
             {
-                vel.Velocity.y = base_paddle_speed;
+                vel.y = base_paddle_speed;
             }
         }
     }
@@ -69,8 +70,8 @@ void sys::movement(const GameContext *context)
     for (const entt::entity &e : view)
     {
         auto [pos, vel] = view.get<game::Position, game::Velocity>(e);
-        pos.Position.x += vel.Velocity.x;
-        pos.Position.y += vel.Velocity.y;
+        pos.x += vel.x;
+        pos.y += vel.y;
     }
 }
 

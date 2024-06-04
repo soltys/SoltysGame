@@ -86,7 +86,7 @@ public:
     sf::RenderTarget *get_main_render_target() const
     {
         return this->main_render_target;
-    }
+    }   
 };
 
 typedef const std::unique_ptr<GameContext> GameContextPtr;

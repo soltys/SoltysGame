@@ -3,6 +3,8 @@
 #include <game/composition/composition.hpp>
 #include <game/EntityFactory.h>
 #include <game/system/system.h>
+#include <sstream>
+#include <game/core/EnttArchive.h>
 void Game::Initialize()
 {
     this->gameTime = std::make_unique<GameTime>();
@@ -15,7 +17,7 @@ void Game::Initialize()
     {
         window_style = sf::Style::Fullscreen;
     }
-    
+
     this->window = new sf::RenderWindow(video_mode, r::get_locale_string("WINDOW_TITLE"), window_style);
     this->view.setSize(video_mode.width, video_mode.height);
     view.setCenter(view.getSize().x / 2, view.getSize().y / 2);
@@ -50,6 +52,7 @@ void Game::Update()
         else if (event.type == sf::Event::MouseButtonPressed)
         {
             l::info("MouseButtonPressed");
+            l::info(enttarchive::to_json(this->reg));
         }
     }
 

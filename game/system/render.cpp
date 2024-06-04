@@ -20,10 +20,10 @@ void sys::render_paddle(const GameContext *context)
     for (const entt::entity e : view)
     {
         auto &shape = view.get<game::Paddle>(e).Shape;
-        const auto size = view.get<game::Size>(e).Size;
-        const auto position = view.get<game::Position>(e).Position;
-        shape.setSize(size);
-        shape.setPosition(position);
+        const auto size = view.get<game::Size>(e);
+        const auto position = view.get<game::Position>(e);
+        shape.setSize(sf::Vector2f(size.width, size.height));
+        shape.setPosition(position.x, position.y);
 
         const auto renderTarget = view.get<game::RenderTarget>(e).RenderTarget;
         renderTarget->draw(shape);
@@ -37,10 +37,10 @@ void sys::render_ball(const GameContext *context)
     for (const entt::entity e : view)
     {
         auto &shape = view.get<game::Ball>(e).Shape;
-        const auto size = view.get<game::Size>(e).Size;
-        const auto position = view.get<game::Position>(e).Position;
-        shape.setRadius(size.x);
-        shape.setPosition(position);
+        const auto size = view.get<game::Size>(e);
+        const auto position = view.get<game::Position>(e);
+        shape.setRadius(size.width);
+        shape.setPosition(position.x, position.y);
 
         const auto renderTarget = view.get<game::RenderTarget>(e).RenderTarget;
         renderTarget->draw(shape);

@@ -24,6 +24,9 @@ add_executable(${MAIN_TARGET}
     core/KeyMapService.cpp
     include/game/core/GameSettingsService.h
     core/GameSettingsService.cpp
+    include/game/core/EnttArchive.h
+    core/EnttArchive.cpp
+    
 
     Locator.cpp
     include/game/Locator.h
