@@ -17,8 +17,8 @@ void Game::Initialize()
     {
         window_style = sf::Style::Fullscreen;
     }
-
-    this->window = new sf::RenderWindow(video_mode, r::get_locale_string("WINDOW_TITLE"), window_style);
+    this->reg = std::make_shared<entt::registry>();
+    this->window = std::make_unique<sf::RenderWindow>(video_mode, r::get_locale_string("WINDOW_TITLE"), window_style);
     this->view.setSize(video_mode.width, video_mode.height);
     view.setCenter(view.getSize().x / 2, view.getSize().y / 2);
     view = mysf::get_letterbox_view(view, video_mode.width, video_mode.height);
@@ -28,7 +28,7 @@ void Game::Initialize()
         ->add_lag(this->gameTime->GetMicroseconds())
         ->set_video_mode(video_mode)
         ->set_registry(reg)
-        ->set_main_render_target(window);
+        ->set_main_render_target(window.get());
 
     factory::create_paddle(context.get(), sf::Vector2f(10.f, 300.f), game::Location::Left);
     factory::create_paddle(context.get(), sf::Vector2f(video_mode.width - 10.f, 300.f), game::Location::Right);
@@ -52,7 +52,6 @@ void Game::Update()
         else if (event.type == sf::Event::MouseButtonPressed)
         {
             l::info("MouseButtonPressed");
-            l::info(enttarchive::to_json(this->reg));
         }
     }
 
@@ -70,7 +69,6 @@ bool Game::IsRunning()
 }
 void Game::Terminate()
 {
-    delete window;
 }
 void Game::Draw()
 {

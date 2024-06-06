@@ -16,16 +16,15 @@ void sys::render_background(const GameContext *context)
 void sys::render_paddle(const GameContext *context)
 {
     const auto reg = context->get_registry();
-    const auto view = reg->view<game::Paddle, game::Position, game::Size, game::RenderTarget>();
+    const auto view = reg->view<game::Paddle, game::Position, game::Size>();
     for (const entt::entity e : view)
-    {
-        auto &shape = view.get<game::Paddle>(e).Shape;
+    {        
         const auto size = view.get<game::Size>(e);
         const auto position = view.get<game::Position>(e);
-        shape.setSize(sf::Vector2f(size.width, size.height));
+        auto shape = sf::RectangleShape(sf::Vector2f(size.width, size.height));        
         shape.setPosition(position.x, position.y);
 
-        const auto renderTarget = view.get<game::RenderTarget>(e).RenderTarget;
+        const auto renderTarget = context->get_main_render_target();
         renderTarget->draw(shape);
     }
 }
@@ -33,16 +32,15 @@ void sys::render_paddle(const GameContext *context)
 void sys::render_ball(const GameContext *context)
 {
     const auto reg = context->get_registry();
-    const auto view = reg->view<game::Ball, game::Position, game::Size, game::RenderTarget>();
+    const auto view = reg->view<game::Ball, game::Position, game::Size>();
     for (const entt::entity e : view)
     {
-        auto &shape = view.get<game::Ball>(e).Shape;
         const auto size = view.get<game::Size>(e);
         const auto position = view.get<game::Position>(e);
-        shape.setRadius(size.width);
+        auto shape = sf::CircleShape(size.width);
         shape.setPosition(position.x, position.y);
 
-        const auto renderTarget = view.get<game::RenderTarget>(e).RenderTarget;
+        const auto renderTarget = context->get_main_render_target();
         renderTarget->draw(shape);
     }
 }

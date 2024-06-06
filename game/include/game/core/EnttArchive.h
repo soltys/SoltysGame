@@ -54,8 +54,8 @@ public:
 namespace enttarchive
 {
     template <typename SnapshotType, typename ArchiveType>
-    void perform_archive_action(SnapshotType& snapshot, ArchiveType& archive);
+    void perform_archive_action(SnapshotType &snapshot, ArchiveType &archive);
 
     std::string to_json(const entt::registry &reg);
-    entt::registry from_json(const std::string &json);
+    std::shared_ptr<entt::registry> from_json(std::string &json);
 }

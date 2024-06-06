@@ -14,12 +14,12 @@ EnttOutputArchive::EnttOutputArchive()
 
 void EnttOutputArchive::operator()(entt::entity entity)
 {
-    current["ids"].push_back(entity);
+    current["ids"].push_back(entity);    
 }
 
 void EnttOutputArchive::operator()(std::underlying_type_t<entt::entity> e)
 {
-    if (!current.empty() && !current["ids"].empty())
+    if (!current.empty())
     {
         root.push_back(current);
         current = nullptr;
@@ -76,6 +76,11 @@ void EnttInputArchive::operator()(entt::entity &entity)
 {
     uint32_t ent = current["ids"][current_idx].get<uint32_t>();
     entity = entt::entity(ent);
+
+    //if data is NOT empty current_idx should be increased by EnttInputArchive::operator()(T &t)
+    if (current["data"].empty()){        
+        current_idx++;
+    }
 }
 
 template <typename T>
@@ -83,7 +88,7 @@ void EnttInputArchive::operator()(T &t)
 {
     nlohmann::json component_data = current["data"][current_idx];
     auto comp = component_data.get<T>();
-    t = comp;
+    t = comp;    
     current_idx++;
 }
 
@@ -91,10 +96,12 @@ template <typename SnapshotType, typename ArchiveType>
 void enttarchive::perform_archive_action(SnapshotType &snapshot, ArchiveType &archive)
 {
     snapshot
-        .get<entt::entity>(archive)
+        .get<game::Paddle>(archive)
+        .get<game::Ball>(archive)
         .get<game::Position>(archive)
         .get<game::Size>(archive)
-        .get<game::Velocity>(archive);
+        .get<game::Velocity>(archive)
+        .get<game::PlacementLocation>(archive);
 }
 
 std::string enttarchive::to_json(const entt::registry &reg)
@@ -105,11 +112,11 @@ std::string enttarchive::to_json(const entt::registry &reg)
     return out.AsString();
 }
 
-entt::registry enttarchive::from_json(const std::string &json)
-{
-    entt::registry reg;
+std::shared_ptr<entt::registry> enttarchive::from_json(std::string &json)
+{    
     EnttInputArchive input(json);
-    auto loader = entt::snapshot_loader{reg};
+    auto reg = std::make_shared<entt::registry>();
+    auto loader = entt::snapshot_loader{*reg};
     perform_archive_action(loader, input);
     return reg;
 }

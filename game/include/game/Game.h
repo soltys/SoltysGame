@@ -2,7 +2,6 @@
 #include <SFML/Graphics.hpp>
 #include <game/GameTime.hpp>
 #include <game/GameContext.hpp>
-#include <game/logging/LogWindow.h>
 #include <entt/entt.hpp>
 class Game
 {
@@ -13,9 +12,9 @@ class Game
 
 	std::unique_ptr<GameContext> context;
 	std::unique_ptr<GameTime> gameTime;
-	sf::RenderWindow* window;
+	std::unique_ptr<sf::RenderWindow> window;
 	sf::View view;
-	entt::registry reg;
+	std::shared_ptr<entt::registry> reg = nullptr;
 public:
 	void Initialize();
 	void Update();

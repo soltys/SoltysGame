@@ -15,11 +15,11 @@ namespace game
 
     struct Paddle
     {
-        sf::RectangleShape Shape;
+        const char *name() const { return "paddle"; }
     };
     struct Ball
     {
-        sf::CircleShape Shape;
+        const char *name() const { return "ball"; }
     };
     struct Size
     {
@@ -40,24 +40,14 @@ namespace game
     struct Velocity
     {
         const char *name() const { return "velocity"; }
-        int x;
-        int y;
+        float x;
+        float y;
         NLOHMANN_DEFINE_TYPE_INTRUSIVE(game::Velocity, x, y);
-    };
-    struct Controlable
-    {
-    };
-    struct Ai
-    {
     };
     struct PlacementLocation
     {
         const char *name() const { return "placement_location"; }
         Location Loc;
         NLOHMANN_DEFINE_TYPE_INTRUSIVE(game::PlacementLocation, Loc);
-    };
-    struct RenderTarget
-    {
-        sf::RenderTarget *RenderTarget;
     };
 }

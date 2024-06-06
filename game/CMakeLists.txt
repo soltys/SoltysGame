@@ -27,12 +27,9 @@ add_executable(${MAIN_TARGET}
     include/game/core/EnttArchive.h
     core/EnttArchive.cpp
     
-
     Locator.cpp
     include/game/Locator.h
 
-    logging/LogWindow.cpp
-    include/game/logging/LogWindow.h
     include/game/logging/Logger.h
     include/game/logging/DbLogger.h
     logging/DbLogger.cpp
