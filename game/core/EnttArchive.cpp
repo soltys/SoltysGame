@@ -27,6 +27,7 @@ void EnttOutputArchive::operator()(std::underlying_type_t<entt::entity> e)
     current = nlohmann::json::object();
     current["data"] = nlohmann::json::array();
     current["ids"] = nlohmann::json::array();
+    current["name"] = name;
     current["size"] = e;
 }
 
@@ -96,12 +97,12 @@ template <typename SnapshotType, typename ArchiveType>
 void enttarchive::perform_archive_action(SnapshotType &snapshot, ArchiveType &archive)
 {
     snapshot
-        .get<game::Paddle>(archive)
-        .get<game::Ball>(archive)
-        .get<game::Position>(archive)
-        .get<game::Size>(archive)
-        .get<game::Velocity>(archive)
-        .get<game::PlacementLocation>(archive);
+        .get<game::Paddle>(archive.set_name("paddle"))
+        .get<game::Ball>(archive.set_name("ball"))
+        .get<game::Position>(archive.set_name("position"))
+        .get<game::Size>(archive.set_name("size"))
+        .get<game::Velocity>(archive.set_name("velocity"))
+        .get<game::PlacementLocation>(archive.set_name("placement_location"));
 }
 
 std::string enttarchive::to_json(const entt::registry &reg)

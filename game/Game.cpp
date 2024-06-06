@@ -52,6 +52,7 @@ void Game::Update()
         else if (event.type == sf::Event::MouseButtonPressed)
         {
             l::info("MouseButtonPressed");
+            l::info(enttarchive::to_json(*this->reg));
         }
     }
 

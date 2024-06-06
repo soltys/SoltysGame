@@ -90,6 +90,7 @@
         "future": "cpp",
         "random": "cpp",
         "stack": "cpp",
-        "typeindex": "cpp"
+        "typeindex": "cpp",
+        "*.rh": "cpp"
     }
 }

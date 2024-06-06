@@ -18,7 +18,6 @@ public:
     void operator()(T &t)
     {
         current["data"].push_back(t);
-        current["name"] = t.name();
     }
 
     // create a json as string
@@ -26,10 +25,16 @@ public:
 
     // create bson-data
     const std::vector<uint8_t> AsBson();
+    EnttOutputArchive &set_name(std::string n)
+    {
+        name = n;
+        return *this;
+    }
 
 private:
     nlohmann::json root;
     nlohmann::json current;
+    std::string name;
 };
 
 class EnttInputArchive
@@ -37,13 +42,20 @@ class EnttInputArchive
 private:
     nlohmann::json root;
     nlohmann::json current;
+    std::string name;
 
     int root_idx = -1;
     int current_idx = 0;
 
-public:
-    EnttInputArchive(const std::string &json_string);
     void next_component();
+
+public:
+    EnttInputArchive &set_name(std::string n)
+    {
+        name = n;
+        return *this;
+    }
+    EnttInputArchive(const std::string &json_string);
 
     void operator()(std::underlying_type_t<entt::entity> &s);
     void operator()(entt::entity &entity);
