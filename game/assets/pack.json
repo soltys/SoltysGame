@@ -17,10 +17,10 @@
                 }
             },
             "ball": {
-                "base_speed": 10,
+                "base_speed": 7,
                 "base_size": {
-                    "width": 7,
-                    "height": 7
+                    "width": 40,
+                    "height": 40
                 }                
             }
         },

@@ -29,8 +29,8 @@ namespace epoch
 
 namespace comp
 {
-    const char* to_string(game::Location location);
-    game::Location to_location(std::string name);
+    const char* to_string(game::Direction location);
+    game::Direction to_location(std::string name);
 }
 
 namespace mysf

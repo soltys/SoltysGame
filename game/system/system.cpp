@@ -16,6 +16,30 @@ void sys::clear_velocity(const GameContext *context)
     }
 }
 
+void sys::serve(const GameContext *context)
+{
+    const auto reg = context->get_registry();
+    const auto view = reg->view<game::Ball, game::Serve, game::Velocity>();
+    auto game_settings = Locator::get_game_settings();
+    for (const entt::entity &e : view)
+    {
+        auto &vel = view.get<game::Velocity>(e);
+        auto &serv = view.get<game::Serve>(e);
+        if (serv.Loc == game::Direction::Left)
+        {
+            vel.x = -game_settings->get_ball_base_speed();
+            vel.y = 0;
+        }
+        else
+        {
+            vel.x = game_settings->get_ball_base_speed();
+            vel.y = 0;
+        }
+
+        reg->erase<game::Serve>(e);
+    }
+}
+
 void sys::keyboard(const GameContext *context)
 {
     const auto reg = context->get_registry();
@@ -55,11 +79,23 @@ void sys::keyboard(const GameContext *context)
 void sys::collision(const GameContext *context)
 {
     const auto reg = context->get_registry();
-    const auto view = reg->view<game::Paddle, game::Position, game::Size, game::Velocity>();
-    for (const entt::entity &e : view)
+    const auto paddle_view = reg->view<game::Paddle, game::Position, game::Size>();
+    for (const entt::entity &paddle_e : paddle_view)
     {
-        auto [pos, size] = view.get<game::Position, game::Size>(e);
-        auto &vel = view.get<game::Velocity>(e);
+        auto [paddle_pos, paddle_size] = paddle_view.get<game::Position, game::Size>(paddle_e);
+        auto paddle_rect = sf::Rect<float>(paddle_pos.to_vector(), paddle_size.to_vector());
+        const auto ball_view = reg->view<game::Ball, game::Position, game::Size, game::Velocity>();
+        for (const entt::entity &ball_e : ball_view)
+        {
+            auto [ball_pos, ball_size, ball_vel] = ball_view.get<game::Position, game::Size, game::Velocity>(ball_e);
+            auto ball_rect = sf::Rect<float>(ball_pos.to_vector(), ball_size.to_vector(2.f));
+
+            if (ball_rect.intersects(paddle_rect))
+            {
+                auto &vel = ball_view.get<game::Velocity>(ball_e);
+                vel.x = vel.x * -1;
+            }
+        }
     }
 }
 

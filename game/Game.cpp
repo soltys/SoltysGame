@@ -30,8 +30,8 @@ void Game::Initialize()
         ->set_registry(reg)
         ->set_main_render_target(window.get());
 
-    factory::create_paddle(context.get(), sf::Vector2f(10.f, 300.f), game::Location::Left);
-    factory::create_paddle(context.get(), sf::Vector2f(video_mode.width - 10.f, 300.f), game::Location::Right);
+    factory::create_paddle(context.get(), sf::Vector2f(10.f, 300.f), game::Direction::Left);
+    factory::create_paddle(context.get(), sf::Vector2f(video_mode.width - 10.f, 300.f), game::Direction::Right);
     factory::create_ball(context.get(), sf::Vector2f(400.f, 300.f));
 }
 void Game::Update()
@@ -59,6 +59,7 @@ void Game::Update()
     while (this->context->should_update())
     {
         sys::clear_velocity(this->context.get());
+        sys::serve(this->context.get());
         sys::keyboard(this->context.get());
         sys::collision(this->context.get());
         sys::movement(this->context.get());

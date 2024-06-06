@@ -5,14 +5,14 @@
 typedef std::string action_name;
 typedef sf::Keyboard::Key key_name;
 typedef std::map<action_name, key_name> KeyMap;
-typedef std::map<game::Location, KeyMap> PlayerKeyMap;
+typedef std::map<game::Direction, KeyMap> PlayerKeyMap;
 class KeyMapService
 {
 protected:
     PlayerKeyMap maps;
 
 public:
-    const key_name &get_key(game::Location loc, action_name action_name)
+    const key_name &get_key(game::Direction loc, action_name action_name)
     {
         return maps[loc][action_name];
     }

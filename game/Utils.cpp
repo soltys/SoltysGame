@@ -71,9 +71,9 @@ std::chrono::system_clock::time_point epoch::to_time_point(int64_t microseconds_
 /// COMP
 ///
 #define LOCTOSTR(enum_value)           \
-    case game::Location::##enum_value: \
+    case game::Direction::##enum_value: \
         return #enum_value;
-const char *comp::to_string(game::Location location)
+const char *comp::to_string(game::Direction location)
 {
     switch (location)
     {
@@ -88,9 +88,9 @@ const char *comp::to_string(game::Location location)
 #define STRTOLOC(location_value)                 \
     if (name == #location_value)                 \
     {                                            \
-        return game::Location::##location_value; \
+        return game::Direction::##location_value; \
     }
-game::Location comp::to_location(std::string name)
+game::Direction comp::to_location(std::string name)
 {
     STRTOLOC(Left)
     STRTOLOC(Right)

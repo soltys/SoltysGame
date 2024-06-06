@@ -4,7 +4,7 @@
 #include <game/GameContext.hpp>
 #include <entt/entt.hpp>
 #include <game/Locator.h>
-void factory::create_paddle(const GameContext *game_context, sf::Vector2f position, game::Location location)
+void factory::create_paddle(const GameContext *game_context, sf::Vector2f position, game::Direction location)
 {
     auto reg = game_context->get_registry();
     auto base_size = Locator::get_game_settings()->get_paddle_base_size();
@@ -25,4 +25,5 @@ void factory::create_ball(const GameContext *game_context, sf::Vector2f position
     reg->emplace<game::Position>(e, position.x, position.y);
     reg->emplace<game::Velocity>(e, 0.f, 0.f);
     reg->emplace<game::Size>(e, base_size);
+    reg->emplace<game::Serve>(e, game::Direction::Left);
 }

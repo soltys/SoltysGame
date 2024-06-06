@@ -5,9 +5,9 @@
 
 namespace game
 {
-    enum class Location
+    enum class Direction
     {
-        UNKNOW = 0,
+        Unkown = 0,
         Up,
         Down,
         Left,
@@ -27,22 +27,34 @@ namespace game
         float width;
         float height;
         NLOHMANN_DEFINE_TYPE_INTRUSIVE(game::Size, width, height);
+
+        sf::Vector2f to_vector() { return sf::Vector2f(width, height); }
+        sf::Vector2f to_vector(float scale) { return sf::Vector2f(width * scale, height * scale); }
     };
     struct Position
     {
         float x;
         float y;
         NLOHMANN_DEFINE_TYPE_INTRUSIVE(game::Position, x, y);
+
+        sf::Vector2f to_vector() { return sf::Vector2f(x, y); }
     };
     struct Velocity
     {
         float x;
         float y;
         NLOHMANN_DEFINE_TYPE_INTRUSIVE(game::Velocity, x, y);
+
+        sf::Vector2f to_vector() { return sf::Vector2f(x, y); }
     };
     struct PlacementLocation
     {
-        Location Loc;
+        Direction Loc;
         NLOHMANN_DEFINE_TYPE_INTRUSIVE(game::PlacementLocation, Loc);
+    };
+    struct Serve
+    {
+        Direction Loc;
+        NLOHMANN_DEFINE_TYPE_INTRUSIVE(game::Serve, Loc);
     };
 }
