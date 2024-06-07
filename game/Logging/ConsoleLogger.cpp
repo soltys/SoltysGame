@@ -1,4 +1,4 @@
-#include <game/logging/ConsoleLogger.h>
+#include <game/logging/ConsoleLogger.hpp>
 #include <iostream>
 void ConsoleLogger::log(LogLevel log_level, const std::string &logger, const std::string &message)
 {

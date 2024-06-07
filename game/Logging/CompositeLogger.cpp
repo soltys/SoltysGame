@@ -1,4 +1,4 @@
-#include <game/logging/CompositeLogger.h>
+#include <game/logging/CompositeLogger.hpp>
 
 void CompositeLogger::log(LogLevel log_level, const std::string &logger_name, const std::string &message)
 {

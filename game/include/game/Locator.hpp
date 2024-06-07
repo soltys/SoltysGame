@@ -2,9 +2,9 @@
 #include <memory>
 #include <utility>
 #include <packer/Packer.h>
-#include <game/logging/Logger.h>
-#include <game/core/KeyMapService.h>
-#include <game/core/GameSettingsService.h>
+#include <game/logging/Logger.hpp>
+#include <game/core/KeyMapService.hpp>
+#include <game/core/GameSettingsService.hpp>
 
 #define LOCATOR_FIELD(type, name)                             \
 private:                                                      \

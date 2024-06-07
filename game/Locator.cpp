@@ -1,17 +1,17 @@
-#include <game/Locator.h>
-#include <game/logging/Logger.h>
-#include <game/logging/NullLogger.h>
-#include <game/logging/DbLogger.h>
-#include <game/logging/WindowsDebugLogger.h>
-#include <game/logging/ConsoleLogger.h>
-#include <game/logging/CompositeLogger.h>
+#include <game/Locator.hpp>
+#include <game/logging/Logger.hpp>
+#include <game/logging/NullLogger.hpp>
+#include <game/logging/DbLogger.hpp>
+#include <game/logging/WindowsDebugLogger.hpp>
+#include <game/logging/ConsoleLogger.hpp>
+#include <game/logging/CompositeLogger.hpp>
 
-#include <game/Utils.h>
+#include <game/Utils.hpp>
 
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #undef WIN32_LEAN_AND_MEAN
-#include <game/resources.h>
+#include <game/resources.hpp>
 #include <fstream>
 
 void Locator::initialize()

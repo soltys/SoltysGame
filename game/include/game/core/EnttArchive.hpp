@@ -3,7 +3,7 @@
 #include <nlohmann/json.hpp>
 #include <entt/entt.hpp>
 #include <memory>
-#include <game/Utils.h>
+#include <game/Utils.hpp>
 
 class EnttOutputArchive
 {

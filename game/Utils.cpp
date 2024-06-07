@@ -1,5 +1,5 @@
-#include <game/Utils.h>
-#include <game/Locator.h>
+#include <game/Utils.hpp>
+#include <game/Locator.hpp>
 
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>

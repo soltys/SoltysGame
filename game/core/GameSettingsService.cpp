@@ -1,4 +1,4 @@
-#include <game/core/GameSettingsService.h>
+#include <game/core/GameSettingsService.hpp>
 GameSettingsJsonService GameSettingsJsonService::parse(std::string json)
 {
     auto root = nlohmann::json::parse(json);

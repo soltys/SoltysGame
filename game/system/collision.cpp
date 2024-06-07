@@ -1,5 +1,5 @@
 #include <game/composition/composition.hpp>
-#include <game/system/system.h>
+#include <game/system/system.hpp>
 #include <game/GameContext.hpp>
 void sys::collision(const GameContext *context)
 {

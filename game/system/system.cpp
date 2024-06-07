@@ -1,9 +1,9 @@
 #include <game/composition/composition.hpp>
-#include <game/system/system.h>
+#include <game/system/system.hpp>
 #include <game/GameContext.hpp>
 #include <SFML/Window.hpp>
-#include "render.h"
-#include <game/Locator.h>
+#include "render.hpp"
+#include <game/Locator.hpp>
 void sys::clear_velocity(const GameContext *context)
 {
     const auto reg = context->get_registry();

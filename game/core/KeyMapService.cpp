@@ -1,5 +1,5 @@
-#include <game/core/KeyMapService.h>
-#include <game/Utils.h>
+#include <game/core/KeyMapService.hpp>
+#include <game/Utils.hpp>
 #include <nlohmann/json.hpp>
 KeyMapJsonService KeyMapJsonService::parse(std::string json)
 {

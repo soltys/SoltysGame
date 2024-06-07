@@ -1,8 +1,8 @@
 #include <game/composition/composition.hpp>
-#include <game/system/system.h>
+#include <game/system/system.hpp>
 #include <game/GameContext.hpp>
 #include <SFML/Window.hpp>
-#include "render.h"
+#include "render.hpp"
 
 void sys::render_background(const GameContext *context)
 {

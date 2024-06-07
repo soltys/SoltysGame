@@ -1,10 +1,10 @@
-#include <game/Game.h>
-#include <game/Utils.h>
+#include <game/Game.hpp>
+#include <game/Utils.hpp>
 #include <game/composition/composition.hpp>
-#include <game/EntityFactory.h>
-#include <game/system/system.h>
+#include <game/EntityFactory.hpp>
+#include <game/system/system.hpp>
 #include <sstream>
-#include <game/core/EnttArchive.h>
+#include <game/core/EnttArchive.hpp>
 void Game::Initialize()
 {
     this->gameTime = std::make_unique<GameTime>();

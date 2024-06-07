@@ -1,4 +1,4 @@
-#include <game/logging/WindowsDebugLogger.h>
+#include <game/logging/WindowsDebugLogger.hpp>
 #include <format>
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>

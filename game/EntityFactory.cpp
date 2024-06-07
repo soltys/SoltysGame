@@ -1,9 +1,9 @@
-#include <game/EntityFactory.h>
+#include <game/EntityFactory.hpp>
 #include <game/composition/composition.hpp>
 #include <SFML/System.hpp>
 #include <game/GameContext.hpp>
 #include <entt/entt.hpp>
-#include <game/Locator.h>
+#include <game/Locator.hpp>
 void factory::create_paddle(const GameContext *game_context, sf::Vector2f position, game::Direction location)
 {
     auto reg = game_context->get_registry();
