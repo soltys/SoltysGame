@@ -99,11 +99,14 @@ void enttarchive::perform_archive_action(SnapshotType &snapshot, ArchiveType &ar
     snapshot
         .get<game::Paddle>(archive.set_name("paddle"))        
         .get<game::Ball>(archive.set_name("ball"))
+        .get<game::Wall>(archive.set_name("wall"))
         .get<game::Position>(archive.set_name("position"))
         .get<game::Size>(archive.set_name("size"))
         .get<game::Velocity>(archive.set_name("velocity"))
         .get<game::Serve>(archive.set_name("serve"))
-        .get<game::PlacementLocation>(archive.set_name("placement_location"));
+        .get<game::PlacementLocation>(archive.set_name("placement_location"))
+        .get<game::RenderRectange>(archive.set_name("render_rectangle"))
+        .get<game::RenderCircle>(archive.set_name("render_circle"));
 }
 
 std::string enttarchive::to_json(const entt::registry &reg)

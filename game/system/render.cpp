@@ -13,10 +13,10 @@ void sys::render_background(const GameContext *context)
     render_target->draw(blackbg);
 }
 
-void sys::render_paddle(const GameContext *context)
+void sys::render_rectangles(const GameContext *context)
 {
     const auto reg = context->get_registry();
-    const auto view = reg->view<game::Paddle, game::Position, game::Size>();
+    const auto view = reg->view<game::RenderRectange, game::Position, game::Size>();
     for (const entt::entity e : view)
     {        
         const auto size = view.get<game::Size>(e);
@@ -29,10 +29,10 @@ void sys::render_paddle(const GameContext *context)
     }
 }
 
-void sys::render_ball(const GameContext *context)
+void sys::render_circles(const GameContext *context)
 {
     const auto reg = context->get_registry();
-    const auto view = reg->view<game::Ball, game::Position, game::Size>();
+    const auto view = reg->view<game::RenderCircle, game::Position, game::Size>();
     for (const entt::entity e : view)
     {
         const auto size = view.get<game::Size>(e);

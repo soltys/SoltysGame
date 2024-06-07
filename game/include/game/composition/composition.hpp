@@ -20,6 +20,9 @@ namespace game
     struct Ball
     {
     };
+    struct Wall
+    {
+    };
     struct Size
     {
         Size() {}
@@ -49,12 +52,18 @@ namespace game
     };
     struct PlacementLocation
     {
-        Direction Loc;
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(game::PlacementLocation, Loc);
+        Direction Dir;
+        NLOHMANN_DEFINE_TYPE_INTRUSIVE(game::PlacementLocation, Dir);
     };
     struct Serve
     {
-        Direction Loc;
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(game::Serve, Loc);
+        Direction Dir;
+        NLOHMANN_DEFINE_TYPE_INTRUSIVE(game::Serve, Dir);
+    };
+    struct RenderRectange
+    {
+    };
+    struct RenderCircle
+    {
     };
 }

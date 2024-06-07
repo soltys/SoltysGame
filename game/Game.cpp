@@ -30,9 +30,16 @@ void Game::Initialize()
         ->set_registry(reg)
         ->set_main_render_target(window.get());
 
-    factory::create_paddle(context.get(), sf::Vector2f(10.f, 300.f), game::Direction::Left);
-    factory::create_paddle(context.get(), sf::Vector2f(video_mode.width - 10.f, 300.f), game::Direction::Right);
-    factory::create_ball(context.get(), sf::Vector2f(400.f, 300.f));
+    const float paddle_margin = 20.f;
+    factory::create_paddle(context.get(), sf::Vector2f(paddle_margin, 300.f), game::Direction::Left);
+    factory::create_paddle(context.get(), sf::Vector2f(video_mode.width - paddle_margin, 300.f), game::Direction::Right);
+
+    factory::create_ball(context.get(), sf::Vector2f(150.f, 150.f), game::Direction::Left);
+    factory::create_ball(context.get(), sf::Vector2f(150.f, 150.f), game::Direction::Right);
+    factory::create_ball(context.get(), sf::Vector2f(150.f, 150.f), game::Direction::Up);
+    factory::create_ball(context.get(), sf::Vector2f(150.f, 150.f), game::Direction::Down);
+
+    factory::create_walls(context.get());
 }
 void Game::Update()
 {
