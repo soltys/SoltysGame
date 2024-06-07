@@ -3,8 +3,8 @@
 #include <game/composition/composition.hpp>
 #include <game/EntityFactory.hpp>
 #include <game/system/system.hpp>
-#include <sstream>
 #include <game/core/EnttArchive.hpp>
+#include <SFML/Graphics.hpp>
 void Game::Initialize()
 {
     this->gameTime = std::make_unique<GameTime>();
@@ -13,15 +13,27 @@ void Game::Initialize()
     const sf::VideoMode video_mode(800u, 600u);
 
     auto window_style = sf::Style::Default;
-    if (r::get_toggle("WINDOW_FULLSCREEN_LAUNCH"))
+    auto should_fullscreen_launch = r::get_toggle("WINDOW_FULLSCREEN_LAUNCH");
+    if (should_fullscreen_launch)
     {
         window_style = sf::Style::Fullscreen;
     }
     this->reg = std::make_shared<entt::registry>();
     this->window = std::make_unique<sf::RenderWindow>(video_mode, r::get_locale_string("WINDOW_TITLE"), window_style);
+
     this->view.setSize(video_mode.width, video_mode.height);
-    view.setCenter(view.getSize().x / 2, view.getSize().y / 2);
-    view = mysf::get_letterbox_view(view, video_mode.width, video_mode.height);
+    this->view.setCenter(view.getSize().x / 2, view.getSize().y / 2);
+    if (should_fullscreen_launch)
+    {
+        auto desktop_modes = sf::VideoMode::getFullscreenModes();
+        auto desktop_mode = desktop_modes[0];
+        this->view = mysf::get_letterbox_view(view, desktop_mode.width, desktop_mode.height);
+    }
+    else
+    {
+        this->view = mysf::get_letterbox_view(view, video_mode.width, video_mode.height);
+    }
+
     l::info("===started game===");
 
     context
