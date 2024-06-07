@@ -15,6 +15,7 @@ void factory::create_paddle(const GameContext *game_context, sf::Vector2f positi
     reg->emplace<game::Size>(e, base_size);
     reg->emplace<game::PlacementLocation>(e, location);
     reg->emplace<game::RenderRectange>(e);
+    reg->emplace<game::Color>(e, game::Colors::White);
 }
 
 void factory::create_ball(const GameContext *game_context, sf::Vector2f position, game::Direction serve_direction)
@@ -28,6 +29,7 @@ void factory::create_ball(const GameContext *game_context, sf::Vector2f position
     reg->emplace<game::Size>(e, base_size);
     reg->emplace<game::Serve>(e, serve_direction);
     reg->emplace<game::RenderCircle>(e);
+    reg->emplace<game::Color>(e, game::Colors::White);
 }
 
 void create_wall(const GameContext *context, game::Direction location, game::Position position, game::Size size)
@@ -39,6 +41,7 @@ void create_wall(const GameContext *context, game::Direction location, game::Pos
     reg->emplace<game::Position>(e, position);
     reg->emplace<game::Size>(e, size);
     reg->emplace<game::RenderRectange>(e);
+    reg->emplace<game::Color>(e, game::Colors::White);
 }
 
 void factory::create_walls(const GameContext *context)

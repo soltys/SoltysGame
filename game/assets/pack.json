@@ -19,8 +19,8 @@
             "ball": {
                 "base_speed": 7,
                 "base_size": {
-                    "width": 40,
-                    "height": 40
+                    "width": 7,
+                    "height": 7
                 }                
             }            
         },

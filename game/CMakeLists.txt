@@ -47,6 +47,8 @@ add_executable(${MAIN_TARGET}
     system/system.cpp
     system/render.h
     system/render.cpp
+    system/collision.cpp
+    
     EntityFactory.cpp
     include/game/EntityFactory.h
     #single-header-libraries
