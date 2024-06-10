@@ -11,10 +11,8 @@ class Game
 	bool noexit = true;
 	bool should_escape_close = false;
 
-	std::vector<char> font_memory;
-	sf::Font fps_font;
-	sf::Text fps_text;
-	int fps_count = 0;
+	std::vector<int> fps_counts;
+	entt::entity fps_entity;
 	std::chrono::high_resolution_clock::time_point fps_start;
 	std::chrono::high_resolution_clock::time_point fps_end;
 

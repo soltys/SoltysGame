@@ -96,4 +96,5 @@ void sys::render(const GameContext *context)
     render_background(context);
     render_rectangles(context);
     render_circles(context);
+    render_text(context);
 }

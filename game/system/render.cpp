@@ -3,6 +3,27 @@
 #include <game/GameContext.hpp>
 #include <SFML/Window.hpp>
 #include "render.hpp"
+#include <game/Locator.hpp>
+
+void sys::render_text(const GameContext *context)
+{
+    const auto default_font = Locator::get_font_service()->get_font();
+    const auto reg = context->get_registry();
+    const auto render_target = context->get_main_render_target();
+    const auto view = reg->view<game::Text, game::Position, game::Color, game::Size>();
+    for (const entt::entity &e : view)
+    {
+        const auto size = view.get<game::Size>(e);
+        const auto t = view.get<game::Text>(e);
+        const auto position = view.get<game::Position>(e);
+        const auto color = view.get<game::Color>(e);
+        sf::Text text(t.text, default_font);
+        text.setPosition(position.to_vector());
+        text.setCharacterSize(24);
+        text.setColor(color.to_color());
+        render_target->draw(text);
+    }
+}
 
 void sys::render_background(const GameContext *context)
 {
@@ -18,14 +39,14 @@ void sys::render_rectangles(const GameContext *context)
     const auto reg = context->get_registry();
     const auto renderTarget = context->get_main_render_target();
     const auto view = reg->view<game::RenderRectange, game::Position, game::Color, game::Size>();
-    for (const entt::entity& e : view)
-    {        
+    for (const entt::entity &e : view)
+    {
         const auto size = view.get<game::Size>(e);
         const auto position = view.get<game::Position>(e);
         const auto color = view.get<game::Color>(e);
-        auto shape = sf::RectangleShape(sf::Vector2f(size.width, size.height));        
+        auto shape = sf::RectangleShape(sf::Vector2f(size.width, size.height));
         shape.setPosition(position.x, position.y);
-        shape.setFillColor(color.to_color());        
+        shape.setFillColor(color.to_color());
         renderTarget->draw(shape);
     }
 }
@@ -35,14 +56,14 @@ void sys::render_circles(const GameContext *context)
     const auto reg = context->get_registry();
     const auto renderTarget = context->get_main_render_target();
     const auto view = reg->view<game::RenderCircle, game::Position, game::Color, game::Size>();
-    for (const entt::entity& e : view)
+    for (const entt::entity &e : view)
     {
         const auto size = view.get<game::Size>(e);
         const auto position = view.get<game::Position>(e);
         const auto color = view.get<game::Color>(e);
         auto shape = sf::CircleShape(size.width);
         shape.setPosition(position.x, position.y);
-        shape.setFillColor(color.to_color());        
+        shape.setFillColor(color.to_color());
         renderTarget->draw(shape);
     }
 }

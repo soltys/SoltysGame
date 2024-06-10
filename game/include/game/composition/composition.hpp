@@ -93,4 +93,8 @@ namespace game
     struct RenderCircle
     {
     };
+    struct Text
+    {
+        std::string text;
+    };
 }

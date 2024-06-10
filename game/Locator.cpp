@@ -21,6 +21,7 @@ void Locator::initialize()
     Locator::provide_key_map();
     Locator::provide_game_settings();
     Locator::provide_game_input();
+    Locator::provide_font_service();
 }
 
 std::filesystem::path Locator::get_packer_path()
@@ -111,4 +112,10 @@ void Locator::provide_game_input()
 {
     auto game_input = std::make_shared<GameInput>();
     provide(game_input);
+}
+
+void Locator::provide_font_service()
+{
+    auto font_service = std::make_shared<FontService>();
+    provide(font_service);
 }

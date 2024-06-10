@@ -58,3 +58,14 @@ void factory::create_walls(const GameContext *context)
     create_wall(context, game::Direction::Left, {left_right_wall_margin, 0}, {wall_thickness, (float)video_mode.height});
     create_wall(context, game::Direction::Right, {(float)video_mode.width - (left_right_wall_margin + wall_thickness), 0}, {wall_thickness, (float)video_mode.height});
 }
+
+entt::entity factory::create_text(const GameContext *context, sf::Vector2f position, sf::Vector2f size)
+{
+    auto reg = context->get_registry();
+    auto e = reg->create();
+    reg->emplace<game::Text>(e);
+    reg->emplace<game::Position>(e, position.x, position.y);
+    reg->emplace<game::Size>(e, size.x, size.y);
+    reg->emplace<game::Color>(e, game::Colors::White);
+    return e;
+}

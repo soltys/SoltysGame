@@ -53,14 +53,7 @@ void Game::initialize()
     factory::create_ball(context.get(), sf::Vector2f(150.f, 150.f), game::Direction::Down);
 
     factory::create_walls(context.get());
-
-    this->font_memory = r::get_file("font_Consolas.ttf");
-    fps_font.loadFromMemory(font_memory.data(), font_memory.size());
-    fps_text.setFont(fps_font);
-    fps_text.setPosition(20, 20);
-    fps_text.setCharacterSize(24);
-    fps_text.setStyle(sf::Text::Bold | sf::Text::Underlined);
-    fps_text.setColor(sf::Color::Red);
+    fps_entity = factory::create_text(context.get(), sf::Vector2f(20.f, 20.f), sf::Vector2f(20, 20));
 }
 void Game::update()
 {
@@ -120,11 +113,17 @@ void Game::draw()
     window->setView(view);
 
     sys::render(this->context.get());
-    
-    fps_text.setString(std::format("FPS: {}", fps_count));
-    window->draw(fps_text);
 
     window->display();
     fps_end = std::chrono::high_resolution_clock::now();
-    fps_count = (float)1e9 / (float)std::chrono::duration_cast<std::chrono::nanoseconds>(fps_end - fps_start).count();
+    auto fps_count = (float)1e9 / (float)std::chrono::duration_cast<std::chrono::nanoseconds>(fps_end - fps_start).count();
+    if (fps_counts.size() >= 100)
+    {
+        fps_counts.erase(fps_counts.begin());
+    }
+    fps_counts.push_back(fps_count);
+    auto computed_fps = std::reduce(fps_counts.begin(), fps_counts.end()) / fps_counts.size();
+    
+    auto &t = this->reg->get<game::Text>(fps_entity);
+    t.text = std::format("FPS: {}", computed_fps);
 }
