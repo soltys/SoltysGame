@@ -21,8 +21,8 @@
                 "base_size": {
                     "width": 7,
                     "height": 7
-                }                
-            }            
+                }
+            }
         },
         "keymapping": {
             "Left": {
@@ -37,6 +37,7 @@
     },
     "options": {
         "WINDOW_FULLSCREEN_LAUNCH": false,
+        "ESCAPE_CLOSE_GAME": true,
         "LOG_ENABLED": true,
         "LOG_WINDOW": false,
         "LOG_TO_DB": true,

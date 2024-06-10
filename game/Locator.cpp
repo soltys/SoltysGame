@@ -20,6 +20,7 @@ void Locator::initialize()
     Locator::provide_logger();
     Locator::provide_key_map();
     Locator::provide_game_settings();
+    Locator::provide_game_input();
 }
 
 std::filesystem::path Locator::get_packer_path()
@@ -104,4 +105,10 @@ void Locator::provide_game_settings()
 {
     auto game_settings_service = std::make_shared<GameSettingsService>(GameSettingsJsonService::parse(r::get_string("game_settings")));
     provide(game_settings_service);
+}
+
+void Locator::provide_game_input()
+{
+    auto game_input = std::make_shared<GameInput>();
+    provide(game_input);
 }

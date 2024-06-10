@@ -13,10 +13,15 @@ class GameContext
     static constexpr float frame_limit = 60.f;
     static constexpr int microseconds_per_update = static_cast<int>(1000000.f / frame_limit);
 
-public:   
+public:
     const sf::VideoMode &get_video_mode() const
     {
         return this->video_mode;
+    }
+    GameContext *set_video_mode(const sf::VideoMode view_mode)
+    {
+        this->video_mode = view_mode;
+        return this;
     }
     const sf::Int64 &get_lag() const
     {
@@ -36,15 +41,10 @@ public:
             return true;
         }
         return false;
-    }   
+    }
     GameContext *add_lag(sf::Int64 microseconds)
     {
         this->lag += microseconds;
-        return this;
-    }
-    GameContext *set_video_mode(const sf::VideoMode view_mode)
-    {
-        this->video_mode = view_mode;
         return this;
     }
 
@@ -63,7 +63,7 @@ public:
     sf::RenderTarget *get_main_render_target() const
     {
         return this->main_render_target;
-    }   
+    }
 };
 
 typedef const std::unique_ptr<GameContext> GameContextPtr;

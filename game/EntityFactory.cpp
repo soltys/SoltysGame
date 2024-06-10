@@ -48,13 +48,13 @@ void factory::create_walls(const GameContext *context)
 {
     auto video_mode = context->get_video_mode();
 
-    const int up_down_wall_margin = 25;
-    const int wall_thickness = 5;
+    const int wall_thickness = 2;
+    const int up_down_wall_margin = 50;
 
-    const int left_right_wall_margin = 5;
     create_wall(context, game::Direction::Up, {0, up_down_wall_margin}, {(float)video_mode.width, wall_thickness});
     create_wall(context, game::Direction::Down, {0, static_cast<float>(video_mode.height - up_down_wall_margin)}, {(float)video_mode.width, wall_thickness});
 
+    const int left_right_wall_margin = 0;
     create_wall(context, game::Direction::Left, {left_right_wall_margin, 0}, {wall_thickness, (float)video_mode.height});
-    create_wall(context, game::Direction::Right, {(float)video_mode.width - left_right_wall_margin, 0}, {wall_thickness, (float)video_mode.height});
+    create_wall(context, game::Direction::Right, {(float)video_mode.width - (left_right_wall_margin + wall_thickness), 0}, {wall_thickness, (float)video_mode.height});
 }

@@ -7,7 +7,7 @@ private:
 public:
 	GameTime()  {	}
 
-	sf::Int64 GetMicroseconds() {
+	sf::Int64 get_microseconds() {
 		auto dt = clock.getElapsedTime().asMicroseconds();
 		clock.restart();
 		return dt;

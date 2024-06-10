@@ -5,11 +5,12 @@
 #include <game/system/system.hpp>
 #include <game/core/EnttArchive.hpp>
 #include <SFML/Graphics.hpp>
-void Game::Initialize()
+#include <game/Locator.hpp>
+void Game::initialize()
 {
     this->gameTime = std::make_unique<GameTime>();
     this->context = std::make_unique<GameContext>();
-
+    this->should_escape_close = r::get_toggle("ESCAPE_CLOSE_GAME");
     const sf::VideoMode video_mode(800u, 600u);
 
     auto window_style = sf::Style::Default;
@@ -37,7 +38,7 @@ void Game::Initialize()
     l::info("===started game===");
 
     context
-        ->add_lag(this->gameTime->GetMicroseconds())
+        ->add_lag(this->gameTime->get_microseconds())
         ->set_video_mode(video_mode)
         ->set_registry(reg)
         ->set_main_render_target(window.get());
@@ -52,11 +53,20 @@ void Game::Initialize()
     factory::create_ball(context.get(), sf::Vector2f(150.f, 150.f), game::Direction::Down);
 
     factory::create_walls(context.get());
+
+    this->font_memory = r::get_file("font_Consolas.ttf");
+    fps_font.loadFromMemory(font_memory.data(), font_memory.size());
+    fps_text.setFont(fps_font);
+    fps_text.setPosition(20, 20);
+    fps_text.setCharacterSize(24);
+    fps_text.setStyle(sf::Text::Bold | sf::Text::Underlined);
+    fps_text.setColor(sf::Color::Red);
 }
-void Game::Update()
+void Game::update()
 {
+    fps_start = std::chrono::high_resolution_clock::now();
     context
-        ->add_lag(this->gameTime->GetMicroseconds());
+        ->add_lag(this->gameTime->get_microseconds());
 
     for (auto event = sf::Event{}; window->pollEvent(event);)
     {
@@ -64,9 +74,22 @@ void Game::Update()
         {
             view = mysf::get_letterbox_view(view, event.size.width, event.size.height);
         }
-        if (event.type == sf::Event::Closed)
+        else if (event.type == sf::Event::Closed)
         {
             window->close();
+        }
+        else if (event.type == sf::Event::KeyPressed)
+        {
+            if (this->should_escape_close && event.key.code == sf::Keyboard::Escape)
+            {
+                window->close();
+            }
+
+            Locator::get_game_input()->on_key_pressed((int)event.key.code);
+        }
+        else if (event.type == sf::Event::KeyReleased)
+        {
+            Locator::get_game_input()->on_key_released((int)event.key.code);
         }
         else if (event.type == sf::Event::MouseButtonPressed)
         {
@@ -84,18 +107,24 @@ void Game::Update()
         sys::movement(this->context.get());
     }
 }
-bool Game::IsRunning()
+bool Game::is_running()
 {
     return window->isOpen();
 }
-void Game::Terminate()
+void Game::terminate()
 {
 }
-void Game::Draw()
+void Game::draw()
 {
-    window->clear(sf::Color::Color(0x333333));
+    window->clear(sf::Color::Color(0xff, 0, 0));
     window->setView(view);
 
     sys::render(this->context.get());
+    
+    fps_text.setString(std::format("FPS: {}", fps_count));
+    window->draw(fps_text);
+
     window->display();
+    fps_end = std::chrono::high_resolution_clock::now();
+    fps_count = (float)1e9 / (float)std::chrono::duration_cast<std::chrono::nanoseconds>(fps_end - fps_start).count();
 }

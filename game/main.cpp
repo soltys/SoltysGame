@@ -5,13 +5,13 @@ int main(int argc, char *argv[])
     Locator::initialize();
 
     Game game;
-    game.Initialize();
-    while (game.IsRunning())
+    game.initialize();
+    while (game.is_running())
     {
-        game.Update();
+        game.update();
 
-        game.Draw();
+        game.draw();
     }
-    game.Terminate();
+    game.terminate();
     return 0;
 }

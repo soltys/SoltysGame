@@ -57,19 +57,22 @@ void sys::serve(const GameContext *context)
 void sys::keyboard(const GameContext *context)
 {
     const auto reg = context->get_registry();
-    const auto view = reg->view<game::Paddle, game::Position, game::Size, game::Velocity, game::PlacementLocation>();
+    const auto view = reg->view<game::Paddle, game::Velocity, game::PlacementLocation>();
     auto key_map = Locator::get_key_map();
     auto game_settings = Locator::get_game_settings();
+    auto game_input = Locator::get_game_input();
     auto base_paddle_speed = game_settings->get_paddle_base_speed();
     for (const entt::entity &e : view)
     {
-        auto [pl, pos, size, vel] = view.get<game::PlacementLocation, game::Position, game::Size, game::Velocity>(e);
+        auto [pl, vel] = view.get<game::PlacementLocation, game::Velocity>(e);
 
-        if (sf::Keyboard::isKeyPressed(key_map->get_key(pl.Dir, "Up")))
+        auto action_up_key = key_map->get_key(pl.Dir, Action::UP);
+        if (game_input->is_key_pressed(action_up_key))
         {
             vel.y = -base_paddle_speed;
         }
-        if (sf::Keyboard::isKeyPressed(key_map->get_key(pl.Dir, "Down")))
+        auto action_down_key = key_map->get_key(pl.Dir, Action::DOWN);
+        if (game_input->is_key_pressed(action_down_key))
         {
             vel.y = base_paddle_speed;
         }

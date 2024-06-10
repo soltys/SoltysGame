@@ -5,6 +5,7 @@
 #include <game/logging/Logger.hpp>
 #include <game/core/KeyMapService.hpp>
 #include <game/core/GameSettingsService.hpp>
+#include <game/core/GameInput.hpp>
 
 #define LOCATOR_FIELD(type, name)                             \
 private:                                                      \
@@ -29,6 +30,7 @@ private:
     LOCATOR_FIELD(Logger, logger)
     LOCATOR_FIELD(KeyMapService, key_map)
     LOCATOR_FIELD(GameSettingsService, game_settings)
+    LOCATOR_FIELD(GameInput, game_input)
 public:
     static void initialize();
 };
