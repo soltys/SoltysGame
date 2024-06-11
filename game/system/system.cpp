@@ -25,22 +25,22 @@ void sys::serve(const GameContext *context)
     {
         auto &vel = view.get<game::Velocity>(e);
         auto &serv = view.get<game::Serve>(e);
-        if (serv.Dir == game::Direction::Left)
+        if (serv.dir == game::Direction::Left)
         {
             vel.x = -game_settings->get_ball_base_speed();
             vel.y = 11;
         }
-        else if (serv.Dir == game::Direction::Right)
+        else if (serv.dir == game::Direction::Right)
         {
             vel.x = game_settings->get_ball_base_speed();
             vel.y = 7;
         }
-        else if (serv.Dir == game::Direction::Up)
+        else if (serv.dir == game::Direction::Up)
         {
             vel.x = 5;
             vel.y = -game_settings->get_ball_base_speed();
         }
-        else if (serv.Dir == game::Direction::Down)
+        else if (serv.dir == game::Direction::Down)
         {
             vel.x = 3;
             vel.y = game_settings->get_ball_base_speed();
@@ -66,12 +66,12 @@ void sys::keyboard(const GameContext *context)
     {
         auto [pl, vel] = view.get<game::PlacementLocation, game::Velocity>(e);
 
-        auto action_up_key = key_map->get_key(pl.Dir, Action::UP);
+        auto action_up_key = key_map->get_key(pl.dir, Action::UP);
         if (game_input->is_key_pressed(action_up_key))
         {
             vel.y = -base_paddle_speed;
         }
-        auto action_down_key = key_map->get_key(pl.Dir, Action::DOWN);
+        auto action_down_key = key_map->get_key(pl.dir, Action::DOWN);
         if (game_input->is_key_pressed(action_down_key))
         {
             vel.y = base_paddle_speed;

@@ -79,13 +79,13 @@ namespace game
     };
     struct PlacementLocation
     {
-        Direction Dir;
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(game::PlacementLocation, Dir);
+        Direction dir;
+        NLOHMANN_DEFINE_TYPE_INTRUSIVE(game::PlacementLocation, dir);
     };
     struct Serve
     {
-        Direction Dir;
-        NLOHMANN_DEFINE_TYPE_INTRUSIVE(game::Serve, Dir);
+        Direction dir;
+        NLOHMANN_DEFINE_TYPE_INTRUSIVE(game::Serve, dir);
     };
     struct RenderRectange
     {
@@ -96,5 +96,6 @@ namespace game
     struct Text
     {
         std::string text;
+        NLOHMANN_DEFINE_TYPE_INTRUSIVE(game::Text, text);
     };
 }

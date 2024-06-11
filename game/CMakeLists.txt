@@ -6,8 +6,11 @@ pack_resources(pack_file
 	OUTPUT_FILE "${PROJECT_BINARY_DIR}/pack.db"
     FORCE)
 
-configure_file("game.rc.in" "${PROJECT_BINARY_DIR}/game.rc")
+file(SHA256 ${CMAKE_CURRENT_SOURCE_DIR}/assets/pack.json JSON_SHA256)
+string(SUBSTRING ${JSON_SHA256} 0 7 JSON_SHORT_SHA256)
 
+configure_file("game.rc.in" "${PROJECT_BINARY_DIR}/game.rc")
+configure_file("config.hpp.in" "${PROJECT_BINARY_DIR}/include/game/config.hpp")
 add_subdirectory(assets)
 
 add_executable(${MAIN_TARGET}
@@ -18,7 +21,7 @@ add_executable(${MAIN_TARGET}
     include/game/Game.hpp
     include/game/GameTime.hpp
     include/game/GameContext.hpp
-    include/game/Config.hpp
+    ${PROJECT_BINARY_DIR}/include/game/config.hpp
 
     include/game/core/KeyMapService.hpp
     core/KeyMapService.cpp
@@ -26,6 +29,8 @@ add_executable(${MAIN_TARGET}
     core/GameSettingsService.cpp
     include/game/core/EnttArchive.hpp
     core/EnttArchive.cpp
+    include/game/core/FontService.hpp
+    include/game/core/GameInput.hpp
     
     Locator.cpp
     include/game/Locator.hpp
@@ -61,4 +66,4 @@ add_executable(${MAIN_TARGET}
 
 target_link_libraries(${MAIN_TARGET} PRIVATE sfml-graphics sfml-main packer_library)
 
-target_include_directories(${MAIN_TARGET} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_include_directories(${MAIN_TARGET} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include ${PROJECT_BINARY_DIR}/include)

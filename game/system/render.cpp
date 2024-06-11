@@ -19,7 +19,7 @@ void sys::render_text(const GameContext *context)
         const auto color = view.get<game::Color>(e);
         sf::Text text(t.text, default_font);
         text.setPosition(position.to_vector());
-        text.setCharacterSize(24);
+        text.setCharacterSize(size.height);
         text.setColor(color.to_color());
         render_target->draw(text);
     }

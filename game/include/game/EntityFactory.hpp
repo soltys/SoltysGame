@@ -10,4 +10,5 @@ namespace factory
     void create_ball(const GameContext *game_context, sf::Vector2f position, game::Direction serve_direction);
     void create_walls(const GameContext *context);
     entt::entity create_text(const GameContext* context, sf::Vector2f position, sf::Vector2f size);
+    entt::entity create_text(const GameContext* context, std::string text, sf::Vector2f position, sf::Vector2f size);
 }

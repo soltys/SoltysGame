@@ -26,11 +26,11 @@ void sys::collision(const GameContext *context)
                 col.blue = col.blue - color_change_step < 0 ? 0 : col.blue - color_change_step;
                 col.green = col.green - color_change_step < 0 ? 0 : col.green - color_change_step;
 
-                if (wall_placement.Dir == game::Direction::Left || wall_placement.Dir == game::Direction::Right)
+                if (wall_placement.dir == game::Direction::Left || wall_placement.dir == game::Direction::Right)
                 {
                     vel.x = vel.x * -1;
                 }
-                else if (wall_placement.Dir == game::Direction::Down || wall_placement.Dir == game::Direction::Up)
+                else if (wall_placement.dir == game::Direction::Down || wall_placement.dir == game::Direction::Up)
                 {
                     vel.y = vel.y * -1;
                 }

@@ -106,7 +106,8 @@ void enttarchive::perform_archive_action(SnapshotType &snapshot, ArchiveType &ar
         .get<game::Serve>(archive.set_name("serve"))        
         .get<game::PlacementLocation>(archive.set_name("placement_location"))
         .get<game::RenderRectange>(archive.set_name("render_rectangle"))
-        .get<game::RenderCircle>(archive.set_name("render_circle"));
+        .get<game::RenderCircle>(archive.set_name("render_circle"))
+        .get<game::Text>(archive.set_name("screen_text"));
 }
 
 std::string enttarchive::to_json(const entt::registry &reg)

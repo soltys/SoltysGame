@@ -6,9 +6,10 @@
 #include <game/core/EnttArchive.hpp>
 #include <SFML/Graphics.hpp>
 #include <game/Locator.hpp>
+#include <game/config.hpp>
 void Game::initialize()
 {
-    this->gameTime = std::make_unique<GameTime>();
+    this->time = std::make_unique<GameTime>();
     this->context = std::make_unique<GameContext>();
     this->should_escape_close = r::get_toggle("ESCAPE_CLOSE_GAME");
     const sf::VideoMode video_mode(800u, 600u);
@@ -38,14 +39,15 @@ void Game::initialize()
     l::info("===started game===");
 
     context
-        ->add_lag(this->gameTime->get_microseconds())
+        ->add_lag(this->time->get_microseconds_duration())
         ->set_video_mode(video_mode)
         ->set_registry(reg)
         ->set_main_render_target(window.get());
 
     const float paddle_margin = 20.f;
-    factory::create_paddle(context.get(), sf::Vector2f(paddle_margin, 300.f), game::Direction::Left);
-    factory::create_paddle(context.get(), sf::Vector2f(video_mode.width - paddle_margin, 300.f), game::Direction::Right);
+    const float middle_of_screen = video_mode.height / 2;
+    factory::create_paddle(context.get(), sf::Vector2f(paddle_margin, middle_of_screen), game::Direction::Left);
+    factory::create_paddle(context.get(), sf::Vector2f(video_mode.width - paddle_margin, middle_of_screen), game::Direction::Right);
 
     factory::create_ball(context.get(), sf::Vector2f(150.f, 150.f), game::Direction::Left);
     factory::create_ball(context.get(), sf::Vector2f(150.f, 150.f), game::Direction::Right);
@@ -53,13 +55,18 @@ void Game::initialize()
     factory::create_ball(context.get(), sf::Vector2f(150.f, 150.f), game::Direction::Down);
 
     factory::create_walls(context.get());
-    fps_entity = factory::create_text(context.get(), sf::Vector2f(20.f, 20.f), sf::Vector2f(20, 20));
+
+    auto fps_entity = factory::create_text(context.get(), sf::Vector2f(20.f, 20.f), sf::Vector2f(20, 20));
+    time->set_fps_entity(fps_entity);
+
+    std::string version_string = std::format("ver:{} git:{} pack:{}", PROJECT_VERSION, PROJECT_VERSION_SHORT_SHA1, PROJECT_PACK_JSON_SHORT_SHA256);
+    factory::create_text(context.get(), version_string, sf::Vector2f(20.f, video_mode.height - 20.f), sf::Vector2f(10.f, 10.f));
 }
 void Game::update()
 {
-    fps_start = std::chrono::high_resolution_clock::now();
+    time->set_fps_start_time_point();
     context
-        ->add_lag(this->gameTime->get_microseconds());
+        ->add_lag(this->time->get_microseconds_duration());
 
     for (auto event = sf::Event{}; window->pollEvent(event);)
     {
@@ -115,15 +122,5 @@ void Game::draw()
     sys::render(this->context.get());
 
     window->display();
-    fps_end = std::chrono::high_resolution_clock::now();
-    auto fps_count = (float)1e9 / (float)std::chrono::duration_cast<std::chrono::nanoseconds>(fps_end - fps_start).count();
-    if (fps_counts.size() >= 100)
-    {
-        fps_counts.erase(fps_counts.begin());
-    }
-    fps_counts.push_back(fps_count);
-    auto computed_fps = std::reduce(fps_counts.begin(), fps_counts.end()) / fps_counts.size();
-    
-    auto &t = this->reg->get<game::Text>(fps_entity);
-    t.text = std::format("FPS: {}", computed_fps);
+    time->update_fps(this->reg.get());
 }

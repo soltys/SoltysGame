@@ -2,13 +2,17 @@ cmake_minimum_required(VERSION 3.28)
 
 project(
     SoltysGame
-    VERSION 1.0
+    VERSION 0.0.1
     DESCRIPTION "Soltys Game"
     HOMEPAGE_URL "https://github.com/soltys/SoltysGame"
     LANGUAGES CXX
 )
 
 list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
+
+include(GetGitRevisionDescription)
+get_git_head_revision(GIT_REFSPEC GIT_SHA1)
+string(SUBSTRING ${GIT_SHA1} 0 7 GIT_SHORT_SHA1)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/$<CONFIG>/bin")
 option(BUILD_SHARED_LIBS "Build shared libraries" OFF)

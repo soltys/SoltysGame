@@ -61,9 +61,14 @@ void factory::create_walls(const GameContext *context)
 
 entt::entity factory::create_text(const GameContext *context, sf::Vector2f position, sf::Vector2f size)
 {
+    return create_text(context, "", position, size);
+}
+
+entt::entity factory::create_text(const GameContext *context, std::string text, sf::Vector2f position, sf::Vector2f size)
+{
     auto reg = context->get_registry();
     auto e = reg->create();
-    reg->emplace<game::Text>(e);
+    reg->emplace<game::Text>(e, text);
     reg->emplace<game::Position>(e, position.x, position.y);
     reg->emplace<game::Size>(e, size.x, size.y);
     reg->emplace<game::Color>(e, game::Colors::White);
