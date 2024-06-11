@@ -56,11 +56,17 @@ void Game::initialize()
 
     factory::create_walls(context.get());
 
-    auto fps_entity = factory::create_text(context.get(), sf::Vector2f(20.f, 20.f), sf::Vector2f(20, 20));
-    time->set_fps_entity(fps_entity);
+    if (r::get_toggle("SHOW_FPS"))
+    {
+        auto fps_entity = factory::create_text(context.get(), sf::Vector2f(20.f, 20.f), sf::Vector2f(20, 20));
+        time->set_fps_entity(fps_entity);
+    }
 
-    std::string version_string = std::format("ver:{} git:{} pack:{}", PROJECT_VERSION, PROJECT_VERSION_SHORT_SHA1, PROJECT_PACK_JSON_SHORT_SHA256);
-    factory::create_text(context.get(), version_string, sf::Vector2f(20.f, video_mode.height - 20.f), sf::Vector2f(10.f, 10.f));
+    if (r::get_toggle("SHOW_VERSION"))
+    {
+        std::string version_string = std::format("ver:{} git:{} pack:{}", PROJECT_VERSION, PROJECT_VERSION_SHORT_SHA1, PROJECT_PACK_JSON_SHORT_SHA256);
+        factory::create_text(context.get(), version_string, sf::Vector2f(20.f, video_mode.height - 20.f), sf::Vector2f(10.f, 10.f));
+    }
 }
 void Game::update()
 {
@@ -122,5 +128,5 @@ void Game::draw()
     sys::render(this->context.get());
 
     window->display();
-    time->update_fps(this->reg.get());
+    time->compute_fps(this->reg.get());
 }

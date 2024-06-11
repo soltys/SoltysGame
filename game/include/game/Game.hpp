@@ -7,7 +7,6 @@ class Game
 {
 	void Update(double dt, GameContext ev);
 
-	bool noexit = true;
 	bool should_escape_close = false;
 
 	std::unique_ptr<GameContext> context;
