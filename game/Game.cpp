@@ -39,7 +39,6 @@ void Game::initialize()
     l::info("===started game===");
 
     context
-        ->add_lag(this->time->get_microseconds_duration())
         ->set_video_mode(video_mode)
         ->set_registry(reg)
         ->set_main_render_target(window.get());
@@ -57,7 +56,7 @@ void Game::initialize()
     factory::create_walls(context.get());
     factory::create_point(context.get(), sf::Vector2f(paddle_margin, middle_of_screen), game::Colors::Cyan);
 
-    if(r::get_toggle("DEBUG_GRID"))
+    if (r::get_toggle("DEBUG_GRID"))
     {
         factory::create_grid(context.get());
     }
@@ -74,12 +73,21 @@ void Game::initialize()
         factory::create_text(context.get(), version_string, sf::Vector2f(20.f, video_mode.height - 20.f), sf::Vector2f(10.f, 10.f));
     }
 }
+
 void Game::update()
 {
-    time->set_fps_start_time_point();
-    context
-        ->add_lag(this->time->get_microseconds_duration());
+    time->set_fps_start_time_point();    
+    context->add_lag(this->time->get_microseconds_duration());
 
+    handle_events();
+    update_systems();
+    draw();
+
+    time->compute_fps(this->reg.get());
+}
+
+void Game::handle_events()
+{
     for (auto event = sf::Event{}; window->pollEvent(event);)
     {
         if (event.type == sf::Event::Resized)
@@ -111,7 +119,10 @@ void Game::update()
             l::info(enttarchive::to_json(*this->reg));
         }
     }
+}
 
+void Game::update_systems()
+{
     while (this->context->should_update())
     {
         sys::clear_velocity(this->context.get());
@@ -122,20 +133,19 @@ void Game::update()
         sys::movement(this->context.get());
     }
 }
+
+void Game::draw()
+{
+    window->clear(sf::Color::Color(0xff, 0, 0));
+    window->setView(view);
+    sys::render(this->context.get());
+    window->display();
+}
+
 bool Game::is_running()
 {
     return window->isOpen();
 }
 void Game::terminate()
 {
-}
-void Game::draw()
-{
-    window->clear(sf::Color::Color(0xff, 0, 0));
-    window->setView(view);
-
-    sys::render(this->context.get());
-
-    window->display();
-    time->compute_fps(this->reg.get());
 }

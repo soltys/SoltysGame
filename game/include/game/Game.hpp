@@ -15,10 +15,13 @@ class Game
 	sf::View view;
 	std::shared_ptr<entt::registry> reg = nullptr;
 
+	void handle_events();
+	void update_systems();
+	void draw();
+	
 public:
 	void initialize();
 	void update();
 	bool is_running();
 	void terminate();
-	void draw();
 };

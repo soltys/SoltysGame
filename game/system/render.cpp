@@ -55,7 +55,7 @@ void sys::render_rectangles(const GameContext *context)
         {
             shape.setFillColor(sf::Color::Transparent);
             shape.setOutlineColor(color.to_color());
-            shape.setOutlineThickness(1.f);
+            shape.setOutlineThickness(0.5f);
         }
 
         renderTarget->draw(shape);
