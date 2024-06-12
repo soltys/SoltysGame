@@ -41,12 +41,23 @@ void sys::render_rectangles(const GameContext *context)
     const auto view = reg->view<game::RenderRectange, game::Position, game::Color, game::Size>();
     for (const entt::entity &e : view)
     {
+        const auto render_rectangle = view.get<game::RenderRectange>(e);
         const auto size = view.get<game::Size>(e);
         const auto position = view.get<game::Position>(e);
         const auto color = view.get<game::Color>(e);
         auto shape = sf::RectangleShape(sf::Vector2f(size.width, size.height));
         shape.setPosition(position.x, position.y);
-        shape.setFillColor(color.to_color());
+        if (render_rectangle.shape_style == game::ShapeStyle::FILL)
+        {
+            shape.setFillColor(color.to_color());
+        }
+        else
+        {
+            shape.setFillColor(sf::Color::Transparent);
+            shape.setOutlineColor(color.to_color());
+            shape.setOutlineThickness(1.f);
+        }
+
         renderTarget->draw(shape);
     }
 }

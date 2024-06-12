@@ -87,8 +87,15 @@ namespace game
         Direction dir;
         NLOHMANN_DEFINE_TYPE_INTRUSIVE(game::Serve, dir);
     };
+    enum class ShapeStyle
+    {
+        FILL,
+        OUTLINE
+    };
     struct RenderRectange
     {
+        ShapeStyle shape_style;
+        NLOHMANN_DEFINE_TYPE_INTRUSIVE(game::RenderRectange, shape_style);
     };
     struct RenderCircle
     {

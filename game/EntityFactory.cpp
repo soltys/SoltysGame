@@ -14,7 +14,7 @@ entt::entity factory::create_paddle(const GameContext *game_context, sf::Vector2
     reg->emplace<game::Velocity>(e, 0.f, 0.f);
     reg->emplace<game::Size>(e, base_size);
     reg->emplace<game::PlacementLocation>(e, location);
-    reg->emplace<game::RenderRectange>(e);
+    reg->emplace<game::RenderRectange>(e, game::ShapeStyle::FILL);
     reg->emplace<game::Color>(e, game::Colors::White);
     return e;
 }
@@ -42,7 +42,7 @@ void create_wall(const GameContext *context, game::Direction location, game::Pos
     reg->emplace<game::PlacementLocation>(e, location);
     reg->emplace<game::Position>(e, position);
     reg->emplace<game::Size>(e, size);
-    reg->emplace<game::RenderRectange>(e);
+    reg->emplace<game::RenderRectange>(e, game::ShapeStyle::FILL);
     reg->emplace<game::Color>(e, game::Colors::White);
 }
 
@@ -98,4 +98,26 @@ entt::entity factory::add_time_to_live(const GameContext *context, entt::entity 
     auto reg = context->get_registry();
     reg->emplace<game::TimeToLive>(e, microseconds_to_live);
     return e;
+}
+
+void factory::create_grid(const GameContext *context)
+{
+    auto reg = context->get_registry();
+    auto video_mode = context->get_video_mode();
+
+    const int grid_width = 64;
+    const int grid_height = grid_width;
+    int x_count = static_cast<int>(video_mode.width / grid_width) + 1;
+    int y_count = static_cast<int>(video_mode.height / grid_height) + 1;
+    for (int x = 0; x < x_count; x++)
+    {
+        for (int y = 0; y < y_count; y++)
+        {
+            entt::entity e = reg->create();
+            reg->emplace<game::Position>(e, static_cast<float>(grid_width * x), static_cast<float>(grid_height * y));
+            reg->emplace<game::Size>(e, grid_width, grid_height);
+            reg->emplace<game::RenderRectange>(e, game::ShapeStyle::OUTLINE);
+            reg->emplace<game::Color>(e, game::Colors::Green);
+        }
+    }
 }

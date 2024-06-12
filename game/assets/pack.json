@@ -36,6 +36,7 @@
         }
     },
     "options": {
+        "DEBUG_GRID": true,
         "SHOW_FPS": true,
         "SHOW_VERSION": true,
         "WINDOW_FULLSCREEN_LAUNCH": false,

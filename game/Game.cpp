@@ -57,6 +57,11 @@ void Game::initialize()
     factory::create_walls(context.get());
     factory::create_point(context.get(), sf::Vector2f(paddle_margin, middle_of_screen), game::Colors::Cyan);
 
+    if(r::get_toggle("DEBUG_GRID"))
+    {
+        factory::create_grid(context.get());
+    }
+
     if (r::get_toggle("SHOW_FPS"))
     {
         auto fps_entity = factory::create_text(context.get(), sf::Vector2f(20.f, 20.f), sf::Vector2f(20, 20));
@@ -101,7 +106,7 @@ void Game::update()
         else if (event.type == sf::Event::MouseButtonPressed)
         {
             auto p = factory::create_point(context.get(), sf::Vector2f(event.mouseButton.x, event.mouseButton.y), game::Colors::Red);
-            factory::add_time_to_live(context.get(), p, 3* 1000000);
+            factory::add_time_to_live(context.get(), p, 3 * 1000000);
 
             l::info(enttarchive::to_json(*this->reg));
         }
