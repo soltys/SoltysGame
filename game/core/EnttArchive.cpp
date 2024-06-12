@@ -105,8 +105,10 @@ void enttarchive::perform_archive_action(SnapshotType &snapshot, ArchiveType &ar
         .get<game::Velocity>(archive.set_name("velocity"))
         .get<game::Serve>(archive.set_name("serve"))        
         .get<game::PlacementLocation>(archive.set_name("placement_location"))
+        .get<game::TimeToLive>(archive.set_name("time_to_live"))
         .get<game::RenderRectange>(archive.set_name("render_rectangle"))
         .get<game::RenderCircle>(archive.set_name("render_circle"))
+        .get<game::RenderPoint>(archive.set_name("render_point"))
         .get<game::Text>(archive.set_name("screen_text"));
 }
 

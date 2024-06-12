@@ -67,3 +67,30 @@ void sys::render_circles(const GameContext *context)
         renderTarget->draw(shape);
     }
 }
+
+void sys::render_points(const GameContext *context)
+{
+    const auto reg = context->get_registry();
+    const auto renderTarget = context->get_main_render_target();
+    const auto view = reg->view<game::RenderPoint, game::Position, game::Color, game::Size>();
+    for (const entt::entity &e : view)
+    {
+        const auto size = view.get<game::Size>(e);
+        const auto position = view.get<game::Position>(e);
+        const auto color = view.get<game::Color>(e);
+        sf::VertexArray hline(sf::LinesStrip, 2);
+        hline[0].position = sf::Vector2f(position.x - size.width, position.y);
+        hline[1].position = sf::Vector2f(position.x + size.width, position.y);
+        hline[0].color = color.to_color();
+        hline[1].color = color.to_color();
+
+        sf::VertexArray vline(sf::LinesStrip, 2);
+        vline[0].position = sf::Vector2f(position.x, position.y - size.height);
+        vline[1].position = sf::Vector2f(position.x, position.y + size.height);
+        vline[0].color = color.to_color();
+        vline[1].color = color.to_color();
+
+        renderTarget->draw(hline);
+        renderTarget->draw(vline);
+    }
+}

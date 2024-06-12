@@ -4,21 +4,22 @@
 #include <game/GameContext.hpp>
 #include <entt/entt.hpp>
 #include <game/Locator.hpp>
-void factory::create_paddle(const GameContext *game_context, sf::Vector2f position, game::Direction location)
+entt::entity factory::create_paddle(const GameContext *game_context, sf::Vector2f position, game::Direction location)
 {
     auto reg = game_context->get_registry();
     auto base_size = Locator::get_game_settings()->get_paddle_base_size();
     entt::entity e = reg->create();
     reg->emplace<game::Paddle>(e);
-    reg->emplace<game::Position>(e, position.x, position.y);
+    reg->emplace<game::Position>(e, position.x, position.y - base_size.height / 2);
     reg->emplace<game::Velocity>(e, 0.f, 0.f);
     reg->emplace<game::Size>(e, base_size);
     reg->emplace<game::PlacementLocation>(e, location);
     reg->emplace<game::RenderRectange>(e);
     reg->emplace<game::Color>(e, game::Colors::White);
+    return e;
 }
 
-void factory::create_ball(const GameContext *game_context, sf::Vector2f position, game::Direction serve_direction)
+entt::entity factory::create_ball(const GameContext *game_context, sf::Vector2f position, game::Direction serve_direction)
 {
     auto reg = game_context->get_registry();
     auto base_size = Locator::get_game_settings()->get_ball_base_size();
@@ -30,6 +31,7 @@ void factory::create_ball(const GameContext *game_context, sf::Vector2f position
     reg->emplace<game::Serve>(e, serve_direction);
     reg->emplace<game::RenderCircle>(e);
     reg->emplace<game::Color>(e, game::Colors::White);
+    return e;
 }
 
 void create_wall(const GameContext *context, game::Direction location, game::Position position, game::Size size)
@@ -72,5 +74,28 @@ entt::entity factory::create_text(const GameContext *context, std::string text, 
     reg->emplace<game::Position>(e, position.x, position.y);
     reg->emplace<game::Size>(e, size.x, size.y);
     reg->emplace<game::Color>(e, game::Colors::White);
+    return e;
+}
+
+entt::entity factory::create_point(const GameContext *context, sf::Vector2f position, game::Color color)
+{
+    auto reg = context->get_registry();
+    auto e = reg->create();
+    reg->emplace<game::RenderPoint>(e);
+    reg->emplace<game::Position>(e, position.x, position.y);
+    reg->emplace<game::Size>(e, 5.f, 5.f);
+    reg->emplace<game::Color>(e, color);
+    return e;
+}
+
+entt::entity factory::add_time_to_live_sec(const GameContext *context, entt::entity e, int64_t seconds_to_live)
+{
+    return add_time_to_live(context, e, seconds_to_live * 1000000);
+}
+
+entt::entity factory::add_time_to_live(const GameContext *context, entt::entity e, int64_t microseconds_to_live)
+{
+    auto reg = context->get_registry();
+    reg->emplace<game::TimeToLive>(e, microseconds_to_live);
     return e;
 }

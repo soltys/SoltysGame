@@ -11,9 +11,10 @@ class GameContext
     sf::RenderTarget *main_render_target;
 
     static constexpr float frame_limit = 60.f;
-    static constexpr int microseconds_per_update = static_cast<int>(1000000.f / frame_limit);
-
+    
 public:
+    static constexpr int microseconds_per_update = static_cast<int>(1000000.f / frame_limit);
+    
     const sf::VideoMode &get_video_mode() const
     {
         return this->video_mode;

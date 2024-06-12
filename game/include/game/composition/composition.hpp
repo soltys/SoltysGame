@@ -98,4 +98,12 @@ namespace game
         std::string text;
         NLOHMANN_DEFINE_TYPE_INTRUSIVE(game::Text, text);
     };
+    struct RenderPoint
+    {
+    };
+    struct TimeToLive
+    {
+        int64_t microseconds;
+        NLOHMANN_DEFINE_TYPE_INTRUSIVE(game::TimeToLive, microseconds);
+    };
 }

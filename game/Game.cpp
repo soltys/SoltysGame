@@ -55,6 +55,7 @@ void Game::initialize()
     factory::create_ball(context.get(), sf::Vector2f(150.f, 150.f), game::Direction::Down);
 
     factory::create_walls(context.get());
+    factory::create_point(context.get(), sf::Vector2f(paddle_margin, middle_of_screen), game::Colors::Cyan);
 
     if (r::get_toggle("SHOW_FPS"))
     {
@@ -99,7 +100,9 @@ void Game::update()
         }
         else if (event.type == sf::Event::MouseButtonPressed)
         {
-            l::info("MouseButtonPressed");
+            auto p = factory::create_point(context.get(), sf::Vector2f(event.mouseButton.x, event.mouseButton.y), game::Colors::Red);
+            factory::add_time_to_live(context.get(), p, 3* 1000000);
+
             l::info(enttarchive::to_json(*this->reg));
         }
     }
@@ -107,6 +110,7 @@ void Game::update()
     while (this->context->should_update())
     {
         sys::clear_velocity(this->context.get());
+        sys::time_to_live(this->context.get());
         sys::serve(this->context.get());
         sys::keyboard(this->context.get());
         sys::collision(this->context.get());
