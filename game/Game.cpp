@@ -115,8 +115,9 @@ void Game::handle_events()
         {
             auto p = factory::create_point(context.get(), sf::Vector2f(event.mouseButton.x, event.mouseButton.y), game::Colors::Red);
             factory::add_time_to_live(context.get(), p, 3 * 1000000);
-
-            l::info(enttarchive::to_json(*this->reg));
+            //l::info(enttarchive::to_json(*this->reg));      
+            l::error("error sample");
+            l::warn("warn sample");
         }
     }
 }
