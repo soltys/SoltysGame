@@ -6,6 +6,9 @@
 #include <game/logging/ConsoleLogger.hpp>
 #include <game/logging/CompositeLogger.hpp>
 
+#include <game/core/PackerToggleService.hpp>
+#include <game/core/MemoryCacheToggleService.hpp>
+
 #include <game/Utils.hpp>
 
 #define WIN32_LEAN_AND_MEAN
@@ -17,11 +20,13 @@
 void Locator::initialize()
 {
     Locator::provide_packer();
+    Locator::provide_toggle_service();
+
     Locator::provide_logger();
     Locator::provide_key_map();
     Locator::provide_game_settings();
     Locator::provide_game_input();
-    Locator::provide_font_service();
+    Locator::provide_font_service();    
 }
 
 std::filesystem::path Locator::get_packer_path()
@@ -118,4 +123,19 @@ void Locator::provide_font_service()
 {
     auto font_service = std::make_shared<FontService>();
     provide(font_service);
+}
+
+void Locator::provide_toggle_service()
+{
+    auto packer_toggle_service = std::make_shared<PackerToggleService>();
+    auto memory_cache_toggle_service = std::make_shared<MemoryCacheToggleService>(packer_toggle_service.get());    
+    
+    auto all_toggles = Locator::get_packer()->get_toggles();
+    preload_collection collection;
+    for(const auto& packer_toggle : all_toggles ){
+        collection.push_back(std::tuple(packer_toggle.name(), packer_toggle.is_on()));
+    }
+    memory_cache_toggle_service->preload(collection);
+
+    provide(memory_cache_toggle_service);
 }

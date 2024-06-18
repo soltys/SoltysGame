@@ -31,6 +31,11 @@ add_executable(${MAIN_TARGET}
     core/EnttArchive.cpp
     include/game/core/FontService.hpp
     include/game/core/GameInput.hpp
+
+    core/ToggleService.cpp
+    include/game/core/ToggleService.hpp
+    include/game/core/PackerToggleService.hpp
+    include/game/core/MemoryCacheToggleService.hpp
     
     Locator.cpp
     include/game/Locator.hpp

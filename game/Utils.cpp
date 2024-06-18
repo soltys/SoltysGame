@@ -3,7 +3,7 @@
 
 bool r::is_on(const std::string &name)
 {
-    return Locator::get_packer()->is_on(name);
+    return Locator::get_toggle_service()->is_on(name);
 }
 
 std::vector<char> r::get_file(const std::string &name)
