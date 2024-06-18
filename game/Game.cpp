@@ -11,11 +11,11 @@ void Game::initialize()
 {
     this->time = std::make_unique<GameTime>();
     this->context = std::make_unique<GameContext>();
-    this->should_escape_close = r::get_toggle("ESCAPE_CLOSE_GAME");
+    this->should_escape_close = r::is_on("ESCAPE_CLOSE_GAME");
     const sf::VideoMode video_mode(800u, 600u);
 
     auto window_style = sf::Style::Default;
-    auto should_fullscreen_launch = r::get_toggle("WINDOW_FULLSCREEN_LAUNCH");
+    auto should_fullscreen_launch = r::is_on("WINDOW_FULLSCREEN_LAUNCH");
     if (should_fullscreen_launch)
     {
         window_style = sf::Style::Fullscreen;
@@ -56,18 +56,18 @@ void Game::initialize()
     factory::create_walls(context.get());
     factory::create_point(context.get(), sf::Vector2f(paddle_margin, middle_of_screen), game::Colors::Cyan);
 
-    if (r::get_toggle("DEBUG_GRID"))
+    if (r::is_on("DEBUG_GRID"))
     {
         factory::create_grid(context.get());
     }
 
-    if (r::get_toggle("SHOW_FPS"))
+    if (r::is_on("SHOW_FPS"))
     {
         auto fps_entity = factory::create_text(context.get(), sf::Vector2f(20.f, 20.f), sf::Vector2f(20, 20));
         time->set_fps_entity(fps_entity);
     }
 
-    if (r::get_toggle("SHOW_VERSION"))
+    if (r::is_on("SHOW_VERSION"))
     {
         std::string version_string = std::format("ver:{} git:{} pack:{}", PROJECT_VERSION, PROJECT_VERSION_SHORT_SHA1, PROJECT_PACK_JSON_SHORT_SHA256);
         factory::create_text(context.get(), version_string, sf::Vector2f(20.f, video_mode.height - 20.f), sf::Vector2f(10.f, 10.f));

@@ -1,7 +1,7 @@
 #pragma once
 #include <memory>
 #include <utility>
-#include <packer/Packer.h>
+#include <packer/Packer.hpp>
 #include <game/logging/Logger.hpp>
 #include <game/core/KeyMapService.hpp>
 #include <game/core/GameSettingsService.hpp>

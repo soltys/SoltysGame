@@ -69,21 +69,21 @@ void Locator::provide_packer()
 
 void Locator::provide_logger()
 {
-    if (r::get_toggle("LOG_ENABLED"))
+    if (r::is_on("LOG_ENABLED"))
     {
         auto composite_logger = std::make_shared<CompositeLogger>();
 
-        if (r::get_toggle("LOG_TO_DB"))
+        if (r::is_on("LOG_TO_DB"))
         {
             composite_logger->push_back(std::make_shared<DbLogger>());
         }
 
-        if (r::get_toggle("LOG_TO_WINDOWS_DEBUG"))
+        if (r::is_on("LOG_TO_WINDOWS_DEBUG"))
         {
             composite_logger->push_back(std::make_shared<WindowsDebugLogger>());
         }
 
-        if (r::get_toggle("LOG_TO_CONSOLE"))
+        if (r::is_on("LOG_TO_CONSOLE"))
         {
             composite_logger->push_back(std::make_shared<ConsoleLogger>());
         }

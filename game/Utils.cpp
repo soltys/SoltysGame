@@ -5,9 +5,9 @@
 #include <windows.h>
 #undef WIN32_LEAN_AND_MEAN
 
-bool r::get_toggle(const std::string &name)
+bool r::is_on(const std::string &name)
 {
-    return Locator::get_packer()->get_toggle(name);
+    return Locator::get_packer()->is_on(name);
 }
 
 std::vector<char> r::get_file(const std::string &name)
