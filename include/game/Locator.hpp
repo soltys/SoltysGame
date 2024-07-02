@@ -23,10 +23,6 @@ public:                                                       \
 class Locator
 {
 private:
-    static void remove_packer_if_exists(const std::filesystem::path packer_path);
-    static std::filesystem::path get_packer_path();
-    static void extract_packer_from_executable(const std::filesystem::path packer_path);
-
     LOCATOR_FIELD(packer::Packer, packer)
     LOCATOR_FIELD(Logger, logger)
     LOCATOR_FIELD(KeyMapService, key_map)

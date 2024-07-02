@@ -11,11 +11,7 @@
 
 #include <game/Utils.hpp>
 
-#define WIN32_LEAN_AND_MEAN
-#include <windows.h>
-#undef WIN32_LEAN_AND_MEAN
-#include <game/resources.hpp>
-#include <fstream>
+#include <game/core/PackerProvider.hpp>
 
 void Locator::initialize()
 {
@@ -26,42 +22,7 @@ void Locator::initialize()
     Locator::provide_key_map();
     Locator::provide_game_settings();
     Locator::provide_game_input();
-    Locator::provide_font_service();    
-}
-
-std::filesystem::path Locator::get_packer_path()
-{
-    wchar_t szPath[MAX_PATH];
-    GetModuleFileNameW(NULL, szPath, MAX_PATH);
-    const std::filesystem::path exe_path(szPath);
-    const auto exe_folder = exe_path.parent_path();
-    const auto packer_path = exe_folder / "pack.db";
-    return packer_path;
-}
-
-void Locator::remove_packer_if_exists(const std::filesystem::path packer_path)
-{
-    if (std::filesystem::exists(packer_path))
-    {
-        std::filesystem::remove(packer_path);
-    }
-}
-
-void Locator::extract_packer_from_executable(const std::filesystem::path packer_path)
-{
-    HMODULE hModule = GetModuleHandle(NULL);
-    HRSRC hResource = FindResource(hModule, MAKEINTRESOURCE(IDR_SQLITE1), "sqlite");
-    HGLOBAL hMemory = LoadResource(hModule, hResource);
-    DWORD dwSize = SizeofResource(hModule, hResource);
-    LPVOID lpAddress = LockResource(hMemory);
-
-    char *bytes = new char[dwSize];
-    memcpy(bytes, lpAddress, dwSize);
-    std::ofstream stream;
-    stream.open(packer_path, std::ios::app | std::ios::binary);
-    stream.write(bytes, dwSize);
-    stream.close();
-    delete[] bytes;
+    Locator::provide_font_service();
 }
 
 void Locator::provide_packer()
@@ -128,11 +89,12 @@ void Locator::provide_font_service()
 void Locator::provide_toggle_service()
 {
     auto packer_toggle_service = std::make_shared<PackerToggleService>();
-    auto memory_cache_toggle_service = std::make_shared<MemoryCacheToggleService>(packer_toggle_service.get());    
-    
+    auto memory_cache_toggle_service = std::make_shared<MemoryCacheToggleService>(packer_toggle_service.get());
+
     auto all_toggles = Locator::get_packer()->get_toggles();
     preload_collection collection;
-    for(const auto& packer_toggle : all_toggles ){
+    for (const auto &packer_toggle : all_toggles)
+    {
         collection.push_back(std::tuple(packer_toggle.name(), packer_toggle.is_on()));
     }
     memory_cache_toggle_service->preload(collection);

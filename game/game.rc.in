@@ -1,2 +1,2 @@
 #include <game/resources.hpp>
-IDR_SQLITE1             sqlite                  "@PROJECT_BINARY_DIR@/pack.db"
+IDR_SQLITE1             sqlite                  "@PACK_FILE_ZLIB@"
