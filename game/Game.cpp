@@ -20,7 +20,7 @@ void Game::initialize()
     {
         window_style = sf::Style::Fullscreen;
     }
-    this->reg = std::make_shared<entt::registry>();
+    this->reg = std::make_unique<entt::registry>();
     this->window = std::make_unique<sf::RenderWindow>(video_mode, r::get_locale_string("WINDOW_TITLE"), window_style);
 
     this->view.setSize(video_mode.width, video_mode.height);
@@ -40,7 +40,7 @@ void Game::initialize()
 
     context
         ->set_video_mode(video_mode)
-        ->set_registry(reg)
+        ->set_registry(reg.get())
         ->set_main_render_target(window.get());
 
     const float paddle_margin = 20.f;

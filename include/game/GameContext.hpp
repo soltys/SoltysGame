@@ -7,7 +7,7 @@ class GameContext
     sf::VideoMode video_mode;
     sf::Int64 lag = 0;
 
-    std::shared_ptr<entt::registry> registry;
+    entt::registry* registry;
     sf::RenderTarget *main_render_target;
 
     static constexpr float frame_limit = 60.f;
@@ -29,7 +29,7 @@ public:
         return this->lag;
     }
 
-    std::shared_ptr<entt::registry> get_registry() const
+    entt::registry* get_registry() const
     {
         return this->registry;
     }
@@ -49,7 +49,7 @@ public:
         return this;
     }
 
-    GameContext *set_registry(std::shared_ptr<entt::registry> reg)
+    GameContext *set_registry(entt::registry* reg)
     {
         this->registry = reg;
         return this;

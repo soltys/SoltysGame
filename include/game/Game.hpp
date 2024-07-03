@@ -13,7 +13,7 @@ class Game
 	std::unique_ptr<GameTime> time;
 	std::unique_ptr<sf::RenderWindow> window;
 	sf::View view;
-	std::shared_ptr<entt::registry> reg = nullptr;
+	std::unique_ptr<entt::registry> reg = nullptr;
 
 	void handle_events();
 	void update_systems();

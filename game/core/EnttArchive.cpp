@@ -120,10 +120,10 @@ std::string enttarchive::to_json(const entt::registry &reg)
     return out.AsString();
 }
 
-std::shared_ptr<entt::registry> enttarchive::from_json(std::string &json)
+std::unique_ptr<entt::registry> enttarchive::from_json(std::string &json)
 {    
     EnttInputArchive input(json);
-    auto reg = std::make_shared<entt::registry>();
+    auto reg = std::unique_ptr<entt::registry>();
     auto loader = entt::snapshot_loader{*reg};
     perform_archive_action(loader, input);
     return reg;

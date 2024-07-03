@@ -14,6 +14,8 @@ function(compress_file out_var)
     set(args INPUT_FILE OUTPUT_FILE)
     set(listArgs)
 
+    set(TOOL_NAME tools_compressor)
+    
     cmake_parse_arguments(ARG "${flags}" "${args}" "${listArgs}" ${ARGN})
     if (NOT ARG_INPUT_FILE)
         message(FATAL_ERROR "[compress_file]: INPUT_FILE is a required argument")
@@ -29,8 +31,8 @@ function(compress_file out_var)
 
     add_custom_command(OUTPUT ${out_f_path}
             COMMAND ${CMAKE_COMMAND} -E make_directory "${out_f_dir}"
-            COMMAND tools_compressor ${input_f_path} ${out_f_path}
-            DEPENDS "${input_f_path}" tools_compressor
+            COMMAND ${TOOL_NAME} ${input_f_path} ${out_f_path}
+            DEPENDS "${input_f_path}" ${TOOL_NAME}
             COMMENT "Compressing file from ${input_f_path} into ${out_f_path}"
             VERBATIM)
     set(${out_var} "${ARG_OUTPUT_FILE}" PARENT_SCOPE)

@@ -6,13 +6,13 @@
 class FontService
 {
     std::vector<char> default_font_memory;
-    std::shared_ptr<sf::Font> default_font;
+    std::unique_ptr<sf::Font> default_font;
 
 public:
     FontService()
     {
         default_font_memory = r::get_file("font_Consolas.ttf");
-        default_font = std::make_shared<sf::Font>();
+        default_font = std::make_unique<sf::Font>();
         default_font->loadFromMemory(default_font_memory.data(), default_font_memory.size());
     }
     const sf::Font& get_font()

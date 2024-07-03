@@ -69,5 +69,5 @@ namespace enttarchive
     void perform_archive_action(SnapshotType &snapshot, ArchiveType &archive);
 
     std::string to_json(const entt::registry &reg);
-    std::shared_ptr<entt::registry> from_json(std::string &json);
+    std::unique_ptr<entt::registry> from_json(std::string &json);
 }
