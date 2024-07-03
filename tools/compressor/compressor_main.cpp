@@ -34,8 +34,8 @@ int main(int argc, char **argv)
 {
     args::ArgumentParser parser("This program compresses file given as input");
     args::HelpFlag help(parser, "help", "Display this help menu", {'h', "help"});
-    args::Positional<std::string> input_file(parser, "input", "input file to be compressed");
-    args::Positional<std::string> output_file(parser, "output", "output file where output should be");
+    args::Positional<std::string> input_file(parser, "input", "input file to be compressed", args::Options::Required);
+    args::Positional<std::string> output_file(parser, "output", "output file where output should be", args::Options::Required);
     try
     {
         parser.ParseCLI(argc, argv);
@@ -51,19 +51,13 @@ int main(int argc, char **argv)
         std::cerr << parser;
         return EXIT_FAILURE;
     }
-
-    if (!input_file)
+    catch (const args::ValidationError &e)
     {
-        std::cerr << "no input file specified" << std::endl;
+        std::cerr << e.what() << std::endl;
         std::cerr << parser;
         return EXIT_FAILURE;
     }
-    if (!output_file)
-    {
-        std::cerr << "no output file specified" << std::endl;
-        std::cerr << parser;
-        return EXIT_FAILURE;
-    }
+   
     auto input_path = args::get(input_file);
     auto output_path = args::get(output_file);
 

@@ -1,8 +1,14 @@
 set(MAIN_TARGET soltys_game)
 set(MAIN_TARGET_DISPLAY_NAME "SoltysGame")
 
+merge_pack_json(MERGED_PACK_FILE 
+OUTPUT_FILE "${CMAKE_CURRENT_SOURCE_DIR}/assets/output.json"
+FILES  
+"${CMAKE_CURRENT_SOURCE_DIR}/assets/pack.json" 
+"${CMAKE_CURRENT_SOURCE_DIR}/assets/pack.Debug.json")
+
 pack_resources(PACK_FILE
-    JSON_FILE "${CMAKE_CURRENT_SOURCE_DIR}/assets/pack.json"
+    JSON_FILE ${MERGED_PACK_FILE}
 	OUTPUT_FILE "${PROJECT_BINARY_DIR}/pack.db"
     FORCE)
 

@@ -1,0 +1,7 @@
+{
+   "options": {
+        "DEBUG_GRID": false,
+        "SHOW_FPS": false,
+        "SHOW_VERSION": false,
+    }
+}
