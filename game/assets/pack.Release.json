@@ -1,0 +1,14 @@
+{
+    "options": {
+        "DEBUG_GRID": false,
+        "SHOW_FPS": false,
+        "SHOW_VERSION": false,
+        "WINDOW_FULLSCREEN_LAUNCH": false,
+        "ESCAPE_CLOSE_GAME": true,
+        "LOG_ENABLED": false,
+        "LOG_WINDOW": false,
+        "LOG_TO_DB": false,
+        "LOG_TO_WINDOWS_DEBUG": false,
+        "LOG_TO_CONSOLE": false
+    }   
+}

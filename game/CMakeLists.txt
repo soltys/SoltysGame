@@ -2,8 +2,10 @@ set(MAIN_TARGET soltys_game)
 set(MAIN_TARGET_DISPLAY_NAME "SoltysGame")
 
 pack_resources(PACK_FILE
-    JSON_FILE "${CMAKE_CURRENT_SOURCE_DIR}/assets/pack.json"
+    JSON_FILES "${CMAKE_CURRENT_SOURCE_DIR}/assets/pack.json"
+               "${CMAKE_CURRENT_SOURCE_DIR}/assets/pack.$<CONFIG>.json"
 	OUTPUT_FILE "${PROJECT_BINARY_DIR}/pack.db"
+    WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/assets"
     FORCE)
 
 file(SHA256 ${CMAKE_CURRENT_SOURCE_DIR}/assets/pack.json JSON_SHA256)

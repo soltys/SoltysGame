@@ -35,18 +35,6 @@
             }
         }
     },
-    "options": {
-        "DEBUG_GRID": true,
-        "SHOW_FPS": true,
-        "SHOW_VERSION": true,
-        "WINDOW_FULLSCREEN_LAUNCH": false,
-        "ESCAPE_CLOSE_GAME": true,
-        "LOG_ENABLED": true,
-        "LOG_WINDOW": false,
-        "LOG_TO_DB": true,
-        "LOG_TO_WINDOWS_DEBUG": true,
-        "LOG_TO_CONSOLE": true
-    },
     "strings": {
         "WINDOW_TITLE": {
             "en": "[en] BATTLE PONG",
