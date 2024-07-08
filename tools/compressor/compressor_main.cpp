@@ -2,6 +2,7 @@
 #include <args/args.hpp>
 
 #include <iostream>
+#include <iomanip>
 #include <fstream>
 #include <filesystem>
 
@@ -79,9 +80,13 @@ int main(int argc, char **argv)
     auto compress_status = compress(compress_data.data(), &compress_length, (const unsigned char *)input_data.data(), input_data.size());
     if (compress_status != Z_OK)
     {
-        std::cerr << "compress() failed" << std::endl;
+        std::cerr << "compress() failed, status: " <<  compress_status << std::endl;
         return EXIT_FAILURE;
     }
+
+    std::cout << std::setprecision(2)
+              << "From: " << input_data.size() / (1024.0 * 1024.0) << "MB To: " << compress_length / (1024.0 * 1024.0) << "MB "
+              << "Compression: " << ((double)compress_length / (double)input_data.size() * 100.0) << "%" << std::endl;
     std::fstream ofs;
     ofs.open(output_path, std::ios::out | std::ios::binary);
     ofs.write((const char *)compress_data.data(), compress_length);
