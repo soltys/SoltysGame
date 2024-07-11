@@ -1,12 +1,13 @@
+#include <SFML/Graphics.hpp>
+#include <game/EntityFactory.hpp>
 #include <game/Game.hpp>
+#include <game/Locator.hpp>
 #include <game/Utils.hpp>
 #include <game/composition/composition.hpp>
-#include <game/EntityFactory.hpp>
-#include <game/system/system.hpp>
-#include <game/core/EnttArchive.hpp>
-#include <SFML/Graphics.hpp>
-#include <game/Locator.hpp>
 #include <game/config.hpp>
+#include <game/core/EnttArchive.hpp>
+#include <game/system/system.hpp>
+
 void Game::initialize()
 {
     this->time = std::make_unique<GameTime>();
@@ -38,15 +39,13 @@ void Game::initialize()
 
     l::info("===started game===");
 
-    context
-        ->set_video_mode(video_mode)
-        ->set_registry(reg.get())
-        ->set_main_render_target(window.get());
+    context->set_video_mode(video_mode)->set_registry(reg.get())->set_main_render_target(window.get());
 
     const float paddle_margin = 20.f;
     const float middle_of_screen = video_mode.height / 2;
     factory::create_paddle(context.get(), sf::Vector2f(paddle_margin, middle_of_screen), game::Direction::Left);
-    factory::create_paddle(context.get(), sf::Vector2f(video_mode.width - paddle_margin, middle_of_screen), game::Direction::Right);
+    factory::create_paddle(context.get(), sf::Vector2f(video_mode.width - paddle_margin, middle_of_screen),
+                           game::Direction::Right);
 
     factory::create_ball(context.get(), sf::Vector2f(150.f, 150.f), game::Direction::Left);
     factory::create_ball(context.get(), sf::Vector2f(150.f, 150.f), game::Direction::Right);
@@ -69,20 +68,21 @@ void Game::initialize()
 
     if (r::is_on("SHOW_VERSION"))
     {
-        std::string version_string = std::format("ver:{} git:{} pack:{}", PROJECT_VERSION, PROJECT_VERSION_SHORT_SHA1, PROJECT_PACK_JSON_SHORT_SHA256);
-        factory::create_text(context.get(), version_string, sf::Vector2f(20.f, video_mode.height - 20.f), sf::Vector2f(10.f, 10.f));
+        std::string version_string = std::format("ver:{} git:{} pack:{}", PROJECT_VERSION, PROJECT_VERSION_SHORT_SHA1,
+                                                 PROJECT_PACK_JSON_SHORT_SHA256);
+        factory::create_text(context.get(), version_string, sf::Vector2f(20.f, video_mode.height - 20.f),
+                             sf::Vector2f(10.f, 10.f));
     }
 }
 
 void Game::update()
 {
-    time->set_fps_start_time_point();    
+    time->set_fps_start_time_point();
     context->add_lag(this->time->get_microseconds_duration());
 
     handle_events();
     update_systems();
     draw();
-
     time->compute_fps(this->reg.get());
 }
 
@@ -113,9 +113,10 @@ void Game::handle_events()
         }
         else if (event.type == sf::Event::MouseButtonPressed)
         {
-            auto p = factory::create_point(context.get(), sf::Vector2f(event.mouseButton.x, event.mouseButton.y), game::Colors::Red);
+            auto p = factory::create_point(context.get(), sf::Vector2f(event.mouseButton.x, event.mouseButton.y),
+                                           game::Colors::Red);
             factory::add_time_to_live(context.get(), p, 3 * 1000000);
-            //l::info(enttarchive::to_json(*this->reg));      
+            // l::info(enttarchive::to_json(*this->reg));
             l::error("error sample");
             l::warn("warn sample");
         }
