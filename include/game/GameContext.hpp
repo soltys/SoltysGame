@@ -5,7 +5,7 @@
 class GameContext
 {
     sf::VideoMode video_mode;
-    sf::Int64 lag = 0;
+    std::int64_t lag = 0;
 
     entt::registry* registry;
     sf::RenderTarget *main_render_target;
@@ -24,7 +24,7 @@ public:
         this->video_mode = view_mode;
         return this;
     }
-    const sf::Int64 &get_lag() const
+    const std::int64_t &get_lag() const
     {
         return this->lag;
     }
@@ -43,7 +43,7 @@ public:
         }
         return false;
     }
-    GameContext *add_lag(sf::Int64 microseconds)
+    GameContext *add_lag(std::int64_t microseconds)
     {
         this->lag += microseconds;
         return this;

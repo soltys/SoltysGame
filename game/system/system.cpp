@@ -88,12 +88,12 @@ void sys::keyboard(const GameContext *context)
         auto [pl, vel] = view.get<game::PlacementLocation, game::Velocity>(e);
 
         auto action_up_key = key_map->get_key(pl.dir, Action::UP);
-        if (game_input->is_key_pressed(action_up_key))
+        if (game_input->is_key_pressed((int)action_up_key))
         {
             vel.y = -base_paddle_speed;
         }
         auto action_down_key = key_map->get_key(pl.dir, Action::DOWN);
-        if (game_input->is_key_pressed(action_down_key))
+        if (game_input->is_key_pressed((int)action_down_key))
         {
             vel.y = base_paddle_speed;
         }

@@ -1,5 +1,5 @@
-#include <game/Utils.hpp>
 #include <game/Locator.hpp>
+#include <game/Utils.hpp>
 
 bool r::is_on(const std::string &name)
 {
@@ -29,9 +29,15 @@ std::vector<packer::LogEntry> r::get_logs(const int amount)
 //
 // logging section
 //
-#define LOG_FUNCTION(log_level, name) \
-    void l::##name(const std::string &logger, const std::string &message) { log(##log_level, logger, message); }\
-    void l::##name(const std::string &message) { log(##log_level, "GLOBAL_LOGGER", message); }
+#define LOG_FUNCTION(log_level, name)                                                                                  \
+    void l::##name(const std::string &logger, const std::string &message)                                              \
+    {                                                                                                                  \
+        log(##log_level, logger, message);                                                                             \
+    }                                                                                                                  \
+    void l::##name(const std::string &message)                                                                         \
+    {                                                                                                                  \
+        log(##log_level, "GLOBAL_LOGGER", message);                                                                    \
+    }
 
 LOG_FUNCTION(LogLevel::INFO, info)
 LOG_FUNCTION(LogLevel::WARN, warn)
@@ -41,7 +47,6 @@ void l::log(LogLevel log_level, const std::string &logger, const std::string &me
 {
     Locator::get_logger()->log(log_level, logger, message);
 }
-
 
 ///
 /// EPOCH
@@ -69,8 +74,8 @@ std::chrono::system_clock::time_point epoch::to_time_point(int64_t microseconds_
 ///
 /// COMP
 ///
-#define LOCTOSTR(enum_value)            \
-    case game::Direction::##enum_value: \
+#define LOCTOSTR(enum_value)                                                                                           \
+    case game::Direction::##enum_value:                                                                                \
         return #enum_value;
 const char *comp::to_string(game::Direction location)
 {
@@ -84,10 +89,10 @@ const char *comp::to_string(game::Direction location)
         throw std::invalid_argument("unmapped argument in to_string for Location");
     }
 }
-#define STRTOLOC(location_value)                  \
-    if (name == #location_value)                  \
-    {                                             \
-        return game::Direction::##location_value; \
+#define STRTOLOC(location_value)                                                                                       \
+    if (name == #location_value)                                                                                       \
+    {                                                                                                                  \
+        return game::Direction::##location_value;                                                                      \
     }
 game::Direction comp::to_location(std::string name)
 {
@@ -98,10 +103,10 @@ game::Direction comp::to_location(std::string name)
     throw std::invalid_argument("string (" + name + ") cannot be mapped into game::Location");
 }
 
-#define KEYCONV(key_value)                \
-    if (key_name == #key_value)           \
-    {                                     \
-        return sf::Keyboard::##key_value; \
+#define KEYCONV(key_value)                                                                                             \
+    if (key_name == #key_value)                                                                                        \
+    {                                                                                                                  \
+        return sf::Keyboard::Key::##key_value;                                                                         \
     }
 sf::Keyboard::Key mysf::to_key(std::string key_name)
 {
@@ -243,7 +248,7 @@ sf::View mysf::get_letterbox_view(sf::View view, int windowWidth, int windowHeig
         posY = (1 - sizeY) / 2.f;
     }
 
-    view.setViewport(sf::FloatRect(posX, posY, sizeX, sizeY));
+    view.setViewport(sf::FloatRect({posX, posY}, {sizeX, sizeY}));
 
     return view;
 }

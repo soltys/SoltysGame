@@ -47,7 +47,7 @@ public:
 		return computed_fps;
 	}
 
-	sf::Int64 get_microseconds_duration()
+	std::int64_t get_microseconds_duration()
 	{
 		auto dt = main_clock.getElapsedTime().asMicroseconds();
 		main_clock.restart();

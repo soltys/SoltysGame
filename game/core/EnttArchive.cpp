@@ -1,4 +1,3 @@
-#pragma once
 #include <game/composition/composition.hpp>
 #include <nlohmann/json.hpp>
 #include <entt/entt.hpp>

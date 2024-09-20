@@ -53,12 +53,12 @@ void factory::create_walls(const GameContext *context)
     const int wall_thickness = 2;
     const int up_down_wall_margin = 50;
 
-    create_wall(context, game::Direction::Up, {0, up_down_wall_margin}, {(float)video_mode.width, wall_thickness});
-    create_wall(context, game::Direction::Down, {0, static_cast<float>(video_mode.height - up_down_wall_margin)}, {(float)video_mode.width, wall_thickness});
+    create_wall(context, game::Direction::Up, {0, up_down_wall_margin}, {(float)video_mode.size.x, wall_thickness});
+    create_wall(context, game::Direction::Down, {0, static_cast<float>(video_mode.size.y - up_down_wall_margin)}, {(float)video_mode.size.x, wall_thickness});
 
     const int left_right_wall_margin = 0;
-    create_wall(context, game::Direction::Left, {left_right_wall_margin, 0}, {wall_thickness, (float)video_mode.height});
-    create_wall(context, game::Direction::Right, {(float)video_mode.width - (left_right_wall_margin + wall_thickness), 0}, {wall_thickness, (float)video_mode.height});
+    create_wall(context, game::Direction::Left, {left_right_wall_margin, 0}, {wall_thickness, (float)video_mode.size.y});
+    create_wall(context, game::Direction::Right, {(float)video_mode.size.x - (left_right_wall_margin + wall_thickness), 0}, {wall_thickness, (float)video_mode.size.y});
 }
 
 entt::entity factory::create_text(const GameContext *context, sf::Vector2f position, sf::Vector2f size)
@@ -107,8 +107,8 @@ void factory::create_grid(const GameContext *context)
 
     const int grid_width = 64;
     const int grid_height = grid_width;
-    int x_count = static_cast<int>(video_mode.width / grid_width) + 1;
-    int y_count = static_cast<int>(video_mode.height / grid_height) + 1;
+    int x_count = static_cast<int>(video_mode.size.x / grid_width) + 1;
+    int y_count = static_cast<int>(video_mode.size.y / grid_height) + 1;
     for (int x = 0; x < x_count; x++)
     {
         for (int y = 0; y < y_count; y++)

@@ -13,28 +13,28 @@ void Game::initialize()
     this->time = std::make_unique<GameTime>();
     this->context = std::make_unique<GameContext>();
     this->should_escape_close = r::is_on("ESCAPE_CLOSE_GAME");
-    const sf::VideoMode video_mode(800u, 600u);
+    const sf::VideoMode video_mode({800u, 600u});
 
-    auto window_style = sf::Style::Default;
+    auto window_style = sf::State::Windowed;
     auto should_fullscreen_launch = r::is_on("WINDOW_FULLSCREEN_LAUNCH");
     if (should_fullscreen_launch)
     {
-        window_style = sf::Style::Fullscreen;
+        window_style = sf::State::Fullscreen;
     }
     this->reg = std::make_unique<entt::registry>();
     this->window = std::make_unique<sf::RenderWindow>(video_mode, r::get_locale_string("WINDOW_TITLE"), window_style);
 
-    this->view.setSize(video_mode.width, video_mode.height);
-    this->view.setCenter(view.getSize().x / 2, view.getSize().y / 2);
+    this->view.setSize({(float)video_mode.size.x, (float)video_mode.size.y});
+    this->view.setCenter({view.getSize().x / 2, view.getSize().y / 2});
     if (should_fullscreen_launch)
     {
         auto desktop_modes = sf::VideoMode::getFullscreenModes();
         auto desktop_mode = desktop_modes[0];
-        this->view = mysf::get_letterbox_view(view, desktop_mode.width, desktop_mode.height);
+        this->view = mysf::get_letterbox_view(view, desktop_mode.size.x, desktop_mode.size.y);
     }
     else
     {
-        this->view = mysf::get_letterbox_view(view, video_mode.width, video_mode.height);
+        this->view = mysf::get_letterbox_view(view, video_mode.size.x, video_mode.size.y);
     }
 
     l::info("===started game===");
@@ -42,19 +42,17 @@ void Game::initialize()
     context->set_video_mode(video_mode)->set_registry(reg.get())->set_main_render_target(window.get());
 
     const float paddle_margin = 20.f;
-    const float middle_of_screen = video_mode.height / 2;
+    const float middle_of_screen = video_mode.size.y / 2;
     factory::create_paddle(context.get(), sf::Vector2f(paddle_margin, middle_of_screen), game::Direction::Left);
-    factory::create_paddle(context.get(), sf::Vector2f(video_mode.width - paddle_margin, middle_of_screen),
+    factory::create_paddle(context.get(), sf::Vector2f(video_mode.size.x - paddle_margin, middle_of_screen),
                            game::Direction::Right);
 
     factory::create_ball(context.get(), sf::Vector2f(150.f, 150.f), game::Direction::Left);
     factory::create_ball(context.get(), sf::Vector2f(150.f, 150.f), game::Direction::Right);
     factory::create_ball(context.get(), sf::Vector2f(150.f, 150.f), game::Direction::Up);
     factory::create_ball(context.get(), sf::Vector2f(150.f, 150.f), game::Direction::Down);
-
     factory::create_walls(context.get());
     factory::create_point(context.get(), sf::Vector2f(paddle_margin, middle_of_screen), game::Colors::Cyan);
-
     if (r::is_on("DEBUG_GRID"))
     {
         factory::create_grid(context.get());
@@ -70,7 +68,7 @@ void Game::initialize()
     {
         std::string version_string = std::format("ver:{} git:{} pack:{}", PROJECT_VERSION, PROJECT_VERSION_SHORT_SHA1,
                                                  PROJECT_PACK_JSON_SHORT_SHA256);
-        factory::create_text(context.get(), version_string, sf::Vector2f(20.f, video_mode.height - 20.f),
+        factory::create_text(context.get(), version_string, sf::Vector2f(20.f, video_mode.size.y - 20.f),
                              sf::Vector2f(10.f, 10.f));
     }
 }
@@ -88,32 +86,32 @@ void Game::update()
 
 void Game::handle_events()
 {
-    for (auto event = sf::Event{}; window->pollEvent(event);)
+    while (const std::optional e = window->pollEvent())
     {
-        if (event.type == sf::Event::Resized)
+        if (const auto* event = e->getIf<sf::Event::Resized>())
         {
-            view = mysf::get_letterbox_view(view, event.size.width, event.size.height);
+            view = mysf::get_letterbox_view(view, event->size.x, event->size.y);
         }
-        else if (event.type == sf::Event::Closed)
+        else if (e->is<sf::Event::Closed>())
         {
             window->close();
         }
-        else if (event.type == sf::Event::KeyPressed)
+        else if (const auto *event = e->getIf<sf::Event::KeyPressed>())
         {
-            if (this->should_escape_close && event.key.code == sf::Keyboard::Escape)
+            if (this->should_escape_close && event->code == sf::Keyboard::Key::Escape)
             {
                 window->close();
             }
 
-            Locator::get_game_input()->on_key_pressed((int)event.key.code);
+            Locator::get_game_input()->on_key_pressed((int)event->code);
         }
-        else if (event.type == sf::Event::KeyReleased)
+        else if (const auto *event = e->getIf<sf::Event::KeyReleased>())
         {
-            Locator::get_game_input()->on_key_released((int)event.key.code);
+            Locator::get_game_input()->on_key_released((int)event->code);
         }
-        else if (event.type == sf::Event::MouseButtonPressed)
+        else if (const auto *event = e->getIf<sf::Event::MouseButtonPressed>())
         {
-            auto p = factory::create_point(context.get(), sf::Vector2f(event.mouseButton.x, event.mouseButton.y),
+            auto p = factory::create_point(context.get(), sf::Vector2f(event->position.x, event->position.y),
                                            game::Colors::Red);
             factory::add_time_to_live(context.get(), p, 3 * 1000000);
             // l::info(enttarchive::to_json(*this->reg));
@@ -138,7 +136,7 @@ void Game::update_systems()
 
 void Game::draw()
 {
-    window->clear(sf::Color::Color(0xff, 0, 0));
+    window->clear(sf::Color(0xff, 0, 0));
     window->setView(view);
     sys::render(this->context.get());
     window->display();

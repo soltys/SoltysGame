@@ -12,8 +12,8 @@ public:
     FontService()
     {
         default_font_memory = r::get_file("font_Consolas.ttf");
-        default_font = std::make_unique<sf::Font>();
-        default_font->loadFromMemory(default_font_memory.data(), default_font_memory.size());
+        default_font = std::make_unique<sf::Font>();        
+        auto isSuccess = default_font->openFromMemory(default_font_memory.data(), default_font_memory.size());
     }
     const sf::Font& get_font()
     {

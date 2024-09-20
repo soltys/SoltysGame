@@ -17,7 +17,6 @@ get_git_head_revision(GIT_REFSPEC GIT_SHA1)
 string(SUBSTRING ${GIT_SHA1} 0 7 GIT_SHORT_SHA1)
 
 option(BUILD_SHARED_LIBS "Build shared libraries" OFF)
-
 if (MSVC)    
     add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 endif()

@@ -16,7 +16,7 @@ void sys::collision(const GameContext *context)
         {
             auto [wall_pos, wall_placement, wall_size] = wall_view.get<game::Position, game::PlacementLocation, game::Size>(wall_e);
             auto wall_rect = sf::Rect<float>(wall_pos.to_vector(), wall_size.to_vector());
-            if (ball_rect.intersects(wall_rect))
+            if (ball_rect.findIntersection(wall_rect))
             {
                 auto &vel = ball_view.get<game::Velocity>(ball_e);
 
@@ -43,7 +43,7 @@ void sys::collision(const GameContext *context)
         {
             auto [paddle_pos, paddle_size] = paddle_view.get<game::Position, game::Size>(paddle_e);
             auto paddle_rect = sf::Rect<float>(paddle_pos.to_vector(), paddle_size.to_vector());
-            if (ball_rect.intersects(paddle_rect))
+            if (ball_rect.findIntersection(paddle_rect))
             {
                 auto &vel = ball_view.get<game::Velocity>(ball_e);
                 vel.x = vel.x * -1;
@@ -63,7 +63,7 @@ void sys::collision(const GameContext *context)
         {
             auto [wall_pos, wall_size] = wall_view.get<game::Position, game::Size>(wall_e);
             auto wall_rect = sf::Rect<float>(wall_pos.to_vector(), wall_size.to_vector());
-            if (paddle_rect.intersects(wall_rect))
+            if (paddle_rect.findIntersection(wall_rect))
             {
                 auto &vel = paddle_view.get<game::Velocity>(paddle_e);
                 vel.y = 0;

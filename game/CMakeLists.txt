@@ -80,6 +80,6 @@ add_executable(${MAIN_TARGET}
 )
 
 
-target_link_libraries(${MAIN_TARGET} PRIVATE sfml-graphics sfml-main packer_library)
+target_link_libraries(${MAIN_TARGET} PRIVATE SFML::Graphics SFML::Main packer_library)
 
 target_include_directories(${MAIN_TARGET} PRIVATE ${PROJECT_INCLUDE_DIR} ${PROJECT_BINARY_DIR}/include)
