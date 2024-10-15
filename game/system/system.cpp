@@ -20,21 +20,17 @@ void sys::time_to_live(const GameContext *context)
 {
     const auto reg = context->get_registry();
     const auto view = reg->view<game::TimeToLive>();
-    std::vector<entt::entity> to_be_removed;
     for (const entt::entity &e : view)
     {
         auto &ttl = view.get<game::TimeToLive>(e);
         if (ttl.microseconds < 0)
         {
-            to_be_removed.push_back(e);
+            reg->destroy(e);
+            continue;
         }
 
         ttl.microseconds -= GameContext::microseconds_per_update;
     }
-
-    std::for_each(to_be_removed.begin(), to_be_removed.end(),
-                  [&](entt::entity &e)
-                  { reg->destroy(e); });
 }
 
 void sys::serve(const GameContext *context)
