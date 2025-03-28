@@ -1,5 +1,8 @@
 .vscode/ipch
 .vs/
+# standard cmake folder
 build/
+# Visual Studio default folder name for build output
+out/
 .vscode/launch.json.cache
 .cache/

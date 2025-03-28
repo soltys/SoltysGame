@@ -8,11 +8,11 @@
             "name": "(Windows) Launch",
             "type": "cppvsdbg",
             "request": "launch",
-            "program": "C:/git/personal/SoltysGame/build/Debug/bin/soltys_game.exe",
+            "program": "C:/dev/soltys/SoltysGame/out/build/x64-Debug/Debug/bin/soltys_game.exe",
             "args": [
             ],
             "stopAtEntry": false,
-            "cwd": "C:/git/personal/SoltysGame/build/Debug/bin",
+            "cwd": "C:/dev/soltys/SoltysGame/out/build/x64-Debug/Debug/bin",
             "environment": [],
             "console": "externalTerminal"
         }

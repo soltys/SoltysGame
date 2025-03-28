@@ -40,5 +40,8 @@
             "en": "[en] BATTLE PONG",
             "pl": "[pl] BATTLE PONG"
         }
+    },
+    "options":{
+        "ESCAPE_CLOSE_GAME": true
     }
 }
