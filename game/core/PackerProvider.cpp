@@ -1,11 +1,11 @@
 #include <game/core/PackerProvider.hpp>
 #include <miniz/miniz.hpp>
-
+#include <vector>
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #undef WIN32_LEAN_AND_MEAN
-#include <game/resources.hpp>
 #include <fstream>
+#include <game/Resources.hpp>
 std::filesystem::path get_packer_path()
 {
     wchar_t szPath[MAX_PATH];
@@ -38,11 +38,12 @@ void extract_packer_from_executable(const std::filesystem::path packer_path)
     DWORD dwSize = SizeofResource(hModule, hResource);
     LPVOID lpAddress = LockResource(hMemory);
     std::vector<char> bytes;
-    bytes.reserve(dwSize);    
+    bytes.reserve(dwSize);
     memcpy(bytes.data(), lpAddress, dwSize);
     size_t in_buf_size = (size_t)dwSize;
     std::ofstream stream;
     stream.open(packer_path, std::ios::app | std::ios::binary);
-    tinfl_decompress_mem_to_callback(bytes.data(), &in_buf_size, tinfl_write_into_ofstream, &stream, TINFL_FLAG_PARSE_ZLIB_HEADER);
+    tinfl_decompress_mem_to_callback(bytes.data(), &in_buf_size, tinfl_write_into_ofstream, &stream,
+                                     TINFL_FLAG_PARSE_ZLIB_HEADER);
     stream.close();
 }

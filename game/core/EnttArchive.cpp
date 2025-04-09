@@ -1,8 +1,8 @@
-#include <game/composition/composition.hpp>
-#include <nlohmann/json.hpp>
 #include <entt/entt.hpp>
-#include <memory>
+#include <game/composition/composition.hpp>
 #include <game/core/EnttArchive.hpp>
+#include <memory>
+#include <nlohmann/json.hpp>
 
 EnttOutputArchive::EnttOutputArchive()
 {
@@ -12,7 +12,7 @@ EnttOutputArchive::EnttOutputArchive()
 
 void EnttOutputArchive::operator()(entt::entity entity)
 {
-    current["ids"].push_back(entity);    
+    current["ids"].push_back(entity);
 }
 
 void EnttOutputArchive::operator()(std::underlying_type_t<entt::entity> e)
@@ -76,39 +76,38 @@ void EnttInputArchive::operator()(entt::entity &entity)
     uint32_t ent = current["ids"][current_idx].get<uint32_t>();
     entity = entt::entity(ent);
 
-    //if data is NOT empty current_idx should be increased by EnttInputArchive::operator()(T &t)
-    if (current["data"].empty()){        
+    // if data is NOT empty current_idx should be increased by EnttInputArchive::operator()(T &t)
+    if (current["data"].empty())
+    {
         current_idx++;
     }
 }
 
-template <typename T>
-void EnttInputArchive::operator()(T &t)
+template <typename T> void EnttInputArchive::operator()(T &t)
 {
     nlohmann::json component_data = current["data"][current_idx];
     auto comp = component_data.get<T>();
-    t = comp;    
+    t = comp;
     current_idx++;
 }
 
-template <typename SnapshotType, typename ArchiveType>
+template <class SnapshotType, class ArchiveType>
 void enttarchive::perform_archive_action(SnapshotType &snapshot, ArchiveType &archive)
 {
-    snapshot
-        .get<game::Paddle>(archive.set_name("paddle"))        
-        .get<game::Ball>(archive.set_name("ball"))
-        .get<game::Wall>(archive.set_name("wall"))
-        .get<game::Position>(archive.set_name("position"))
-        .get<game::Size>(archive.set_name("size"))
-        .get<game::Color>(archive.set_name("color"))
-        .get<game::Velocity>(archive.set_name("velocity"))
-        .get<game::Serve>(archive.set_name("serve"))        
-        .get<game::PlacementLocation>(archive.set_name("placement_location"))
-        .get<game::TimeToLive>(archive.set_name("time_to_live"))
-        .get<game::RenderRectange>(archive.set_name("render_rectangle"))
-        .get<game::RenderCircle>(archive.set_name("render_circle"))
-        .get<game::RenderPoint>(archive.set_name("render_point"))
-        .get<game::Text>(archive.set_name("screen_text"));
+    snapshot.template get<game::Paddle>(archive.set_name("paddle"))
+        .template get<game::Ball>(archive.set_name("ball"))
+        .template get<game::Wall>(archive.set_name("wall"))
+        .template get<game::Position>(archive.set_name("position"))
+        .template get<game::Size>(archive.set_name("size"))
+        .template get<game::Color>(archive.set_name("color"))
+        .template get<game::Velocity>(archive.set_name("velocity"))
+        .template get<game::Serve>(archive.set_name("serve"))
+        .template get<game::PlacementLocation>(archive.set_name("placement_location"))
+        .template get<game::TimeToLive>(archive.set_name("time_to_live"))
+        .template get<game::RenderRectange>(archive.set_name("render_rectangle"))
+        .template get<game::RenderCircle>(archive.set_name("render_circle"))
+        .template get<game::RenderPoint>(archive.set_name("render_point"))
+        .template get<game::Text>(archive.set_name("screen_text"));
 }
 
 std::string enttarchive::to_json(const entt::registry &reg)
@@ -120,7 +119,7 @@ std::string enttarchive::to_json(const entt::registry &reg)
 }
 
 std::unique_ptr<entt::registry> enttarchive::from_json(std::string &json)
-{    
+{
     EnttInputArchive input(json);
     auto reg = std::unique_ptr<entt::registry>();
     auto loader = entt::snapshot_loader{*reg};

@@ -1,3 +1,4 @@
+#include "game/composition/composition.hpp"
 #include <game/Locator.hpp>
 #include <game/Utils.hpp>
 
@@ -29,19 +30,32 @@ std::vector<packer::LogEntry> r::get_logs(const int amount)
 //
 // logging section
 //
-#define LOG_FUNCTION(log_level, name)                                                                                  \
-    void l::##name(const std::string &logger, const std::string &message)                                              \
-    {                                                                                                                  \
-        log(##log_level, logger, message);                                                                             \
-    }                                                                                                                  \
-    void l::##name(const std::string &message)                                                                         \
-    {                                                                                                                  \
-        log(##log_level, "GLOBAL_LOGGER", message);                                                                    \
-    }
+void l::info(const std::string &logger, const std::string &message)
+{
+    log(LogLevel::INFO, logger, message);
+}
+void l::info(const std::string &message)
+{
+    log(LogLevel::INFO, "GLOBAL_LOGGER", message);
+}
 
-LOG_FUNCTION(LogLevel::INFO, info)
-LOG_FUNCTION(LogLevel::WARN, warn)
-LOG_FUNCTION(LogLevel::ERROR, error)
+void l::warn(const std::string &logger, const std::string &message)
+{
+    log(LogLevel::WARN, logger, message);
+}
+void l::warn(const std::string &message)
+{
+    log(LogLevel::WARN, "GLOBAL_LOGGER", message);
+}
+
+void l::error(const std::string &logger, const std::string &message)
+{
+    log(LogLevel::ERROR, logger, message);
+}
+void l::error(const std::string &message)
+{
+    log(LogLevel::ERROR, "GLOBAL_LOGGER", message);
+}
 
 void l::log(LogLevel log_level, const std::string &logger, const std::string &message)
 {
@@ -74,143 +88,451 @@ std::chrono::system_clock::time_point epoch::to_time_point(int64_t microseconds_
 ///
 /// COMP
 ///
-#define LOCTOSTR(enum_value)                                                                                           \
-    case game::Direction::##enum_value:                                                                                \
-        return #enum_value;
 const char *comp::to_string(game::Direction location)
 {
     switch (location)
     {
-        LOCTOSTR(Down)
-        LOCTOSTR(Up)
-        LOCTOSTR(Left)
-        LOCTOSTR(Right)
+    case game::Direction::Down:
+        return "Down";
+    case game::Direction::Up:
+        return "Up";
+    case game::Direction::Left:
+        return "Left";
+    case game::Direction::Right:
+        return "Right";
     default:
         throw std::invalid_argument("unmapped argument in to_string for Location");
     }
 }
-#define STRTOLOC(location_value)                                                                                       \
-    if (name == #location_value)                                                                                       \
-    {                                                                                                                  \
-        return game::Direction::##location_value;                                                                      \
-    }
+
 game::Direction comp::to_location(std::string name)
 {
-    STRTOLOC(Left)
-    STRTOLOC(Right)
-    STRTOLOC(Up)
-    STRTOLOC(Down)
+    if (name == "Left")
+    {
+        return game::Direction::Left;
+    }
+    if (name == "Right")
+    {
+        return game::Direction::Right;
+    }
+
+    if (name == "Up")
+    {
+        return game::Direction::Up;
+    }
+    if (name == "Down")
+    {
+        return game::Direction::Down;
+    }
     throw std::invalid_argument("string (" + name + ") cannot be mapped into game::Location");
 }
 
-#define KEYCONV(key_value)                                                                                             \
-    if (key_name == #key_value)                                                                                        \
-    {                                                                                                                  \
-        return sf::Keyboard::Key::##key_value;                                                                         \
-    }
 sf::Keyboard::Key mysf::to_key(std::string key_name)
 {
-    KEYCONV(A)
-    KEYCONV(B)
-    KEYCONV(C)
-    KEYCONV(D)
-    KEYCONV(E)
-    KEYCONV(F)
-    KEYCONV(G)
-    KEYCONV(H)
-    KEYCONV(I)
-    KEYCONV(J)
-    KEYCONV(K)
-    KEYCONV(L)
-    KEYCONV(M)
-    KEYCONV(N)
-    KEYCONV(O)
-    KEYCONV(P)
-    KEYCONV(Q)
-    KEYCONV(R)
-    KEYCONV(S)
-    KEYCONV(T)
-    KEYCONV(U)
-    KEYCONV(V)
-    KEYCONV(W)
-    KEYCONV(X)
-    KEYCONV(Y)
-    KEYCONV(Z)
-    KEYCONV(Num0)
-    KEYCONV(Num1)
-    KEYCONV(Num2)
-    KEYCONV(Num3)
-    KEYCONV(Num4)
-    KEYCONV(Num5)
-    KEYCONV(Num6)
-    KEYCONV(Num7)
-    KEYCONV(Num8)
-    KEYCONV(Num9)
-    KEYCONV(Escape)
-    KEYCONV(LControl)
-    KEYCONV(LShift)
-    KEYCONV(LAlt)
-    KEYCONV(LSystem)
-    KEYCONV(RControl)
-    KEYCONV(RShift)
-    KEYCONV(RAlt)
-    KEYCONV(RSystem)
-    KEYCONV(Menu)
-    KEYCONV(LBracket)
-    KEYCONV(RBracket)
-    KEYCONV(Semicolon)
-    KEYCONV(Comma)
-    KEYCONV(Period)
-    KEYCONV(Apostrophe)
-    KEYCONV(Slash)
-    KEYCONV(Backslash)
-    KEYCONV(Grave)
-    KEYCONV(Equal)
-    KEYCONV(Hyphen)
-    KEYCONV(Space)
-    KEYCONV(Enter)
-    KEYCONV(Backspace)
-    KEYCONV(Tab)
-    KEYCONV(PageUp)
-    KEYCONV(PageDown)
-    KEYCONV(End)
-    KEYCONV(Home)
-    KEYCONV(Insert)
-    KEYCONV(Delete)
-    KEYCONV(Add)
-    KEYCONV(Subtract)
-    KEYCONV(Multiply)
-    KEYCONV(Divide)
-    KEYCONV(Left)
-    KEYCONV(Right)
-    KEYCONV(Up)
-    KEYCONV(Down)
-    KEYCONV(Numpad0)
-    KEYCONV(Numpad1)
-    KEYCONV(Numpad2)
-    KEYCONV(Numpad3)
-    KEYCONV(Numpad4)
-    KEYCONV(Numpad5)
-    KEYCONV(Numpad6)
-    KEYCONV(Numpad7)
-    KEYCONV(Numpad8)
-    KEYCONV(Numpad9)
-    KEYCONV(F1)
-    KEYCONV(F2)
-    KEYCONV(F3)
-    KEYCONV(F4)
-    KEYCONV(F5)
-    KEYCONV(F6)
-    KEYCONV(F7)
-    KEYCONV(F8)
-    KEYCONV(F9)
-    KEYCONV(F10)
-    KEYCONV(F11)
-    KEYCONV(F12)
-    KEYCONV(F13)
-    KEYCONV(F14)
-    KEYCONV(F15)
-    KEYCONV(Pause)
+    if (key_name == "A")
+    {
+        return sf::Keyboard::Key::A;
+    }
+    if (key_name == "B")
+    {
+        return sf::Keyboard::Key::B;
+    }
+    if (key_name == "C")
+    {
+        return sf::Keyboard::Key::C;
+    }
+    if (key_name == "D")
+    {
+        return sf::Keyboard::Key::D;
+    }
+    if (key_name == "E")
+    {
+        return sf::Keyboard::Key::E;
+    }
+    if (key_name == "F")
+    {
+        return sf::Keyboard::Key::F;
+    }
+    if (key_name == "G")
+    {
+        return sf::Keyboard::Key::G;
+    }
+    if (key_name == "H")
+    {
+        return sf::Keyboard::Key::H;
+    }
+    if (key_name == "I")
+    {
+        return sf::Keyboard::Key::I;
+    }
+    if (key_name == "J")
+    {
+        return sf::Keyboard::Key::J;
+    }
+    if (key_name == "K")
+    {
+        return sf::Keyboard::Key::K;
+    }
+    if (key_name == "L")
+    {
+        return sf::Keyboard::Key::L;
+    }
+    if (key_name == "M")
+    {
+        return sf::Keyboard::Key::M;
+    }
+    if (key_name == "N")
+    {
+        return sf::Keyboard::Key::N;
+    }
+    if (key_name == "O")
+    {
+        return sf::Keyboard::Key::O;
+    }
+    if (key_name == "P")
+    {
+        return sf::Keyboard::Key::P;
+    }
+    if (key_name == "Q")
+    {
+        return sf::Keyboard::Key::Q;
+    }
+    if (key_name == "R")
+    {
+        return sf::Keyboard::Key::R;
+    }
+    if (key_name == "S")
+    {
+        return sf::Keyboard::Key::S;
+    }
+    if (key_name == "T")
+    {
+        return sf::Keyboard::Key::T;
+    }
+    if (key_name == "U")
+    {
+        return sf::Keyboard::Key::U;
+    }
+    if (key_name == "V")
+    {
+        return sf::Keyboard::Key::V;
+    }
+    if (key_name == "W")
+    {
+        return sf::Keyboard::Key::W;
+    }
+    if (key_name == "X")
+    {
+        return sf::Keyboard::Key::X;
+    }
+    if (key_name == "Y")
+    {
+        return sf::Keyboard::Key::Y;
+    }
+    if (key_name == "Z")
+    {
+        return sf::Keyboard::Key::Z;
+    }
+    if (key_name == "Num0")
+    {
+        return sf::Keyboard::Key::Num0;
+    }
+    if (key_name == "Num1")
+    {
+        return sf::Keyboard::Key::Num1;
+    }
+    if (key_name == "Num2")
+    {
+        return sf::Keyboard::Key::Num2;
+    }
+    if (key_name == "Num3")
+    {
+        return sf::Keyboard::Key::Num3;
+    }
+    if (key_name == "Num4")
+    {
+        return sf::Keyboard::Key::Num4;
+    }
+    if (key_name == "Num5")
+    {
+        return sf::Keyboard::Key::Num5;
+    }
+    if (key_name == "Num6")
+    {
+        return sf::Keyboard::Key::Num6;
+    }
+    if (key_name == "Num7")
+    {
+        return sf::Keyboard::Key::Num7;
+    }
+    if (key_name == "Num8")
+    {
+        return sf::Keyboard::Key::Num8;
+    }
+    if (key_name == "Num9")
+    {
+        return sf::Keyboard::Key::Num9;
+    }
+    if (key_name == "Escape")
+    {
+        return sf::Keyboard::Key::Escape;
+    }
+    if (key_name == "LControl")
+    {
+        return sf::Keyboard::Key::LControl;
+    }
+    if (key_name == "LShift")
+    {
+        return sf::Keyboard::Key::LShift;
+    }
+    if (key_name == "LAlt")
+    {
+        return sf::Keyboard::Key::LAlt;
+    }
+    if (key_name == "LSystem")
+    {
+        return sf::Keyboard::Key::LSystem;
+    }
+    if (key_name == "RControl")
+    {
+        return sf::Keyboard::Key::RControl;
+    }
+    if (key_name == "RShift")
+    {
+        return sf::Keyboard::Key::RShift;
+    }
+    if (key_name == "RAlt")
+    {
+        return sf::Keyboard::Key::RAlt;
+    }
+    if (key_name == "RSystem")
+    {
+        return sf::Keyboard::Key::RSystem;
+    }
+    if (key_name == "Menu")
+    {
+        return sf::Keyboard::Key::Menu;
+    }
+    if (key_name == "LBracket")
+    {
+        return sf::Keyboard::Key::LBracket;
+    }
+    if (key_name == "RBracket")
+    {
+        return sf::Keyboard::Key::RBracket;
+    }
+    if (key_name == "Semicolon")
+    {
+        return sf::Keyboard::Key::Semicolon;
+    }
+    if (key_name == "Comma")
+    {
+        return sf::Keyboard::Key::Comma;
+    }
+    if (key_name == "Period")
+    {
+        return sf::Keyboard::Key::Period;
+    }
+    if (key_name == "Apostrophe")
+    {
+        return sf::Keyboard::Key::Apostrophe;
+    }
+    if (key_name == "Slash")
+    {
+        return sf::Keyboard::Key::Slash;
+    }
+    if (key_name == "Backslash")
+    {
+        return sf::Keyboard::Key::Backslash;
+    }
+    if (key_name == "Grave")
+    {
+        return sf::Keyboard::Key::Grave;
+    }
+    if (key_name == "Equal")
+    {
+        return sf::Keyboard::Key::Equal;
+    }
+    if (key_name == "Hyphen")
+    {
+        return sf::Keyboard::Key::Hyphen;
+    }
+    if (key_name == "Space")
+    {
+        return sf::Keyboard::Key::Space;
+    }
+    if (key_name == "Enter")
+    {
+        return sf::Keyboard::Key::Enter;
+    }
+    if (key_name == "Backspace")
+    {
+        return sf::Keyboard::Key::Backspace;
+    }
+    if (key_name == "Tab")
+    {
+        return sf::Keyboard::Key::Tab;
+    }
+    if (key_name == "PageUp")
+    {
+        return sf::Keyboard::Key::PageUp;
+    }
+    if (key_name == "PageDown")
+    {
+        return sf::Keyboard::Key::PageDown;
+    }
+    if (key_name == "End")
+    {
+        return sf::Keyboard::Key::End;
+    }
+    if (key_name == "Home")
+    {
+        return sf::Keyboard::Key::Home;
+    }
+    if (key_name == "Insert")
+    {
+        return sf::Keyboard::Key::Insert;
+    }
+    if (key_name == "Delete")
+    {
+        return sf::Keyboard::Key::Delete;
+    }
+    if (key_name == "Add")
+    {
+        return sf::Keyboard::Key::Add;
+    }
+    if (key_name == "Subtract")
+    {
+        return sf::Keyboard::Key::Subtract;
+    }
+    if (key_name == "Multiply")
+    {
+        return sf::Keyboard::Key::Multiply;
+    }
+    if (key_name == "Divide")
+    {
+        return sf::Keyboard::Key::Divide;
+    }
+    if (key_name == "Left")
+    {
+        return sf::Keyboard::Key::Left;
+    }
+    if (key_name == "Right")
+    {
+        return sf::Keyboard::Key::Right;
+    }
+    if (key_name == "Up")
+    {
+        return sf::Keyboard::Key::Up;
+    }
+    if (key_name == "Down")
+    {
+        return sf::Keyboard::Key::Down;
+    }
+    if (key_name == "Numpad0")
+    {
+        return sf::Keyboard::Key::Numpad0;
+    }
+    if (key_name == "Numpad1")
+    {
+        return sf::Keyboard::Key::Numpad1;
+    }
+    if (key_name == "Numpad2")
+    {
+        return sf::Keyboard::Key::Numpad2;
+    }
+    if (key_name == "Numpad3")
+    {
+        return sf::Keyboard::Key::Numpad3;
+    }
+    if (key_name == "Numpad4")
+    {
+        return sf::Keyboard::Key::Numpad4;
+    }
+    if (key_name == "Numpad5")
+    {
+        return sf::Keyboard::Key::Numpad5;
+    }
+    if (key_name == "Numpad6")
+    {
+        return sf::Keyboard::Key::Numpad6;
+    }
+    if (key_name == "Numpad7")
+    {
+        return sf::Keyboard::Key::Numpad7;
+    }
+    if (key_name == "Numpad8")
+    {
+        return sf::Keyboard::Key::Numpad8;
+    }
+    if (key_name == "Numpad9")
+    {
+        return sf::Keyboard::Key::Numpad9;
+    }
+    if (key_name == "F1")
+    {
+        return sf::Keyboard::Key::F1;
+    }
+    if (key_name == "F2")
+    {
+        return sf::Keyboard::Key::F2;
+    }
+    if (key_name == "F3")
+    {
+        return sf::Keyboard::Key::F3;
+    }
+    if (key_name == "F4")
+    {
+        return sf::Keyboard::Key::F4;
+    }
+    if (key_name == "F5")
+    {
+        return sf::Keyboard::Key::F5;
+    }
+    if (key_name == "F6")
+    {
+        return sf::Keyboard::Key::F6;
+    }
+    if (key_name == "F7")
+    {
+        return sf::Keyboard::Key::F7;
+    }
+    if (key_name == "F8")
+    {
+        return sf::Keyboard::Key::F8;
+    }
+    if (key_name == "F9")
+    {
+        return sf::Keyboard::Key::F9;
+    }
+    if (key_name == "F10")
+    {
+        return sf::Keyboard::Key::F10;
+    }
+    if (key_name == "F11")
+    {
+        return sf::Keyboard::Key::F11;
+    }
+    if (key_name == "F12")
+    {
+        return sf::Keyboard::Key::F12;
+    }
+    if (key_name == "F13")
+    {
+        return sf::Keyboard::Key::F13;
+    }
+    if (key_name == "F14")
+    {
+        return sf::Keyboard::Key::F14;
+    }
+    if (key_name == "F15")
+    {
+        return sf::Keyboard::Key::F15;
+    }
+    if (key_name == "Pause")
+    {
+        return sf::Keyboard::Key::Pause;
+    }
 
     throw std::invalid_argument("string (" + key_name + ") cannot be mapped into sf::Keyboard::Key");
 }

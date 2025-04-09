@@ -8,7 +8,7 @@ FetchContent_Declare(SFML
 
 FetchContent_Declare(packer
     GIT_REPOSITORY https://github.com/soltys/packer.git
-    GIT_TAG 3bc5606a29ad4c944b730452e74ee91685e7a267
+    GIT_TAG 330cb0c79e59e994f8a51074e1770f99fb47e898
     GIT_SHALLOW 1
 )
 
