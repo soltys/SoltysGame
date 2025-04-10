@@ -43,8 +43,7 @@ const std::string EnttOutputArchive::AsString()
 // create bson-data
 const std::vector<uint8_t> EnttOutputArchive::AsBson()
 {
-    std::vector<std::uint8_t> as_bson = nlohmann::json::to_bson(root);
-    return as_bson;
+    return nlohmann::json::to_bson(root);
 }
 
 EnttInputArchive::EnttInputArchive(const std::string &json_string)

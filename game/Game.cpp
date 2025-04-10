@@ -42,7 +42,7 @@ void Game::initialize()
     context->set_video_mode(video_mode)->set_registry(reg.get())->set_main_render_target(window.get());
 
     const float paddle_margin = 20.f;
-    const float middle_of_screen = video_mode.size.y / 2;
+    const float middle_of_screen = video_mode.size.y / 2.0f;
     factory::create_paddle(context.get(), sf::Vector2f(paddle_margin, middle_of_screen), game::Direction::Left);
     factory::create_paddle(context.get(), sf::Vector2f(video_mode.size.x - paddle_margin, middle_of_screen),
                            game::Direction::Right);
@@ -88,7 +88,7 @@ void Game::handle_events()
 {
     while (const std::optional e = window->pollEvent())
     {
-        if (const auto* event = e->getIf<sf::Event::Resized>())
+        if (const auto *event = e->getIf<sf::Event::Resized>())
         {
             view = mysf::get_letterbox_view(view, event->size.x, event->size.y);
         }

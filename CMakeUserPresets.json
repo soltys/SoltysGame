@@ -2,8 +2,16 @@
     "version": 2,
     "configurePresets": [
         {
-            "name": "default",
+            "name": "clang",
             "inherits": "vcpkg",
+            "environment": {
+                "VCPKG_ROOT": "c:/git/vcpkg",
+                "PATH": "C:/msys64/ucrt64/bin:$penv{PATH}"
+            }
+        },
+        {
+            "name": "msvc",
+            "inherits": "cl",
             "environment": {
                 "VCPKG_ROOT": "c:/git/vcpkg",
                 "PATH": "C:/msys64/ucrt64/bin:$penv{PATH}"
